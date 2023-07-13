@@ -1,0 +1,23 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:arc="http://schemas.i2i.com/ei/wsdl/archive" xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <arc:ArchiveInvoiceExtendedRequest>
+         <REQUEST_HEADER>
+            <SESSION_ID>#SESSION_ID#</SESSION_ID>
+            <APPLICATION_NAME>liserp</APPLICATION_NAME>
+            <COMPRESSED>N</COMPRESSED>
+         </REQUEST_HEADER>
+         <ArchiveInvoiceExtendedContent>
+            <INVOICE_PROPERTIES>
+               <EARSIV_FLAG>Y</EARSIV_FLAG>
+               <EARSIV_PROPERTIES>
+                  <EARSIV_TYPE>#ARCHIVETYPE#</EARSIV_TYPE>
+                  <SUB_STATUS>NEW</SUB_STATUS>
+
+               </EARSIV_PROPERTIES>
+               <INVOICE_CONTENT xmime:contentType="application/?">#XMLIN64BITFORMAT#</INVOICE_CONTENT>
+            </INVOICE_PROPERTIES>
+         </ArchiveInvoiceExtendedContent>
+      </arc:ArchiveInvoiceExtendedRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

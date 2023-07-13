@@ -1,0 +1,15 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.efatura.izibiz.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:Login>
+         
+         <USER_NAME>6091078234</USER_NAME>
+         <PASSWORD>Lisinfo2021</PASSWORD>
+         <!--
+         <USER_NAME>izibiz-test2</USER_NAME>
+         <PASSWORD>izi321</PASSWORD>
+         -->
+         
+      </ws:Login>
+   </soapenv:Body>
+</soapenv:Envelope>

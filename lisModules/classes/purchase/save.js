@@ -1,0 +1,85 @@
+
+// ? modi: -1 = create new document by reference
+// ?        0 = create new document
+// ?        1 - update the document
+
+export default async function save(plispurdocs, pModi) {
+
+    const olispur001 = await lispur001.findOne({
+        company: plispurdocs.company,
+        doctype: plispurdocs.doctype,
+    });
+
+    // Controls before Save ****************
+    for (let i in plispurdocs.items) {
+        
+
+        
+        if (olispur001.deltype > 0) {
+            await Inventory.ctrlMaterialForMove(
+                plispurdocs.company,
+                plispurdocs.items[i]
+            );
+
+            await Inventory.ctrlMoveCode(
+                plispurdocs.company,
+                plispurdocs.items[i].material,
+                olispur001.movecode,
+                plispurdocs.items[i].specialstock
+            );
+        }
+        if (plispurdocs.items[i].quantity <= 0)
+            throw new Error(
+                `Lütfen ${plispurdocs.items[i].itemnum} No'lu kalem için Miktar Giriniz!`
+            );
+        const olisbas009 = await lisbas009.findOne({
+            company: plispurdocs.company,
+            mattype: plispurdocs.items[i].mattype,
+        });
+
+        if (olisbas009 == null) throw new Error("Malzeme Tipi Bulunamadı!");
+    }
+    // Control reference document
+    await this.ctrlChildDocForDel(plispurdocs);
+
+    await this.ctrlRefDocument(plispurdocs);
+
+    // Update reference document
+
+    await this.updRefDocument(plispurdocs);
+
+    plispurdocs = await this.removeDeletedItems(plispurdocs);
+
+    // Save the Document*********************
+
+    if (pModi <= 0) {
+        // Get Document Number
+
+        plispurdocs.docnum = await Numrange.getNewNumber({
+            company: olispur001.company,
+            numrange: olispur001.numrange,
+        });
+
+        // Save the Document
+
+        plispurdocs._id = undefined;
+        const olispurdocs = new lispurdocs(plispurdocs);
+        await olispurdocs.save();
+    } else {
+        await lispurdocs.findOneAndUpdate(
+            { _id: plispurdocs._id },
+            plispurdocs,
+            {
+                new: true,
+                upsert: true,
+            }
+        );
+    }
+    // Update Inventory Document
+    if ((olispur001.deltype == 2) | (olispur001.deltype == 4)) {
+        await Inventory.createInvFromPur(plispurdocs, pModi);
+    }
+
+
+    return plispurdocs;
+}

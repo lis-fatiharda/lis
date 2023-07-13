@@ -1,0 +1,18 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.efatura.izibiz.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:SendInvoice>
+       
+         <SESSION_ID>#SESSION_ID#</SESSION_ID>
+         <APPLICATION_NAME>liserp</APPLICATION_NAME>
+       
+         <RECEIVER_VKN>#RTAXNUM#</RECEIVER_VKN>
+         
+         <RECEIVER_ALIAS>#RALIAS#</RECEIVER_ALIAS>
+        
+         <INVOICE_CONTENT>#XMLIN64BITFORMAT#</INVOICE_CONTENT>
+       
+         <COMPRESSED>N</COMPRESSED>
+      </ws:SendInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>
