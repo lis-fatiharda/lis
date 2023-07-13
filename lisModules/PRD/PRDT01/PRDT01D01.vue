@@ -16,8 +16,8 @@
                     optValue="company" optTitle="stext" optCaptions="company" width="120px" />
                 <l-select :label="this.$gl(`Tesis`, `Plant`)" v-model="dv.sc.plant" options="lisbas002" optValue="plant"
                     optTitle="stext" optCaptions="plant" width="120px" />
-                <l-select :label="this.$gl(`Tipi`, `Type`)" v-model="dv.sc.doctype" options="destektablosu"
-                    optValue="type" optTitle="stext" optCaptions="type" width="120px" />
+                <l-select :label="this.$gl(`Tipi`, `Type`)" v-model="dv.sc.doctype" options="lisprd001"
+                    optValue="type" optTitle="stext" optCaptions="type" width="150px" />
                 <l-input v-model="dv.sc.docnum" :label="this.$gl(`No`, `No`)" dense />
                 <l-input :label="this.$gl(`Malzeme Kodu`, `Material`)" v-model="dv.sc.material">
                     <l-chip class="bg-white" icon="search" dense clickable @click="isSelectMat = !isSelectMat">
@@ -83,7 +83,7 @@ export default {
                 sc: {
                     company: "01",
                     plant: "01",
-                    doctype: 0,
+                    doctype: "",
                     docnum: "",
                     material: "",
                     stext: "",
@@ -165,19 +165,19 @@ export default {
         async btnSearch() {
             this.dv = await this.lis.function("PRDT01/01-btnSearch", this.dv);
         },
-        async btnEdit(prop) {
-            this.dv = await this.lis.function("PRDT01/01-btnEdit", prop);
+        async btnEdit() {
+            this.dv = await this.lis.function("PRDT01/01-btnEdit", this.dv);
         },
-        async btnShow(prop) {
-            this.dv = await this.lis.function("PRDT01/01-btnShow", prop);
+        async btnShow() {
+            this.dv = await this.lis.function("PRDT01/01-btnShow", this.dv);
         },
-        async btnInsert(prop) {
-            this.dv = await this.lis.function("PRDT01/01-btnInsert", prop);
+        async btnInsert() {
+            this.dv = await this.lis.function("PRDT01/01-btnInsert", this.dv);
         },
-        async btnDelete(prop) {
-            this.dv = await this.lis.function("PRDT01/01-btnDelete", prop);
+        async btnDelete() {
+            this.dv = await this.lis.function("PRDT01/01-btnDelete", this.dv);
         },
-        async init(prop) {
+        async init() {
             this.dv = await this.lis.function("PRDT01/01-init", this.dv);
         },
     },

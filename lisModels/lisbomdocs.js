@@ -13,18 +13,26 @@ const prodsSchema = new mongoose.Schema({
     stockplace: { type: String, label: "Giriş Stokyeri", default: "" },
     stext: { type: String, label: "Açıklama", default: "" },
 });
+const activitiesSchema = new mongoose.Schema({
+    operation: { type: Number, label: "Operasyon No", default: 10 },
+    type: { type: String, label: "Aktivite Tİpi", default: "" },
+    value: { type: Number, label: "Tahmini operasyon süresi", default: 0 },
+    unit: { type: String, label: "Birimi", default: "" },
 
+    iscost: { type: Boolean, label: "Maliyete ekle", default: false },
+});
 const operationsSchema = new mongoose.Schema({
     operation: { type: Number, label: "Operasyon No", default: 10 },
     oprcontrol: { type: String, label: "Operasyon Kontrol Tipi", default: "S" },
     workcenter: { type: String, label: "İş Merkezi", default: "" },
     costcenter: { type: String, label: "Maliyet Merkezi", default: "" },
     capgrp: { type: String, label: "İş Merkezi Kapasite Grubu", default: "" },
-    activities: [activitiesSchema],
+    
     stext: { type: String, label: "Açıklama", default: "" },
 });
 
-const activitiesSchema = new mongoose.Schema({
+const equipmentsSchema = new mongoose.Schema({
+    operation: { type: Number, label: "Operasyon No", default: 10 },
     type: { type: String, label: "Aktivite Tİpi", default: "" },
     value: { type: Number, label: "Tahmini operasyon süresi", default: 0 },
     unit: { type: String, label: "Birimi", default: "" },
@@ -54,9 +62,11 @@ const schema = new mongoose.Schema(
         category: { type: String, label: "Ürün Ağacı Kategorisi", default: "" },
         bomnumber: { type: String, label: "Ürün Ağacı No", default: "" },
         alternum: { type: Number, label: "Alternatif No", default: 0 },
-        prods: [prodsSchema], // Materials will be produced
-        operations: [operationsSchema],
-        components: [componentsSchema],
+        prods: [prodsSchema], // Materials will be produced by opeartions
+        components: [componentsSchema], // Materials will be consumed by opeartions
+        operations: [operationsSchema], // Production Opeartions
+        activities: [activitiesSchema], // Activities of operations
+        equipments: [equipmentsSchema], // Equipment will be used by operations
         note: {
             type: String,
             label: "Reçete Notu",

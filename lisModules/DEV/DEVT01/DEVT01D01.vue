@@ -43,25 +43,18 @@
                     <l-btn
                         icon="backup"
                         label="lisdb Backup"
-                        dense
-                        outline
                         color="teal"
                         @click="btnBackup()"
                     />
 
                     <l-input
-                        filled
-                        dense
                         label="Restore Edilecek Yedek İsmi"
-                        hint="/liserp/backups/"
                         v-model="dv.backupName"
                     />
 
                     <l-btn
                         icon="restore"
                         label="lisdb Restore"
-                        dense
-                        outline
                         color="red-8"
                         @click="btnRestore()"
                     />

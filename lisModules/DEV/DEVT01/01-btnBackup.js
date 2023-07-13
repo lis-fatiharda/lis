@@ -25,7 +25,8 @@ Using mongorestore - without any args:
 
 export default async function (params) {
 
-    const DB_NAME = "mongodb://lis:Lis2023@172.20.0.2:27017/lisdb";
+    const DB_NAME =
+        "mongodb://lis:Lis2023@172.20.0.2:27017/lisdb";
     const ARCHIVE_PATH = path.join(
         "/opt/liserp/backups/lisdb",
         `${params.backupName}.gzip`
@@ -33,8 +34,8 @@ export default async function (params) {
 
     const child = await spawn("mongodump", [
         `--uri=${DB_NAME}`,
-        `-u=lis`,
-        `-p=Lis2023`,
+       `-u=lis`,
+       `-p=Lis2023`,
         `--archive=${ARCHIVE_PATH}`,
         "--gzip",
     ]);

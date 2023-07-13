@@ -23,20 +23,22 @@ Using mongorestore - without any args:
 //cron.schedule("*/5 * * * * *", () => backupMongoDB());
 
 export default async function (params) {
-    const DB_NAME = "mongodb://localhost:17037/farda";
+    
+    const DB_NAME = "mongodb://lis:Lis2023@172.20.0.2:27017/lisdb";
     const ARCHIVE_PATH = path.join(
         "/opt/liserp/backups/lisdb",
         `${params.backupName}.gzip`
     );
 
     const child = await spawn("mongorestore", [
-        "--host=192.168.48.2",
-        `--port=27017`,
+        `--uri=${DB_NAME}`,
         `-u=lis`,
         `-p=Lis2023`,
-        `--archive=/opt/liserp/backups/lisdb/deneme2.gzip`,
+        `--archive=${ARCHIVE_PATH}`,
         `--nsFrom="lisdb.*"`,
         `--nsTo="lisdb.*"`,
+        "--drop",
+        "--verbose",
         "--gzip",
     ]);
 

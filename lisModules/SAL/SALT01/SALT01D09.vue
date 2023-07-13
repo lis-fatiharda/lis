@@ -26,7 +26,7 @@
         </div>
         <l-separator inset />
         <l-card-section class="q-gutter-xs row">
-            <l-input label="E-Belge Durumu" readonly  dense />
+            <l-input label="E-Belge Durumu" :readonly = "true"  dense />
             <l-select label="E-Fatura Tipi" width="200px"
             v-model="dv.lissaldocs.einvotype" 
             :options= "[{einvotype: 0, stext: 'Temel Fatura'},{einvotype: 1, stext: 'Ticari Fatura'}]"

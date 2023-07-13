@@ -16,7 +16,8 @@ const prodsSchema = new mongoose.Schema({
 
 
 const activitiesSchema = new mongoose.Schema({
-    type: { type: String, label: "Aktivite Tİpi", default: "" },
+    operation: { type: Number, label: "Operasyon No", default: 10 },
+    type: { type: String, label: "Aktivite Tipi", default: "" },
     value: { type: Number, label: "Tahmini operasyon süresi", default: 0 },
     unit: { type: String, label: "Birimi", default: "" },
 
@@ -29,11 +30,17 @@ const operationsSchema = new mongoose.Schema({
     workcenter: { type: String, label: "İş Merkezi", default: "" },
     costcenter: { type: String, label: "Maliyet Merkezi", default: "" },
     capgrp: { type: String, label: "İş Merkezi Kapasite Grubu", default: "" },
-    activities: [activitiesSchema],
     stext: { type: String, label: "Açıklama", default: "" },
 });
 
+const equipmentsSchema = new mongoose.Schema({
+    operation: { type: Number, label: "Operasyon No", default: 10 },
+    type: { type: String, label: "Aktivite Tipi", default: "" },
+    value: { type: Number, label: "Tahmini operasyon süresi", default: 0 },
+    unit: { type: String, label: "Birimi", default: "" },
 
+    iscost: { type: Boolean, label: "Maliyete ekle", default: false },
+});
 
 
 
@@ -52,15 +59,17 @@ const schema = new mongoose.Schema(
     {
         company: { type: String, label: "Firma Kodu", default: "" },
         plant: { type: String, label: "Tesis", default: "01" },
-        doctype: { type: Number, label: "İş Emri Tipi", default: 0 }, //0: Operasyon, 1: Set Elemanı
+        doctype: { type: String, label: "İş Emri Tipi", default: "" },
         docnum: { type: String, label: "İş Emri No", default: "" },
         alternum: { type: Number, label: "Alternatif No", default: 0 },
-        prods: [prodsSchema], // Materials will be produced
-        operations: [operationsSchema],
-        components: [componentsSchema],
+        prods: [prodsSchema], // Materials will be produced by opeartions
+        components: [componentsSchema], // Materials will be consumed by opeartions
+        operations: [operationsSchema], // Production Opeartions
+        activities: [activitiesSchema], // Activities of operations
+        equipments: [equipmentsSchema], // Equipment will be used by operations
         note: {
             type: String,
-            label: "Reçete Notu",
+            label: "İş Emri Notu",
             default: "",
         },
 
