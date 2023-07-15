@@ -7,7 +7,7 @@
 
         <l-toolbar-title>{{
           this.$gl(
-            "İş Emri Oluşturma-Değiştirme",
+            "İş Emri Oluşturma-Değiştirmez",
             "Work Order Creation-Modification"
           )
         }}</l-toolbar-title>
