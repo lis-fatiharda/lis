@@ -1,7 +1,11 @@
 {
     "compilerOptions": {
       "module": "esnext",
-      "moduleResolution": "node"
+      "moduleResolution": "node",
+
+      "paths": {
+      "@lisModules/*": ["/opt/liserp/lisModules/*"],
+    }
     },
     "exclude": [ "lisRunner/server", "dist", "lisRunner/**/*.js"],
   }

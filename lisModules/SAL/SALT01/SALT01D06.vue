@@ -10,7 +10,18 @@
             :width="'100%'"
             @change="calcPrice()"
         />
-        <l-card-section class="q-gutter-xs">
+        <l-chip
+                dense
+                justify="right"
+                icon="add"
+                clickable
+                rounded
+                glossy
+                color="secondary"
+                text-color="white"
+                @click="pushNewDiscH()"
+            />
+        <!-- <l-card-section class="q-gutter-xs">
             <q-markup-table @change="calcPrice()" dense separator="cell">
                 <thead class="bg-grey-2">
                     <tr>
@@ -129,7 +140,7 @@
                 text-color="white"
                 @click="pushNewDiscH()"
             />
-        </l-card-section>
+        </l-card-section> -->
     </l-card>
 </template>
 

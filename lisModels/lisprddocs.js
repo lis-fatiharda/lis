@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 
 const prodsSchema = new mongoose.Schema({
-    type: { type: String, label: "Giriş Tipi", default: 0 }, // 0: Ürün | 1: Eş değer yanürün | 2: yanürün | 3: fire
+    type: { type: String, label: "Giriş Tipi", default: "" }, // 0: Ürün | 1: Eş değer yanürün | 2: yanürün | 3: fire
     operation: { type: Number, label: "Operasyon No", default: 10 },
     material: { type: String, label: "Malzeme Kodu", default: "" },
     quantity: { type: Number, label: "Temel Miktar", default: 1 },
@@ -38,6 +38,8 @@ const equipmentsSchema = new mongoose.Schema({
     type: { type: String, label: "Aktivite Tipi", default: "" },
     value: { type: Number, label: "Tahmini operasyon süresi", default: 0 },
     unit: { type: String, label: "Birimi", default: "" },
+    material: { type: String, label: "Malzeme Kodu", default: "" },
+    stext: { type: String, label: "Açıklama", default: "" },
 
     iscost: { type: Boolean, label: "Maliyete ekle", default: false },
 });
@@ -45,6 +47,7 @@ const equipmentsSchema = new mongoose.Schema({
 
 
 const componentsSchema = new mongoose.Schema({
+    type: { type: String, label: "Ürün Tipi", default: "" },
     operation: { type: Number, label: "Operasyon No", default: 10 },
     material: { type: String, label: "Malzeme Kodu", default: "" },
     quantity: { type: Number, label: "Tüketilecek Miktar", default: 1 },
@@ -73,16 +76,12 @@ const schema = new mongoose.Schema(
             default: "",
         },
 
-        validfrom: {
+        docdate: {
             type: Date,
-            label: "Başlangıç Tarihi",
-            default: new Date(1970),
+            label: "İş Emri Tarihi",
+            default: new Date(),
         },
-        validuntil: {
-            type: Date,
-            label: "Bitiş Tarihi",
-            default: new Date(2100),
-        },
+       
 
         //************** */
         createdby: { type: String, label: "Oluşturan", default: "" },

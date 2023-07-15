@@ -1,5 +1,3 @@
-
- 
 <template>
     <l-div> 
         <!--Tittle Layer-->
@@ -69,16 +67,16 @@
                     readonly
                 />
                 
-                <l-input :label="this.$gl(`Malzeme Kodu`, `Material`)" v-model="dv.lisprddocs.prods.material">
+                <!-- <l-input :label="this.$gl(`Malzeme Kodu`, `Material`)" v-model="dv.lisprddocs.prods[0].material">
                     <l-chip class="bg-white" icon="search" dense clickable @click="isSelectMat = !isSelectMat">
                         <BAST03D01mini :pComp="dv.sc.company" :isShow="isSelectMat" @ok="
-                            dv.lisprddocs.prods.material = $event.material;
+                            dv.lisprddocs.prods[0].material = $event.material;
                         isSelectMat = false;
                         " @cancel="isSelectMat = false" />
                     </l-chip>
                 </l-input>
                 <l-input
-                    v-model="dv.lisprddocs.prods.quantity"
+                    v-model="dv.lisprddocs.prods[0].quantity"
                     :label="this.$gl(`Miktar`, `Quantity`)"
                     dense
                     style="width: 150px"
@@ -87,7 +85,7 @@
                
                 <l-select
                    :label="this.$gl(`Birim`, `Unit`)"
-                   v-model="dv.lisprddocs.prods.qunit"
+                   v-model="dv.lisprddocs.prods[0].qunit"
                    options="lisbas007"
                    optValue="unit"
                    optTitle="stext"
@@ -97,7 +95,7 @@
                     />
                 <l-select
                    :label="this.$gl(`Depo`, `Warehouse`)"
-                   v-model="dv.lisprddocs.prods.warehouse"
+                   v-model="dv.lisprddocs.prods[0].warehouse"
                    options="lisinv003"
                    optValue="warehouse"
                    optTitle="stext"
@@ -107,20 +105,20 @@
 
                  <l-select
                    :label="this.$gl(`Stok Yeri`, `Stockplace`)"
-                   v-model="dv.lisprddocs.prods.stockplace"
+                   v-model="dv.lisprddocs.prods[0].stockplace"
                    options="lisinv004"
                    optValue="stockplace"
                    optTitle="stext"
                    optCaptions="stockplace"
                    width="150px"
-                 />
+                 /> 
                  <l-input
-                    v-model="dv.lisprddocs.prods.stext"
+                    v-model="dv.lisprddocs.prods[0].stext"
                     :label="this.$gl(`Açıklama`, `Description`)"
                     dense
                     style="width: 245px"
                     
-                />
+                />-->
                 <l-input
                     v-model="dv.lisprddocs.alternum"
                     :label="this.$gl(`Alternatif No`, `Alternative No`)"
@@ -129,78 +127,116 @@
                     
                 />
                 <l-datetime
-                    :label="this.$gl(`Başlangıç Tarihi`, `Start Date`)"
-                    v-model="dv.lisprddocs.validfrom"
+                    :label="this.$gl(`İş Emri Tarihi`, `Work Order Date`)"
+                    v-model="dv.lisprddocs.docdate"
                     style="width: 160px"
                 />
-                <l-datetime
-                    :label="this.$gl(`Bitiş Tarihi`, `End Date`)"
-                    v-model="dv.lisprddocs.validuntil"
-                    style="width: 160px"
-                />
+                
                 <l-checkbox
                     v-model="dv.lisprddocs._deleted"
                     label="Sil"
                     color="pink"
                 />
             </div>
-
-            <l-div>
-                <l-input
-                    type="textarea"
-                    v-model="dv.lisprddocs.note"
-                    label="İş Emri Notu"
-                    dense
-                    style="width: 1650px"
-                    autogrow
+            <l-card>
+            <l-tabs v-model="tab">
+                <l-tab name="Genel" :label="this.$gl(`Genel`, `General`)" />
+                <l-tab
+                    name="Üretilenler"
+                    :label="this.$gl(`Üretilenler`, `Produced`)"
                 />
-            </l-div>
-        </l-card0> 
+                <l-tab
+                    name="Tüketilenler"
+                    :label="this.$gl(`Tüketilenler`, `Consumed`)"
+                />
+                <l-tab
+                    name="Operasyonlar"
+                    :label="this.$gl(`Operasyonlar`, `Operations`)"
+                />
+                <l-tab
+                    name="Araçlar"
+                    :label="this.$gl(`Araçlar`, `Tools`)"
+                />
+               
+                <l-tab name="Maliyetlendirme" :label="this.$gl(`Maliyetlendirme`, `Costing`)" /> 
+                <l-tab name="Notlar" :label="this.$gl(`Notlar`, `Notes`)" />
+                <l-tab
+                    name="Eklenenler"
+                    :label="this.$gl(`Eklenenler`, `Added`)"
+                />
+            </l-tabs>
 
+            <l-tab-panels v-model="tab" animated>
+                 <l-tab-panel name="Genel" >
+                    <PRDT01D03 :dv="dv" :tabInfo="tabInfo" />
+                </l-tab-panel>
+               <l-tab-panel name="Üretilenler" >
+                    <PRDT01D04 :dv="dv" :tabInfo="tabInfo" />
+                </l-tab-panel>
+
+                <l-tab-panel name="Tüketilenler" >
+                    <PRDT01D05 :dv="dv" :tabInfo="tabInfo" />
+                </l-tab-panel>
+
+                <l-tab-panel name="Operasyonlar">
+                    <PRDT01D06 :dv="dv" :tabInfo="tabInfo" />
+                </l-tab-panel>
+
+                <l-tab-panel name="Araçlar" >
+                    <PRDT01D07 :dv="dv" :tabInfo="tabInfo" />
+                </l-tab-panel>
+
+                <l-tab-panel
+                    name="Maliyetlendirme"
+                    class="row"
+                    style="padding: 0"
+                >
+                    <PRDT01D08 :dv="dv" :tabInfo="tabInfo" />
+                </l-tab-panel>
+
+
+                <l-tab-panel name="Notlar" >
+                    <PRDT01D09 :dv="dv" :tabInfo="tabInfo" />
+                </l-tab-panel>
+
+                <l-tab-panel name="Eklenenler" >
+                    <PRDT01D10 :dv="dv" :tabInfo="tabInfo" />
+                </l-tab-panel>
+            </l-tab-panels>
+        </l-card>
+        </l-card0> 
     </l-div>
+    
 </template> 
 
 <script>
+import PRDT01D03 from "./PRDT01D03.vue";
+import PRDT01D04 from "./PRDT01D04.vue";
+import PRDT01D05 from "./PRDT01D05.vue";
+import PRDT01D06 from "./PRDT01D06.vue";
+import PRDT01D07 from "./PRDT01D07.vue";
+import PRDT01D08 from "./PRDT01D08.vue";
+import PRDT01D09 from "./PRDT01D09.vue";
+import PRDT01D10 from "./PRDT01D10.vue";
+
+
 export default {
     props: ["dv", "tabInfo"],
+    components : {
+        PRDT01D03,
+        PRDT01D04,
+        PRDT01D05,
+        PRDT01D06,
+        PRDT01D07,
+        PRDT01D08,
+        PRDT01D09,
+        PRDT01D10,
+        },
      data() {
-         return {isSelectMat: false,}},
-//             toggleMaterial: true,
-//             myColumnsBomItem: [
-//                 {
-//                     type: "string",
-//                     value: "type",
-//                     label: this.$gl("Tip", "Type"),
-//                 },
-//                 {
-//                     type: "string",
-//                     value: "components.component",
-//                     label: this.$gl("Eleman", "Components"),
-//                 },
-//                 {
-//                     type: "number",
-//                     value: "alternum",
-//                     label: this.$gl("Alt.No", "Alt.No"),
-//                 },
-//                 {
-//                     type: "number",
-//                     value: "components.quantity",
-//                     label: this.$gl("Tüketilecek Miktar", "Quantity"),
-//                 },
-//                 {
-//                     type: "string",
-//                     value: "components.qunit",
-//                     label: this.$gl("Birim", "Qunit"),
-//                 },
-//                 {
-//                     type: "string",
-//                     value: "components.stext",
-//                     label: this.$gl("Açıklama", "Description"),
-//                 },
-//             ],
-//         };
-//     },
-
+         return {isSelectMat: false,
+            tab: "Genel",
+        }},
+//        
     methods: {
         async btnSave() {
             console.log("btnSave çalıştı");
@@ -212,12 +248,15 @@ export default {
             this.dv.lisDialog = "PRDT01D01";
         },
     },
-    mounted() {
+    async mounted() {
         this.tabInfo.blockGoToTransaction = true;
     },
     async beforeUnmount() {
-        await this.lis.function("cls-system.unlock", this.lockKeyParams);
+        if (this.dv.modi != 2) {
+            await this.lis.function("cls-system.unlock", this.dv.lockKeyParams);
+        }
     },
+   
 };
 </script>
 
