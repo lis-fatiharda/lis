@@ -16,6 +16,10 @@
                         <th>Value</th>
                     </tr>
                     <tr>
+                        <td>localstorage.sys_lisRunnerVersion</td>
+                        <td>lisRunner version information</td>
+                    </tr>
+                    <tr>
                         <td>localstorage.sys_user</td>
                         <td>Username Information</td>
                     </tr>
@@ -31,6 +35,9 @@
                         <td>localstorage.sys_loginDate</td>
                         <td>User login date-time</td>
                     </tr>
+                    
+
+                    
                 </l-simple-table>
             </l-card-section>
         </l-card>
@@ -45,6 +52,10 @@
                     <tr class="bg-indigo-2">
                         <th>Key</th>
                         <th>Value</th>
+                    </tr>
+                    <tr>
+                        <td>sys_lisRunnerVersion</td>
+                        <td>lisRunner version information</td>
                     </tr>
                     <tr>
                         <td>sys_userLicense</td>

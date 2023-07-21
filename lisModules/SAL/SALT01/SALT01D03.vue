@@ -1,12 +1,12 @@
 <template>
     <l-table
+        name="SALT01D03"
         :tableData="dv.lissaldocs.items"
         :columns="itemsColumns"
         :context="contextMenu"
         @change="calcPrice()"
         @zoom="zoomMaterialRow = $event.row"
         @keydown="if ($event.key == 'Insert') this.pushNewItem($event);"
-        :width="'100%'"
     />
 
     <l-dialog
@@ -28,12 +28,14 @@
         </l-card>
     </l-dialog>
 
-    <SALT01D31
+    <q-dialog v-model="isShowItemDetail">
+        <SALT01D31
         :dv="dv"
         :cpdItemTypes="cpdItemTypes"
         :item="dv.lissaldocs.items[selectedRow]"
         :tabInfo="tabInfo"
     />
+    </q-dialog>
     <BAST03D01mini
         :pComp="dv.sc.company"
         :isShow="zoomMaterialRow == null ? false : true"
@@ -107,7 +109,7 @@ export default {
             isCallFlow: { isShow: false },
             selectedRow: 0,
             zoomMaterialRow: null,
-            showDetail: false,
+            isShowItemDetail: false,
 
             contextMenu: [
                 {
@@ -116,7 +118,7 @@ export default {
                         this.selectedRow = this.dv.lissaldocs.items.findIndex(
                             (e) => e._selected == true
                         );
-                        this.dv.isShowItemDetail = true;
+                        this.isShowItemDetail = true;
                     },
                 },
                 {

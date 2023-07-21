@@ -4,7 +4,7 @@ export default async function (dv) {
       company: dv.lispurdocs.company,
       todoctype: dv.lispurdocs.doctype,
     },
-    { fromdoctype: 1 }
+    //{ fromdoctype: 1 }
   );
 
   var refDocs = [];

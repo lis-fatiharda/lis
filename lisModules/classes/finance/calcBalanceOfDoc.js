@@ -15,8 +15,18 @@ export default async function (plisfindocs, lis) {
 
         //
 
-        myItem.dbalance = myItem.ddebit - myItem.dmatched;
-        myItem.hbalance = myItem.hdebit - myItem.hmatched;
+        if (myItem.ddebit > 0) {
+            myItem.dbalance = myItem.ddebit - myItem.dmatched;
+        } else {
+            myItem.dbalance = myItem.dcredit - myItem.dmatched;
+        }
+
+        if (myItem.hdebit > 0) {
+            myItem.hbalance = myItem.hdebit - myItem.hmatched;
+        } else {
+            myItem.hbalance = myItem.hcredit - myItem.hmatched;
+        }
+        
 
         console.log("--- ", myItem.ddebit, myItem.dmatched, myItem.dbalance);
 

@@ -60,12 +60,57 @@
                         class="bg-blue-1"
                     />
 
-                    <l-input
+                    <!-- <l-input
                         :label="this.$gl(`Hesap No`, `Account No`)"
                         v-model="dv.sc.account"
                         class="bg-blue-1"
-                    ></l-input>
-
+                    >
+                  </l-input> -->
+                  <l-input
+                        :label="this.$gl(`Hesap No`, `Account No`)"
+                        v-model="dv.sc.account"
+                        class="bg-blue-1"
+                    >
+                        <l-chip
+                            class="bg-blue-1"
+                            icon="search"
+                            dense
+                            clickable
+                            @click="isSelectAcc = !isSelectAcc"
+                        >
+                            <FINT01D01mini
+                                :pComp="dv.sc.company"
+                                :isShow="isSelectAcc"
+                                @ok="
+                                    dv.sc.account = $event.account;
+                                    isSelectAcc = false;
+                                "
+                                @cancel="isSelectAcc = false"
+                            />
+                        </l-chip>
+                    </l-input>
+                    <l-input
+                    :label="this.$gl(`T.D Hesap`, `Uniform Account`)"
+                        v-model="dv.sc.glaccount"
+                    >
+                        <l-chip
+                            class="bg-white"
+                            icon="search"
+                            dense
+                            clickable
+                            @click="isSelectGla = !isSelectGla"
+                        >
+                            <FINT01D01mini
+                                :pComp="dv.sc.company"
+                                :isShow="isSelectGla"
+                                @ok="
+                                    dv.sc.glaccount = $event.glaccount;
+                                    isSelectGla = false;
+                                "
+                                @cancel="isSelectGla = false"
+                            />
+                        </l-chip>
+                    </l-input>
                     <l-date
             :label="this.$gl(`Yev. Tar. Başl.`, `Post. Date Str.`)"
             v-model="dv.sc.datefrom"
@@ -138,7 +183,7 @@ export default {
   },
 
   data() {
-    return {
+    return {isSelectAcc : false, isSelectGla : false,
       tab: "Sorgula",
       dv: {
         sc: {

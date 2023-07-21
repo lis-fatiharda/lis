@@ -40,14 +40,14 @@
               readonly
             />
           </l-card-section-flex>
-          <l-card-section-flex>
+          <l-card-section>
             <l-input
               :label="this.$gl(`Veri Tabanı Yolu`, `Database Path`)"
               v-model="dv.sys_dbUri"
               readonly
               style="min-width: 320px"
             />
-          </l-card-section-flex>
+          </l-card-section>
           <l-card-section-flex>
             <l-input
               :label="this.$gl(`Uygulama Sunucusu IP`, `Application Server IP`)"
@@ -55,6 +55,12 @@
               readonly
               style="min-width: 320px"
             />
+            <l-input
+              :label="this.$gl(`lisRunner Versiyon`, `lisRunner Version`)"
+              v-model="sys_lisRunnerVersion"
+              readonly
+            />
+
             <l-input
               :label="this.$gl(`Lis Api Port`, `Lis Api Port`)"
               v-model="dv.sys_lisApiPort"
@@ -149,9 +155,9 @@ export default {
   data() {
     return {
       dv: {
-        lisDialog: "syst02d01",
+        lisDialog: "SYST02D01",
         modi: 2,
-        lisuserlogins: [],
+        lisuserlogins: {},
         sys_projectCode: "",
         sys_userLicense: 0,
         sys_dbUri: "",
@@ -159,6 +165,7 @@ export default {
         sys_lisApiPort: "",
         sys_lisSocketPort: "",
         sys_lisApiOutPort: "",
+        sys_lisRunnerVersion: "",
       },
     };
   },
@@ -166,32 +173,16 @@ export default {
   methods: {
     async init(prop) {
       this.dv = await this.lis.function("SYST02/01-init", prop);
-      // await this.$Axios
-      //   .post("SYST02/01-init", prop)
-      //   .then((res) => {
-      //     this.dv = res.data;
-      //   })
-      //   .catch(function (err) {
-      //     console.log(err);
-      //   });
     },
     async killUser(prop) {
       console.log(prop);
-      await this.lis.function("cls-system.btnLogout", prop);
+      await this.lis.function("cmp-system.btnLogout", prop);
       this.init();
-      // await this.$Axios
-      //   .post("cls-system.btnLogout", prop)
-      //   .then((res) => {
-      //     this.init();
-      //   })
-      //   .catch(function (err) {
-      //     console.log(err);
-      //   });
     },
   },
   mounted() {
     this.init(this.dv);
-    console.log("mounted worked");
+    this.sys_lisRunnerVersion = localStorage.sys_lisRunnerVersion;
   },
 };
 </script>

@@ -94,7 +94,10 @@ export default async function getNewNumber(dv) {
             }
         });
     }
+
+    
     olisnumranges.valcurrent = newnumber;
-    olisnumranges.save();
+
+    lisnumranges.findOneAndUpdate({ _id: olisnumranges._id }, olisnumranges).catch((err) => console.log(err));
     return newnumber;
 }

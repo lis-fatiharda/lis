@@ -485,7 +485,8 @@ export default {
                 });
                 return;
             }
-            if (this.dv.lispurdocs.currency == null) {
+            if ((this.dv.lispurdocs.currency == "") |
+                (this.dv.lispurdocs.currency == null) ){
                 this.$q.notify({
                     type: "warning",
                     message: this.$gl(
@@ -503,6 +504,9 @@ export default {
 
             for (let i in this.dv.lispurdocs.items) {
                 let myItem = this.dv.lispurdocs.items[i].qunit;
+                let myItem2 = this.dv.lispurdocs.items[i].quantity;
+                let myItem3 = this.dv.lispurdocs.items[i].material;
+                let myItem4 = this.dv.lispurdocs.items[i].itemtype;
                 if (myItem == null || myItem == "") {
                     console.log("girdi", this.dv.lispurdocs.items);
                     this.$q.notify({
@@ -519,6 +523,45 @@ export default {
                     });
                     return;
                 }
+                if (myItem2 <= 0){this.$q.notify({
+                        type: "warning",
+                        message: this.$gl(
+                            `Lütfen ${this.dv.lispurdocs.items[i].itemnum} No'lu kalem için Miktar Giriniz!`,
+                            "Please Fill Currency !"
+                        ),
+                        caption: this.$gl(
+                            "Belge Kaydedilemedi!",
+                            "Failed to Save Document!"
+                        ),
+                        actions: [{ label: "X", color: "white", dense: true }],
+                    });
+                    return;}
+                    if (myItem3 == null || myItem3 == ""){this.$q.notify({
+                        type: "warning",
+                        message: this.$gl(
+                            `Lütfen ${this.dv.lispurdocs.items[i].itemnum} No'lu kalem için Malzeme Giriniz!`,
+                            "Please Fill Currency !"
+                        ),
+                        caption: this.$gl(
+                            "Belge Kaydedilemedi!",
+                            "Failed to Save Document!"
+                        ),
+                        actions: [{ label: "X", color: "white", dense: true }],
+                    });
+                    return;}
+                    if (myItem4 == null || myItem4 == ""){this.$q.notify({
+                        type: "warning",
+                        message: this.$gl(
+                            `Lütfen ${this.dv.lispurdocs.items[i].itemnum} No'lu kalem için Kalem Tipi Giriniz!`,
+                            "Please Fill Currency !"
+                        ),
+                        caption: this.$gl(
+                            "Belge Kaydedilemedi!",
+                            "Failed to Save Document!"
+                        ),
+                        actions: [{ label: "X", color: "white", dense: true }],
+                    });
+                    return;}
             }
 
             //------ Print The E-Document ----------

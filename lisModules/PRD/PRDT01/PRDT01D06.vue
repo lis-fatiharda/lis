@@ -5,6 +5,7 @@
     :height="'73vh'"
     width="100%"
     @zoom="fetchZoom($event)"
+    @keydown="if ($event.key == 'Insert') this.pushNewOpr($event);"
   />
   <!-- <BAST03D01mini
          :pComp="dv.sc.company"
@@ -165,9 +166,9 @@ export default {
     async pushNewOpr(event) {
       console.log("pushNewOpr", event);
       let myReturn = await this.lis.function("PRDT01/pushNewOpr", this.dv);
-      myReturn.operations =
+      myReturn.operation =
         this.dv.lisprddocs.operations[this.dv.lisprddocs.operations.length - 1]
-          .operations + 10;
+          .operation + 10;
       this.dv.lisprddocs.operations.push(myReturn);
     },
   },

@@ -1,3 +1,4 @@
+
 export default async function (dv) {
   dv.lisuserlogins = await lisuserlogins.find();
 
@@ -10,6 +11,7 @@ export default async function (dv) {
   dv.sys_lisApiPort = global.sys_lisApiPort;
   dv.sys_lisSocketPort = global.sys_lisSocketPort;
   dv.sys_lisApiOutPort = global.sys_lisApiOutPort;
+  dv.sys_lisApiOutPort = global.sys_lisRunnerVersion;
 
   return dv;
 }

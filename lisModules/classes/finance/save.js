@@ -1,39 +1,29 @@
-
 // ? modi: -1 = create new document by reference
 // ?        0 = create new document
 // ?        1 - update the document
 
 export default async function ({ plisfindocs, modi }) {
-    const Numrange = new numrange();
-
-     // control for save of lisfindocs
+    // control for save of lisfindocs
 
     const olisfin003 = await lisfin003.findOne({
         company: plisfindocs.company,
         doctype: plisfindocs.doctype,
     });
     if (olisfin003 == null) {
-        throw new Error(
-            "Muhasebe Belge Tipi Bulunamadı!"
-        );
+        throw new Error("Muhasebe Belge Tipi Bulunamadı!");
     }
 
     await this.ctrlAccounts(plisfindocs);
 
-   
     plisfindocs = await this.calcBalanceOfDoc(plisfindocs, lis);
-       
-
 
     if (modi <= 0) {
-
         // Get Document Number
 
         plisfindocs.docnum = await Numrange.getNewNumber({
             company: olisfin003.company,
             numrange: olisfin003.numrange,
-        })
-
+        });
 
         // Some Settings
 
@@ -73,19 +63,23 @@ export default async function ({ plisfindocs, modi }) {
             );
         }
     } else {
-
-        await lisfindocs.findOneAndUpdate(
-            {
-                _id: plisfindocs._id,
-            },
-            plisfindocs
-        ).catch((err) => {
-            throw new Error(err);
-        });
+        await lisfindocs
+            .findOneAndUpdate(
+                {
+                    _id: plisfindocs._id,
+                },
+                plisfindocs
+            )
+            .catch((err) => {
+                throw new Error(err);
+            });
 
         if (plisfindocs._deleted == true) {
             // Update lissaldocs
-            if ((plisfindocs.saldoctype != "") | (plisfindocs.saldocnum != "")) {
+            if (
+                (plisfindocs.saldoctype != "") |
+                (plisfindocs.saldocnum != "")
+            ) {
                 await lissaldocs.findOneAndUpdate(
                     {
                         company: plisfindocs.company,
@@ -97,7 +91,10 @@ export default async function ({ plisfindocs, modi }) {
             }
 
             // Update lispurdocs
-            if ((plisfindocs.purdoctype != "") | (plisfindocs.purdocnum != "")) {
+            if (
+                (plisfindocs.purdoctype != "") |
+                (plisfindocs.purdocnum != "")
+            ) {
                 await lispurdocs.findOneAndUpdate(
                     {
                         company: plisfindocs.company,
@@ -108,11 +105,7 @@ export default async function ({ plisfindocs, modi }) {
                 );
             }
         }
-
     }
-
-
-
 
     return true;
 }

@@ -1,4 +1,4 @@
-// lisbom002 - BOM Component Types
+    // lisbom002 - BOM Component Types
 
 import mongoose from "mongoose";
 

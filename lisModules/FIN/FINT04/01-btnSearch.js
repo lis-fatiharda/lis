@@ -6,6 +6,8 @@ export default async function (dv) {
     let accList = await lisaccounts
         .find({
             acctype: "G",
+            account: lis.like(dv.sc.account),
+            glaccount: lis.like(dv.sc.glaccount),
             _deleted: false,
         })
         .catch((err) => console.log(err));
@@ -28,6 +30,7 @@ export default async function (dv) {
                     //   busarea: myAccount.busarea,
                     //   acctype: myAccount.acctype,
                     "items.account": lis.like(myAccount.account),
+                    "items.glaccount": lis.like(myAccount.glaccount),
 
                     docdate: {
                         $lt: dv.sc.datefrom,
@@ -54,8 +57,10 @@ export default async function (dv) {
                     company: myAccount.company,
                     //   busarea: myAccount.busarea,
                     //   acctype: myAccount.acctype,
-                    "items.account": { $regex: myAccount.account + ".*" },
-
+                    //"items.account": { $regex: myAccount.account + ".*" },
+                    //"items.glaccount": { $regex: myAccount.glaccount + ".*" },
+                    "items.account": lis.like(myAccount.account),
+                    "items.glaccount": lis.like(myAccount.glaccount),
                     docdate: {
                         $gte: new Date(dv.sc.datefrom),
                         $lte: new Date(dv.sc.dateuntil),
@@ -82,6 +87,7 @@ export default async function (dv) {
 
         dv.reportList.push({
             account: myAccount.account,
+            glaccount: myAccount.glaccount,
             stext: myAccount.stext,
             xdebit:
                 accountPast[0]?.debit == undefined ? 0 : accountPast[0]?.debit,
@@ -123,30 +129,24 @@ export default async function (dv) {
 
             //-----
 
-            tdebit:
-                accountCurrent[0]?.debit + accountPast[0]?.debit == undefined
-                    ? 0
-                    : accountCurrent[0]?.debit + accountPast[0]?.debit,
-            tcredit:
-                accountCurrent[0]?.credit + accountPast[0]?.credit == undefined
-                    ? 0
-                    : accountCurrent[0]?.credit + accountPast[0]?.credit,
-
-            tbalancedebit:
-                accountCurrent[0]?.debit + accountPast[0]?.debit >
-                accountCurrent[0]?.credit + accountPast[0]?.credit
-                    ? accountCurrent[0]?.debit + accountPast[0]?.debit
-                    : 0,
-
-            tbalancecredit:
-                accountCurrent[0]?.credit + accountPast[0]?.credit >
-                accountCurrent[0]?.debit + accountPast[0]?.debit
-                    ? accountCurrent[0]?.credit + accountPast[0]?.credit
-                    : 0,
+            
 
             _bgColor: myAccount._bgColor,
         });
     }
+
+    dv.reportList.map((e) => {
+        e.tdebit = e.xdebit + e.debit;
+        e.tcredit = e.xcredit + e.credit;
+
+        if (e.tdebit > e.tcredit) {
+            e.tbalancedebit = e.tdebit - e.tcredit;
+            e.tbalancecredit = 0;   
+        } else {
+            e.tbalancecredit = e.tcredit - e.tdebit;
+            e.tbalancedebit = 0; 
+        }
+    });
 
     return dv;
 }

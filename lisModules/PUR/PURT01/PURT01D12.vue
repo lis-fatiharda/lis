@@ -17,7 +17,7 @@
                         dense
                         icon="close"
                         color="negative"
-                        @click="dv.isShowCopyDocs = false"
+                        @click="this.dv.isShowCopyDocs = false"
                     />
                 </div>
             </l-toolbar>

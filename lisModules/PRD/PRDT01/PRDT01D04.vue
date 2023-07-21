@@ -6,6 +6,7 @@
     width="100%"
     :context="contextMenu"
     @zoom="zoomMaterialRow = $event.row"
+    @keydown="if ($event.key == 'Insert') this.pushNewPrd($event);"
   />
   <BAST03D01mini
     :pComp="dv.sc.company"
@@ -108,9 +109,9 @@ export default {
     async pushNewPrd(event) {
       console.log("pushNewPrd", event);
       let myReturn = await this.lis.function("PRDT01/pushNewPrd", this.dv);
-      myReturn.prods =
-        this.dv.lisprddocs.prods[this.dv.lisprddocs.prods.length - 1].prods +
-        10;
+      myReturn.operation =
+        this.dv.lisprddocs.prods[this.dv.lisprddocs.prods.length - 1]
+          .operation + 10;
       this.dv.lisprddocs.prods.push(myReturn);
     },
   },

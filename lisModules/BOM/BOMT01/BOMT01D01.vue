@@ -1,234 +1,200 @@
 <template>
-    <l-div v-if="dv.lisDialog == 'BOMT01D01'">
-        <!--Tittle Layer-->
-        <l-card0>
-            <l-toolbar :class="`bg-${tabInfo.moduleColor}`">
-                <l-icon size="md" name="account_tree" />
+  <l-div v-if="dv.lisDialog == 'BOMT01D01'">
+    <!--Tittle Layer-->
+    <l-card0>
+      <l-toolbar :class="`bg-${tabInfo.moduleColor}`">
+        <l-icon size="md" name="account_tree" />
 
-                <l-toolbar-title>{{
-                    this.$gl("Ürün Ağaçlarım", "Bill Of Materials - Route")
-                }}</l-toolbar-title>
+        <l-toolbar-title>{{
+          this.$gl("Ürün Ağaçları", "Bill Of Materials")
+        }}</l-toolbar-title>
 
-                <l-btn
-                    icon="cancel"
-                    flat
-                    round
-                    dense
-                    color="negative"
-                    @click="this.$btnGoHome(tabInfo)"
-                />
-            </l-toolbar>
-            <l-div-flex>
-                <l-select
-                    :label="this.$gl(`Firma`, `Company`)"
-                    v-model="dv.sc.company"
-                    options="lisbas001"
-                    optValue="company"
-                    optTitle="stext"
-                    optCaptions="company"
-                    width="120px"
-                />
-                <l-select
-                    :label="this.$gl(`Tesis`, `Plant`)"
-                    v-model="dv.sc.plant"
-                    options="lisbas002"
-                    optValue="plant"
-                    optTitle="stext"
-                    optCaptions="plant"
-                    width="120px"
-                />
-
-                <l-input
-                    v-model="dv.sc.bomnumber"
-                    label="Ürün Ağacı No"
-                    dense
-                />
-                <l-input v-model="dv.sc.material" label="Malzeme Kodu" dense />
-                <l-input v-model="dv.sc.stext" label="Açıklama" dense />
-                <l-input
-                    v-model="dv.sc.alternum"
-                    label="Alternatif No"
-                    dense
-                    style="width: 150px"
-                />
-                <l-select
-                    :label="this.$gl(`Tip`, `Type`)"
-                    v-model="dv.sc.type"
-                    options="lisbom003"
-                    optValue="type"
-                    optTitle="stext"
-                    optCaptions="type"
-                    width="120px"
-                />
-                <l-datetime
-                    :label="this.$gl(`Tarih`, `Date`)"
-                    v-model="dv.sc.date"
-                    style="width: 160px"
-                />
-                <l-checkbox
-                    v-model="dv.sc._deleted"
-                    label="Silindi mi?"
-                    color="pink"
-                />
-            </l-div-flex>
-        </l-card0>
-        <!--------------------------------->
-
-        <!--Butons Layer Layer---------------------->
-
-        <l-btn-group>
-            <l-btn color="warning" icon="search" @click="btnSearch(dv)" />
-            <l-btn color="info" icon="visibility" @click="btnShow(dv)" />
-            <l-btn color="primary" icon="edit" @click="btnEdit(dv)" />
-            <l-btn color="secondary" icon="add" @click="btnInsert(dv)" />
-            <l-btn color="negative" icon="print" @click="btnDelete(dv)" />
-        </l-btn-group>
-
-        <l-table
-            name="BOMT01D01"
-            :tableData="dv.reportList"
-            :columns="myColumnsBom"
-            :height="'73vh'"
-            width="100%"
-            :readonly="true"
+        <l-btn
+          icon="cancel"
+          flat
+          round
+          dense
+          color="negative"
+          @click="this.$btnGoHome(tabInfo)"
         />
-    </l-div>
-    <BOMT01D02 :dv="dv" :tabInfo="tabInfo" v-if="dv.lisDialog == 'BOMT01D02'" />
+      </l-toolbar>
+      <l-div-flex>
+        <l-select
+          :label="this.$gl(`Firma`, `Company`)"
+          v-model="dv.sc.company"
+          options="lisbas001"
+          optValue="company"
+          optTitle="stext"
+          optCaptions="company"
+          width="120px"
+        />
+        <l-select
+          :label="this.$gl(`Tesis`, `Plant`)"
+          v-model="dv.sc.plant"
+          options="lisbas002"
+          optValue="plant"
+          optTitle="stext"
+          optCaptions="plant"
+          width="120px"
+        />
+        <l-select
+          :label="this.$gl(`Tipi`, `Type`)"
+          v-model="dv.sc.doctype"
+          options="lisbom002"
+          optValue="type"
+          optTitle="stext"
+          optCaptions="type"
+          width="150px"
+        />
+        <l-input v-model="dv.sc.docnum" :label="this.$gl(`No`, `No`)" dense />
+        <!-- <l-input :label="this.$gl(`Malzeme Kodu`, `Material`)" v-model="dv.sc.material">
+                    <l-chip class="bg-white" icon="search" dense clickable @click="isSelectMat = !isSelectMat">
+                        <BAST03D01mini :pComp="dv.sc.company" :isShow="isSelectMat" @ok="
+                            dv.sc.material = $event.material;
+                        isSelectMat = false;
+                        " @cancel="isSelectMat = false" />
+                    </l-chip>
+                </l-input>
+                <l-input :label="this.$gl(`Müşteri Kodu`, `Customer Code`)" v-model="dv.sc.customer">
+                    <l-chip class="bg-white" icon="search" dense clickable @click="isSelectCust = !this.isSelectCust">
+                        <BAST02D01mini :pComp="dv.sc.company" :isShow="isSelectCust" @ok="
+                            dv.sc.customer = $event.customer;
+                        isSelectCust = false;
+                        " @cancel="isSelectCust = false" />
+                    </l-chip>
+                </l-input> -->
+
+        <!-- <l-input v-model="dv.sc.stext" :label="this.$gl(`Açıklama`, `Description`)" dense style="width: 200px" /> -->
+        <l-datetime
+          :label="this.$gl(`Doküman Tarihi`, `Document Date`)"
+          v-model="dv.sc.validfrom"
+          style="width: 160px"
+        />
+        <l-datetime
+          :label="this.$gl(`Doküman Tarihi`, `Document Date`)"
+          v-model="dv.sc.validuntil"
+          style="width: 160px"
+        />
+
+        <l-checkbox v-model="dv.sc._deleted" label="Silindi mi?" color="pink" />
+      </l-div-flex>
+    </l-card0>
+    <!--------------------------------->
+
+    <!--Butons Layer Layer---------------------->
+
+    <l-btn-group>
+      <l-btn color="warning" icon="search" @click="btnSearch()" />
+      <l-btn color="info" icon="visibility" @click="btnShow()" />
+      <l-btn color="primary" icon="edit" @click="btnEdit()" />
+      <l-btn color="secondary" icon="add" @click="btnInsert()" />
+      <l-btn color="negative" icon="print" @click="btnDelete()" />
+    </l-btn-group>
+
+    <l-table
+      name="BOMT01D01"
+      :tableData="dv.bomList"
+      :columns="myColumnsBom"
+      :height="'73vh'"
+      width="100%"
+      :readonly="true"
+    />
+  </l-div>
+  <BOMT01D02 :dv="dv" :tabInfo="tabInfo" v-if="dv.lisDialog == 'BOMT01D02'" />
 </template>
 
 <script>
 import BOMT01D02 from "./BOMT01D02.vue";
-
+import { startOfMonth, lastDayOfMonth } from "date-fns";
 export default {
-    props: ["lv", "goToTransaction", "currentTab", "tabInfo"],
-    components: {
-        BOMT01D02,
-    },
+  props: ["lv", "goToTransaction", "currentTab", "tabInfo"],
+  components: {
+    BOMT01D02,
+  },
 
-    data() {
-        return {
-            dv: {
-                lisDialog: "BOMT01D01",
-                sc: {
-                    company: "01",
-                    plant: "01",
-                    bomnumber: "",
-                    material: "",
-                    stext: "",
-                    alternum: 0,
-                    type: "",
-                    date: new Date(),
-                    validfrom: new Date(),
-                    validuntil: new Date(),
-                    _deleted: false,
-                },
-                modi: 2,
-                selectedRow: "",
-                lisbomdocs: {},
-                reportList: [],
-                lockKeyParams: {
-                    company: "01",
-                    lid: "BOMT01",
-                    lockkey: "",
-                },
-            },
-            myColumnsBom: [
-                {
-                    type: "string",
-                    value: "company",
-                    label: this.$gl("Firma", "Company"),
-                },
-                {
-                    type: "string",
-                    value: "plant",
-                    label: this.$gl("Tesis", "Plant"),
-                },
-                {
-                    type: "number",
-                    value: "alternum",
-                    label: this.$gl("Alt.No", "Alt.No"),
-                },
-                {
-                    type: "string",
-                    value: "bomnumber",
-                    label: this.$gl("Ürün Ağacı No", "Bom Number"),
-                },
-                {
-                    type: "string",
-                    value: "material",
-                    label: this.$gl("Malzeme", "Material"),
-                },
-                {
-                    type: "string",
-                    value: "stext",
-                    label: this.$gl("Açıklama", "Description"),
-                },
-                {
-                    type: "datetime",
-                    value: "validfrom",
-                    label: this.$gl(`Başlangıç Tarihi`, `Start Date`),
-                },
-                {
-                    type: "datetime",
-                    value: "validuntil",
-                    label: this.$gl(`Bitiş Tarihi`, `End Date`),
-                },
-                {
-                    type: "string",
-                    value: "type",
-                    label: this.$gl("Tip", "Type"),
-                },
-            ],
-        };
-    },
+  data() {
+    return {
+      isSelectMat: false,
+      isSelectCust: false,
+      dv: {
+        lisDialog: "BOMT01D01",
+        sc: {
+          company: "01",
+          plant: "01",
+          doctype: "",
+          docnum: "",
+          material: "",
+          stext: "",
+          alternum: 0,
+          validfrom: startOfMonth(new Date()),
+          validuntil: lastDayOfMonth(new Date()),
+          _deleted: false,
+        },
+        modi: 2,
+        selectedRow: "",
+        lisbomdocs: {},
+        bomList: [],
+        lockKeyParams: {
+          company: "01",
+          lid: "BOMT01",
+          lockkey: "",
+        },
+      },
+      myColumnsBom: [
+        {
+          type: "string",
+          value: "company",
+          label: this.$gl("Firma", "Company"),
+        },
+        {
+          type: "string",
+          value: "doctype",
+          label: this.$gl("Tip", "Type"),
+        },
 
-    methods: {
-        async btnSearch(prop) {
-            this.dv = await this.lis.function("BOMT01/01-btnSearch", prop);
-            // await this.$Axios.post("BOMT01/01-btnSearch", prop).then((res) => {
-            //     this.dv = res.data;
-            // });
+        {
+          type: "string",
+          value: "docnum",
+          label: this.$gl("No", "No"),
         },
-        async btnEdit(prop) {
-            this.dv = await this.lis.function("BOMT01/01-btnEdit", prop);
-            // await this.$Axios.post("BOMT01/01-btnEdit", prop).then((res) => {
-            //     this.dv = res.data;
-            // });
+        {
+          type: "string",
+          value: "note",
+          label: this.$gl("Açıklama", "Description"),
         },
-        async btnShow(prop) {
-            this.dv = await this.lis.function("BOMT01/01-btnShow", prop);
-            // await this.$Axios.post("BOMT01/01-btnShow", prop).then((res) => {
-            //     this.dv = res.data;
-            // });
+        {
+          type: "datetime",
+          value: "docdate",
+          label: this.$gl(`Doküman Tarihi`, `Document Date`),
         },
-        async btnInsert(prop) {
-            this.dv = await this.lis.function("BOMT01/01-btnInsert", prop);
-            // await this.$Axios.post("BOMT01/01-btnInsert", prop).then((res) => {
-            //     this.dv = res.data;
-            // });
-        },
-        async btnDelete(prop) {
-            this.dv = await this.lis.function("BOMT01/01-btnDelete", prop);
-            // await this.$Axios.post("BOMT01/01-btnDelete", prop).then((res) => {
-            //     this.dv = res.data;
-            //});
-        },
-        async init(prop) {
-            this.dv = await this.lis.function("BOMT01/01-init", this.dv);
-            // await this.$Axios
-            //     .post("BOMT01/01-init", this.dv)
-            //     .then((res) => {
-            //         this.dv = res.data;
-            //     })
-            //     .catch(function (err) {
-            //         console.log(err);
-            //     });
-        },
-    },
+      ],
+    };
+  },
 
-    mounted() {
-        this.init(this.dv);
-        console.log("mounted worked");
+  methods: {
+    async btnSearch() {
+      this.dv = await this.lis.function("BOMT01/01-btnSearch", this.dv);
     },
+    async btnEdit() {
+      this.dv = await this.lis.function("BOMT01/01-btnEdit", this.dv);
+    },
+    async btnShow() {
+      this.dv = await this.lis.function("BOMT01/01-btnShow", this.dv);
+    },
+    async btnInsert() {
+      this.dv = await this.lis.function("BOMT01/01-btnInsert", this.dv);
+    },
+    async btnDelete() {
+      this.dv = await this.lis.function("BOMT01/01-btnDelete", this.dv);
+    },
+    async init() {
+      this.dv = await this.lis.function("BOMT01/01-init", this.dv);
+    },
+  },
+
+  mounted() {
+    this.init(this.dv);
+    console.log("mounted worked");
+  },
 };
 </script>

@@ -62,6 +62,51 @@
                         optCaptions="acctype"
                         width="120px"
                     />
+                    <l-input
+                        :label="this.$gl(`Hesap No`, `Account No`)"
+                        v-model="dv.sc.account"
+                       
+                    >
+                        <l-chip
+                            class="bg-white"
+                            icon="search"
+                            dense
+                            clickable
+                            @click="isSelectAcc = !isSelectAcc"
+                        >
+                            <FINT01D01mini
+                                :pComp="dv.sc.company"
+                                :isShow="isSelectAcc"
+                                @ok="
+                                    dv.sc.account = $event.account;
+                                    isSelectAcc = false;
+                                "
+                                @cancel="isSelectAcc = false"
+                            />
+                        </l-chip>
+                    </l-input>
+                    <l-input
+                    :label="this.$gl(`T.D Hesap`, `Uniform Account`)"
+                        v-model="dv.sc.glaccount"
+                    >
+                        <l-chip
+                            class="bg-white"
+                            icon="search"
+                            dense
+                            clickable
+                            @click="isSelectGla = !isSelectGla"
+                        >
+                            <FINT01D01mini
+                                :pComp="dv.sc.company"
+                                :isShow="isSelectGla"
+                                @ok="
+                                    dv.sc.glaccount = $event.glaccount;
+                                    isSelectGla = false;
+                                "
+                                @cancel="isSelectGla = false"
+                            />
+                        </l-chip>
+                    </l-input>
 
                     <l-input
                         :label="this.$gl(`Başlama Hesabı`, `Account No`)"
@@ -139,13 +184,15 @@ export default {
     components: {},
 
     data() {
-        return {
+        return {isSelectAcc : false, isSelectGla : false,
             tab: "Sorgula",
             dv: {
                 sc: {
                     company: "01",
                     busarea: "S",
                     acctype: "G",
+                    account: "",
+                    glaccount: "",
                     account1: this.lis.getDayOfWeek(),
                     account2: "",
                     datefrom: this.lis.firstDayOfYear(),
@@ -255,8 +302,11 @@ export default {
     },
 
     methods: {
-        async btnSearch(prop) {
-            this.dv = await this.lis.function("FINT04/01-btnSearch", prop);
+        // async btnSearch(prop) {
+        //     this.dv = await this.lis.function("FINT04/01-btnSearch", prop);
+        // },
+        async btnSearch() {
+            this.dv = await this.lis.function("FINT04/01-btnSearch", this.dv );
         },
     },
 

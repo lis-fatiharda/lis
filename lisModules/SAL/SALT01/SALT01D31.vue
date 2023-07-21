@@ -1,5 +1,5 @@
 <template>
-  <l-dialog v-model="dv.isShowItemDetail">
+  
     <q-layout container class="bg-white" style="width: 500px">
       <q-header :class="`bg-${tabInfo.moduleColor} text-black`">
         <l-toolbar>
@@ -12,7 +12,7 @@
             dense
             icon="close"
             color="negative"
-            @click="dv.isShowItemDetail = false"
+            @click="item.showDetail = false"
           />
         </l-toolbar>
       </q-header>
@@ -319,7 +319,7 @@
         </q-page>
       </q-page-container>
     </q-layout>
-  </l-dialog>
+
 </template>
 
 <script>

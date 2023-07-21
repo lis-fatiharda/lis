@@ -4,8 +4,6 @@
         :tableData="dv.lispurdocs.items"
         :columns="itemsColumns"
         :context="contextMenu"
-        height="57vh"
-        width="100%"
         @change="calcPrice($event)"
         @zoom="zoomMaterialRow = $event.row"
         @keyup="if ($event.key == 'Insert') this.pushNewItem($event);"
@@ -30,13 +28,16 @@
         </l-card>
     </l-dialog>
 
-    <PURT01D31
-        v-if="dv.lispurdocs.items[selectedRow].showDetail == true"
+    <q-dialog v-model="isShowItemDetail">
+        <PURT01D31
         :dv="dv"
         :cpdItemTypes="cpdItemTypes"
         :item="dv.lispurdocs.items[selectedRow]"
         :tabInfo="tabInfo"
+
     />
+    </q-dialog>
+    
     <BAST03D01mini
         :pComp="dv.sc.company"
         :isShow="zoomMaterialRow == null ? false : true"
@@ -107,6 +108,7 @@ export default {
     data() {
         return {
             isCallFlow: { isShow: false },
+            isShowItemDetail: false,
             selectedRow: 0,
             zoomMaterialRow: null,
              itemsColumns: [
@@ -260,10 +262,8 @@ export default {
                         this.dv.lispurdocs.items[this.selectedRow].showDetail =
                             !this.dv.lispurdocs.items[this.selectedRow]
                                 .showDetail;
-                        console.log(
-                            "selectedRowselectedRowselectedRow",
-                            this.selectedRow
-                        );
+
+                        this.isShowItemDetail = true;
                     },
                 },
                 {

@@ -38,6 +38,10 @@ const itemsSchema = new mongoose.Schema({
     dbalance: { type: Number, label: "Bakiye (Belge P.Br.)", default: 0 },
     //-
 
+
+    ischeck: { type:Boolean, label: "Çek mi?", default: false },
+    checknumber: { type:String, label: "Çek No", default: ""},
+
     //******************* */
     createdby: {
         type: String,

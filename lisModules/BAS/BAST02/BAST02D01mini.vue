@@ -1,6 +1,6 @@
 <template>
     <l-dialog-small v-model="pIsShow" persistent>
-        <div class="bg-white">
+        <l-div>
             <!--Tittle Layer-->
             <l-card0>
                 <l-toolbar class="bg-amber-2">
@@ -155,7 +155,7 @@
                     </tr>
                 </tbody>
             </q-markup-table>
-        </div>
+        </l-div>
     </l-dialog-small>
 </template>
 

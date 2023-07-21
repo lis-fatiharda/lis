@@ -1,5 +1,5 @@
 <template>
-  <l-dialog v-model="item.showDetail">
+  
     <q-layout container class="bg-white" style="width: 1000px">
       <q-header :class="`bg-${tabInfo.moduleColor} text-black`">
         <l-toolbar>
@@ -312,7 +312,7 @@
         </q-page>
       </q-page-container>
     </q-layout>
-  </l-dialog>
+  
 </template>
 
 <script>

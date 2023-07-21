@@ -301,6 +301,7 @@ export default {
             isCallFlow: { isShow: false },
             isSelectCust: false,
             isSelectMat: false,
+            
 
             contextMenu: [
                 {
@@ -457,7 +458,7 @@ export default {
                 toggle: "Tablo Görünümü",
                 isShowFinDoc: false,
                 isShowFinDocDialog: false,
-                isShowItemDetail: false,
+                
                 //isSShow: true,
                 sc: {
                     company: "01",

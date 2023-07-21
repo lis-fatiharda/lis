@@ -140,15 +140,15 @@
                 >
                 </l-input>
 
-                <l-date
+                <l-datetime
                     v-model="dv.sc.docdate1"
                     :label="this.$gl(`Başlangıç Tarihi`, `Starting date`)"
-                    style="width: 140px"
+                    style="width: 160px"
                 />
-                <l-date
+                <l-datetime
                     v-model="dv.sc.docdate2"
                     :label="this.$gl(`Bitiş Tarihi`, `Ending date`)"
-                    style="width: 140px"
+                    style="width: 160px"
                 />
 
                 <l-select
@@ -252,13 +252,13 @@
             </l-card>
         </l-dialog>
     </l-div>
-    <l-dialog-small
+    <q-dialog
         v-model="dv.isShowCopyDocs"
         transition-show="slide-up"
         transition-hide="slide-down"
     >
         <PURT01D12 :dv="dv" :tabInfo="tabInfo"
-    /></l-dialog-small>
+    /></q-dialog>
     <PURT01D02 :dv="dv" :tabInfo="tabInfo" v-if="dv.lisDialog == 'PURT01D02'" />
 </template>
 
@@ -278,7 +278,7 @@ export default {
     data() {
         return {
             isCallFlow: { isShow: false },
-            isShowCopyDocs: false,
+            
             contextMenu: [
                 {
                     name: "Belge Kopyala",
@@ -411,6 +411,7 @@ export default {
                 toggle: "Tablo Görünümü",
                 isShowFinDoc: false,
                 isShowFinDocDialog: false,
+                isShowCopyDocs: false,
                 sc: {
                     company: "01",
 
