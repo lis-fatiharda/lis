@@ -140,12 +140,12 @@
                 >
                 </l-input>
 
-                <l-datetime
+                <l-date
                     v-model="dv.sc.docdate1"
                     :label="this.$gl(`Başlangıç Tarihi`, `Starting date`)"
                     style="width: 160px"
                 />
-                <l-datetime
+                <l-date
                     v-model="dv.sc.docdate2"
                     :label="this.$gl(`Bitiş Tarihi`, `Ending date`)"
                     style="width: 160px"
@@ -202,7 +202,8 @@
         <!--Butons Layer Layer---------------------->
 
         <l-btn-group>
-            <l-btn color="warning" icon="search" @click="btnSearch(dv)" @keypress.enter=""/>
+            <!-- <l-btn color="warning" icon="search" @click="btnSearch(dv)" @keypress.enter=""/> -->
+            <l-btn color="warning" icon="search" @click="btnSearch(dv)" />
             <l-btn color="info" icon="visibility" @click="btnShow(dv)" />
             <l-btn color="primary" icon="edit" @click="btnEdit(dv)" />
             <l-btn color="secondary" icon="add" @click="btnInsert(dv)" />
@@ -260,12 +261,16 @@
         <PURT01D12 :dv="dv" :tabInfo="tabInfo"
     /></q-dialog>
     <PURT01D02 :dv="dv" :tabInfo="tabInfo" v-if="dv.lisDialog == 'PURT01D02'" />
+    <div v-show="false">
+        <PURT01D01PDF :dv="dv" />
+    </div>
 </template>
 
 <script>
 import PURT01D02 from "./PURT01D02.vue";
 import PURT02D01 from "../PURT02/PURT02D01.vue";
 import PURT01D12 from "./PURT01D12.vue";
+import PURT01D01PDF from "./PURT01D01PDF.vue";
 
 export default {
     props: ["lv", "tabInfo"],
@@ -273,6 +278,7 @@ export default {
         PURT01D02,
         PURT02D01,
         PURT01D12,
+        PURT01D01PDF,
     },
 
     data() {
@@ -425,6 +431,7 @@ export default {
                     name1: "",
                     material: "",
                     mtext: "",
+                    paymcond: "",
                     docStat: 99,
                     docChar: 99,
 
@@ -484,25 +491,28 @@ export default {
         async btnInsert(prop) {
             this.dv = await this.lis.function("PURT01/01-btnInsert", prop);
         },
-        async btnPrint(prop) {
-            this.lis.printDirect(`CT~~CD,~CC^~CT~
-^XA~TA000~JSN^LT0^MNW^MTT^PON^PMN^LH0,0^JMA^PR4,4~SD10^JUS^LRN^CI0^XZ
-^XA
-^MMT
-^PW480
-^LL0799
-^LS0
-^FT83,415^A0R,70,55^FH\^FDXCONTROLLERX^FS
-^FT83,34^A0R,70,69^FH\^FDXDATEDATEX^FS
-^FT228,414^A0R,70,64^FH\^FD    XPRDORDERX^FS
-^FT228,33^A0R,70,69^FH\^FDXMATERIALX^FS
-^FT384,113^A0R,87,86^FH\^FD   XNUMUNEREDX^FS
-^FT313,531^A0R,34,36^FH\^FDIs Emri^FS
-^FT315,138^A0R,34,36^FH\^FDMalzeme^FS
-^PQ1,0,1,Y^XZ
-`);
-            this.dv = await this.lis.function("PURT01/01-btnPrint", prop);
+        async btnPrint() {
+            this.lis.printPDF("PURT01D01PDF", "Satın Alma Belgeleri Raporu");
         },
+//         async btnPrint(prop) {
+//             this.lis.printDirect(`CT~~CD,~CC^~CT~
+// ^XA~TA000~JSN^LT0^MNW^MTT^PON^PMN^LH0,0^JMA^PR4,4~SD10^JUS^LRN^CI0^XZ
+// ^XA
+// ^MMT
+// ^PW480
+// ^LL0799
+// ^LS0
+// ^FT83,415^A0R,70,55^FH\^FDXCONTROLLERX^FS
+// ^FT83,34^A0R,70,69^FH\^FDXDATEDATEX^FS
+// ^FT228,414^A0R,70,64^FH\^FD    XPRDORDERX^FS
+// ^FT228,33^A0R,70,69^FH\^FDXMATERIALX^FS
+// ^FT384,113^A0R,87,86^FH\^FD   XNUMUNEREDX^FS
+// ^FT313,531^A0R,34,36^FH\^FDIs Emri^FS
+// ^FT315,138^A0R,34,36^FH\^FDMalzeme^FS
+// ^PQ1,0,1,Y^XZ
+// `);
+//             this.dv = await this.lis.function("PURT01/01-btnPrint", prop);
+//         },
         async init(prop) {
             this.dv = await this.lis.function("PURT01/01-init", this.dv);
         },

@@ -137,7 +137,7 @@
                         icon="add"
                         @click="btnInsert(dv)"
                     />
-                    <l-btn color="pink-4" icon="print" @click="btnPrint(dv)" />
+                    <l-btn color="deep-orange" icon="print" @click="btnPrint(dv)" />
                 </l-btn-group>
      
 
@@ -155,15 +155,20 @@
             :tabInfo="tabInfo"
             v-if="dv.lisDialog == 'BAST02D02'"
         />
+        <div v-show="false">
+        <BAST02D01PDF :dv="dv" />
+    </div>
 </template>
 
 <script>
 import BAST02D02 from "./BAST02D02.vue";
+import BAST02D01PDF from "./BAST02D01PDF.vue";
 
 export default {
     props: ["tabInfo"],
     components: {
         BAST02D02,
+        BAST02D01PDF,
     },
 
     data() {
@@ -282,49 +287,29 @@ export default {
         },
         async btnSearch(prop) {
             this.dv = await this.lis.function("BAST02/01-btnSearch", prop);
-            // await this.$Axios.post("BAST02/01-btnSearch", prop).then((res) => {
-            //   this.dv = res.data;
-            // });
+          
         },
         async btnEdit(prop) {
             this.dv = await this.lis.function("BAST02/01-btnEdit", prop);
             this.tabInfo.blockGoToTransaction = true;
-            // await this.$Axios
-            //   .post("BAST02/01-btnEdit", prop)
-            //   .then((res) => {
-            //     this.dv = res.data;
-            //     this.tabInfo.blockGoToTransaction = true;
-            // })
-            // .catch((err) => {
-            //   this.$q.notify({
-            //     type: "negative",
-            //     message: err.response.data,
-            //     actions: [{ label: "X", color: "white", dense: true }],
-            //   });
-            // });
+           
         },
         async btnShow(prop) {
             this.dv = await this.lis.function("BAST02/01-btnShow", prop);
             this.tabInfo.blockGoToTransaction = true;
-            // await this.$Axios.post("BAST02/01-btnShow", prop).then((res) => {
-            //   this.dv = res.data;
-            //   this.tabInfo.blockGoToTransaction = true;
-            // });
+            
         },
         async btnInsert(prop) {
             this.dv = await this.lis.function("BAST02/01-btnInsert", prop);
             this.tabInfo.blockGoToTransaction = true;
-            // await this.$Axios.post("BAST02/01-btnInsert", prop).then((res) => {
-            //   this.dv = res.data;
-            //   this.tabInfo.blockGoToTransaction = true;
-            // });
+           
         },
-        async btnPrint(prop) {
-            this.dv = await this.lis.function("BAST02/01-btnPrint", prop);
-            // await this.$Axios.post("BAST02/01-btnPrint", prop).then((res) => {
-            //   this.dv = res.data;
-            // });
+        
+            async btnPrint() {
+            this.lis.printPDF("BAST02D01PDF", "Cari Kartlar Raporu");
         },
+            
+       
         async init(prop) {
             this.dv = await this.lis.function("BAST02/01-init", this.dv);
         },

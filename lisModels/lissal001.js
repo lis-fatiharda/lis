@@ -65,14 +65,25 @@ const schema = new mongoose.Schema(
                 { value: 2, stext: "Miktar İade" },
                 { value: 3, stext: "Değer İade" },
                 { value: 4, stext: "İptal faturası" },
-                { value: 5, stext: "Kur Farkı Faturası" },
             ],
             default: 0,
         },
+
+        iscurrdiffinv: {
+            type: Boolean,
+            label: "Kur Farkı Faturası",
+            default: false,
+        },
+        currdiffmaterial: {
+            type: String,
+            label: "Kur Farkı Malzemesi",
+            default: "",
+        },
+
         isfirstinvo: {
             type: Boolean,
             label: "Ön Ödemeli mi?",
-            default: 0,
+            default: false,
         },
         movecode: {
             type: String,

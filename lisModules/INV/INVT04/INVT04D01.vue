@@ -280,7 +280,7 @@ export default {
           material: "",
           mtext: "",
 
-          qpostway: 0,
+          postway: 0,
           quantity: 0.0,
           aquantity: 0.0,
           qquantity: 0.0,

@@ -6,9 +6,6 @@
 // }
 import lislocks from "../../../lisModels/lislocks.js";
 export default async function unlock(params) {
-    console.log("Pcompany, Plid, Plockkey");
-
-    console.log(params);
 
     await lislocks
         .deleteOne({

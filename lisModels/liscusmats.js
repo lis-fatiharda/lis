@@ -6,7 +6,7 @@ const schema = new mongoose.Schema(
   {
     company: { type: String, label: "Firma", default: "" },
     customer: { type: String, label: "Müşteri Kodu", default: "" },
-    name: { type: String, label: "Müşteri Adı", default: "" },
+    name1: { type: String, label: "Müşteri Adı", default: "" },
     material: { type: String, label: "Malzeme Kodu", default: "" },
     mtext: { type: String, label: "Malzeme Adı", default: "" },
     materialcust: {

@@ -30,8 +30,25 @@ export default async function (dv) {
                 debitItem.items.hmatched += hMatchAmount;
                 creditItem.items.hmatched += hMatchAmount;
 
+                // calc currdiffamnt
+
+              
+                let debitcurrdiff = 0;
+                let creditcurrdiff = 0;
+
+                if ((hMatchAmount - dMatchAmount * debitItem.items.currate) > 0) {
+                    debitcurrdiff =
+                        hMatchAmount - dMatchAmount * debitItem.items.currate;
+                } else {
+                    creditcurrdiff =
+                        hMatchAmount - dMatchAmount * debitItem.items.currate;
+                }
+
                 let olisfinmatches = new lisfinmatches({
                     company: creditItem.company,
+                    acctype: debitItem.items.acctype,
+                    account: debitItem.items.account,
+                    atext: debitItem.items.atext,
                     debitdoctype: debitItem.doctype,
                     debitdocnum: debitItem.docnum,
                     debititemnum: debitItem.items.itemnum,
@@ -40,8 +57,10 @@ export default async function (dv) {
                     credititemnum: creditItem.items.itemnum,
                     dmatched: dMatchAmount,
                     hmatched: hMatchAmount,
+                    debitcurrdiff: debitcurrdiff,
+                    creditcurrdiff: creditcurrdiff,
                 });
- 
+
                 olisfinmatches.save().catch((err) => console.log(err));
 
                 await lisfindocs.findOneAndUpdate(
@@ -102,25 +121,20 @@ export default async function (dv) {
             }
         }
 
-        
-
-        await lisfindocs
-            .findOneAndUpdate(
-                {
-                    "items._id": debitItem.items._id,
+        await lisfindocs.findOneAndUpdate(
+            {
+                "items._id": debitItem.items._id,
+            },
+            {
+                $set: {
+                    "items.$.dmatched": debitItem.items.dmatched,
+                    "items.$.hmatched": debitItem.items.hmatched,
+                    "items.$.dbalance": debitItem.items.dbalance,
+                    "items.$.hbalance": debitItem.items.hbalance,
                 },
-                {
-                    $set: {
-                        "items.$.dmatched": debitItem.items.dmatched,
-                        "items.$.hmatched": debitItem.items.hmatched,
-                        "items.$.dbalance": debitItem.items.dbalance,
-                        "items.$.hbalance": debitItem.items.hbalance,
-                    },
-                }
-            )
+            }
+        );
     }
-
-
 
     //--------------
 

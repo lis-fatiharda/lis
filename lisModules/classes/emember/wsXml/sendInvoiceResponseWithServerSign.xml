@@ -1,0 +1,16 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.efatura.izibiz.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:SendInvoiceResponseWithServerSign>
+         <!--Optional:-->
+         <SESSION_ID>#SESSION_ID#</SESSION_ID>
+         <!--Optional:-->
+         <!--Optional:-->
+         <UUID>#UUID#</UUID>
+         <!--Optional:-->
+         <RESPONSE_CODE>#RESPONSE#</RESPONSE_CODE>
+         <!--Optional:-->
+         <RESPONSE_DESCRIPTION>#RESPONSESTR#</RESPONSE_DESCRIPTION>
+      </ws:SendInvoiceResponseWithServerSign>
+   </soapenv:Body>
+</soapenv:Envelope>

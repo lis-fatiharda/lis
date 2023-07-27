@@ -204,7 +204,7 @@ export default {
     },
     async pushNewItem() {
       let myReturn = await this.lis.function("INVT01/41-pushNewItem", this.dv);
-      myReturn.items[0].qpostway = 1;
+      myReturn.items[0].postway = 1;
       this.dv.olisinvdocs.items.push(myReturn.items[0]);
     },
     removeItem(index) {
@@ -226,7 +226,7 @@ export default {
     },
     async init() {
       this.dv = await this.lis.function("INVT01/41-init", this.dv);
-      this.dv.olisinvdocs.items[0].qpostway = 1;
+      this.dv.olisinvdocs.items[0].postway = 1;
     },
   },
   async created() {

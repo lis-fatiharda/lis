@@ -28,7 +28,7 @@ export default async function saveMovement(
             lis.objectMove(pLisinvdocs, olisinvstocks);
             lis.objectMove(myLisinvItem, olisinvstocks);
 
-            if (myLisinvItem.qpostway == 0) {
+            if (myLisinvItem.postway == false) {
                 if (myLisinvItem.stocktype == 0)
                     olisinvstocks.aquantity += myLisinvItem.quantity;
                 if (myLisinvItem.stocktype == 1)
@@ -62,7 +62,7 @@ export default async function saveMovement(
             olisinvstocks = new lisinvstocks(olisinvstocks);
             olisinvstocks.save();
         } else {
-            if (myLisinvItem.qpostway == 0) {
+            if (myLisinvItem.postway == false) {
                 if (myLisinvItem.stocktype == 0)
                     olisinvstocks.aquantity += myLisinvItem.quantity;
                 if (myLisinvItem.stocktype == 1)

@@ -11,7 +11,7 @@ const schema = new mongoose.Schema(
         specialstock: { type: String, label: "Ö.S.Tipi", default: "*" },
         //******************************* */
         doctype: { type: String, label: "Belge Tipi", default: "*" },
-        qpostway: { type: Number, label: "Hareket Yönü", default: 0 },
+        postway: { type: Boolean, label: "Hareket Yönü", default: false },
         fromstocktype: {
             type: Number,
             label: "Stoktan",

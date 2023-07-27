@@ -22,7 +22,6 @@ export default async function getSessionId() {
 
     await Axios.post(
         "https://efatura.izibiz.com.tr:2443/EIWSOIBProxy/EFaturaOIBProxy?wsdl",
-        //"https://efaturatest.izibiz.com.tr/AuthenticationWS?wsdl",
         xmlBodyStr,
         config
     )

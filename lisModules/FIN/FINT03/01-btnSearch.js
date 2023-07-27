@@ -6,7 +6,7 @@ export default async function (dv) {
         $match: {
           company: lis.like(dv.sc.company),
 
-          docdate: {
+          postdate: {
             $gte: new Date(dv.sc.datefrom),
             $lte: new Date(dv.sc.dateuntil),
           },

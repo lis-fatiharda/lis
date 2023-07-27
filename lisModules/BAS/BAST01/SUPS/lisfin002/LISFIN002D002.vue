@@ -238,7 +238,7 @@ export default {
 
                 {
                     label: this.$gl("Borç/Alacak", "Movement"),
-                    value: "qpostway",
+                    value: "postway",
                     type: "checkbox",
                 },
 

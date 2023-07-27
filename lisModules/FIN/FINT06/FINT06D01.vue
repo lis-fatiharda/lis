@@ -64,22 +64,7 @@
                     />
 
                     <l-input
-                        label="Hesap No Aralığı Başl."
-                        v-model="dv.sc.account1"
-                        class="bg-amber-1"
-                    />
-                    <l-input
-                        label="Hesap No Aralığı Bitiş"
-                        v-model="dv.sc.account2"
-                        class="bg-amber-1"
-                    />
-
-                    <!-- <l-input
-                        :label="this.$gl(`TD.Hesap`, `Account`)"
-                        v-model="dv.sc.glaccount"
-                    /> -->
-                    <l-input
-                        :label="this.$gl(`Hesap No`, `Account No`)"
+                        label="Hesap No"
                         v-model="dv.sc.account"
                         class="bg-amber-1"
                     >
@@ -101,8 +86,9 @@
                             />
                         </l-chip>
                     </l-input>
+
                     <l-input
-                    :label="this.$gl(`T.D Hesap`, `Uniform Account`)"
+                        :label="this.$gl(`T.D Hesap`, `Uniform Account`)"
                         v-model="dv.sc.glaccount"
                     >
                         <l-chip
@@ -122,7 +108,7 @@
                                 @cancel="isSelectGla = false"
                             />
                         </l-chip>
-                    </l-input>  
+                    </l-input>
                     <l-date
                         :label="this.$gl(`Dönem Başl.`, `Post. Date Str.`)"
                         v-model="dv.sc.datefrom"
@@ -181,11 +167,12 @@
         />
     </l-div>
 
-    <l-dialog v-model="isShowFINT05D1">
-        
-            <FINT05D01 :pdv="dv" :tabInfo="tabInfo" @cancel="isShowFINT05D1 = false"/>
-       
-        
+    <l-dialog v-model="isShowFINT05D1" persistent>
+        <FINT05D01
+            :pdv="dv"
+            :tabInfo="tabInfo"
+            @cancel="isShowFINT05D1 = false"
+        />
     </l-dialog>
 </template>
 
@@ -196,7 +183,9 @@ export default {
     components: { FINT05D01 },
 
     data() {
-        return {isSelectAcc : false, isSelectGla : false,
+        return {
+            isSelectAcc: false,
+            isSelectGla: false,
             tab: "Sorgula",
             isShowFINT05D1: false,
             dv: {
@@ -204,8 +193,7 @@ export default {
                     company: "01",
                     busarea: "S",
                     acctype: "",
-                    account1: "M-220825-0030",
-                    account2: "M-220825-0030",
+                    account: "",
                     glaccount: "",
 
                     datefrom: this.lis.firstDayOfYear(),
@@ -267,13 +255,8 @@ export default {
 
     methods: {
         async btnSearch() {
-            if (
-                (this.dv.sc.account1 == "") |
-                (this.dv.sc.account1 == null) |
-                (this.dv.sc.account2 == "") |
-                (this.dv.sc.account2 == null)
-            ) {
-                this.lis.alert("E", "Lütfen Bir Hesap Aralığı Seçiniz!");
+            if ((this.dv.sc.account == "") | (this.dv.sc.account == null)) {
+                this.lis.alert("E", "Lütfen Bir Hesap Seçiniz!");
                 return;
             }
             this.dv = await this.lis.function("FINT06/01-btnSearch", this.dv);
@@ -283,14 +266,13 @@ export default {
         },
         async btnMatch() {
             this.dv = await this.lis.function("FINT06/01-btnMatch", this.dv);
-            this.lis.alert("p", "Belge İlişkilendirmeleri Yapıldı.")
+            this.lis.alert("p", "Belge İlişkilendirmeleri Yapıldı.");
             this.btnSearch();
         },
         async btnUnMatch() {
             this.dv = await this.lis.function("FINT06/01-btnUnMatch", this.dv);
-            this.lis.alert("p", "Belge İlişkilendirmeleri Kaldırıldı.")
+            this.lis.alert("p", "Belge İlişkilendirmeleri Kaldırıldı.");
             this.btnSearch();
-            
         },
     },
 

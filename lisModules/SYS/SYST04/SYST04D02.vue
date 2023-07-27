@@ -24,7 +24,7 @@
         <div class="row q-pa-xs">
           <l-select
             :label="this.$gl(`Firma`, `Company`)"
-            v-model="dv.sc.company"
+            v-model="dv.olisnumranges.company"
             options="lisbas001"
             optValue="company"
             optTitle="stext"
@@ -78,7 +78,6 @@
             
             :label="this.$gl(`Parça No`, `Part No`)"
             v-model="item.partno"
-            style="width: 100px"
             :readonly="dv.olisnumranges.isintegrator"
           />
           
@@ -88,10 +87,8 @@
             :options="dv.partTypeOpts"
             :label="this.$gl(`Parça Tipi`, `Part Type`)"
             style="width: 180px"
-            dense
-            optValue="dv.partTypeOpts" 
-            optTitle="dv.partTypeOpts"
-            map-options
+            optValue="value" 
+            optTitle="value"
             :readonly="dv.olisnumranges.isintegrator"
           />
           <l-input

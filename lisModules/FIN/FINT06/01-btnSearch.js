@@ -22,7 +22,7 @@ export default async function (dv) {
                     },
                 ],
 
-                docdate: {
+                postdate: {
                     $gte: new Date(dv.sc.datefrom),
                     $lte: new Date(dv.sc.dateuntil),
                 },

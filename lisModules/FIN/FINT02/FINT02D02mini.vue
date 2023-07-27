@@ -57,14 +57,12 @@
                     
                     dense
                     v-model="dv.lisfindocs.doctype"
-                    style="width: 100px"
                 ></l-input>
                 <l-input
                     :label="this.$gl(`Belge No`, `Document No`)"
                     
                     dense
                     v-model="dv.lisfindocs.docnum"
-                    style="width: 100px"
                 ></l-input>
 
                 <!-- destektablo SORULACAK -->

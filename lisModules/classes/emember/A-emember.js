@@ -20,6 +20,11 @@ import checkInvoiceStatus from "./checkInvoiceStatus.js";
 import sendEinvoiceRec from "./sendEinvoice.js";
 import sendEarchiveRec from "./sendEarchive.js";
 import sendEdeliveryRec from "./sendEdelivery.js";
+
+import getInvoice from "./getInvoice.js";
+import markInvoice from "./markInvoice.js";
+//import acceptInvoice from "./acceptInvoice.js";
+
 const emember = class {
     login = loginRec;
     checkUser = checkUserRec;
@@ -43,6 +48,10 @@ const emember = class {
     sendEinvoice = sendEinvoiceRec;
     sendEarchive = sendEarchiveRec;
     sendEdelivery = sendEdeliveryRec;
+
+    getInvoice = getInvoice;
+    markInvoice = markInvoice;
+    //acceptInvoice = acceptInvoice;
 };
 
 export default emember;

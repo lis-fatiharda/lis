@@ -30,7 +30,7 @@ export default async function saveMovement(pLisinvdocs, pMovecode, pMod) {
             pLisinvdocs.doctype = olisinv006.doctype;
 
             //--- Assign stocktypes-
-            if (pLisinvdocs.items[i].qpostway == 0) {
+            if (pLisinvdocs.items[i].postway == false) {
                 pLisinvdocs.items[i].stocktype = olisinv006.tostocktype;
             } else {
                 pLisinvdocs.items[i].stocktype = olisinv006.fromstocktype;

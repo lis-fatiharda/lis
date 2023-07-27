@@ -120,7 +120,7 @@
           />
           <l-select
             dense
-            v-model="dv.qpostway"
+            v-model="dv.postway"
             :label="this.$gl(`Hrk. Yönü`, `Movement`)"
             :options="[
               { label: this.$gl(`Giriş`, `Entry`), value: 0 },
@@ -292,7 +292,7 @@ export default {
         },
         {
           label: this.$gl("Har.Yönü", "Direction of Movement"),
-          value: "items.qpostway",
+          value: "items.postway",
           type: "select",
           options: [
             {
@@ -398,7 +398,7 @@ export default {
           stext: "",
           doctype: "",
           docnum: "",
-          qpostway: 2,
+          postway: 2,
         
           stocktype: null,
           

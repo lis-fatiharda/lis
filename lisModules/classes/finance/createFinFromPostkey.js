@@ -23,10 +23,12 @@ export default async function ({plisfindocs, cv}) {
                 if (plisfindocs.items.findIndex((x) => x.acctype == "C") > -1) {
                     let myRow = plisfindocs.items.findIndex((x) => x.acctype == "C");
 
-                    if (myfin002_item.qpostway == false) {
-                        plisfindocs.items[myRow].ddebit += cv[myfin002_item.valuefield];
+                    if (myfin002_item.postway == false) {
+                        plisfindocs.items[myRow].ddebit +=
+                            cv[myfin002_item.valuefield];
                     } else {
-                        plisfindocs.items[myRow].dcredit += cv[myfin002_item.valuefield];
+                        plisfindocs.items[myRow].dcredit +=
+                            cv[myfin002_item.valuefield];
                     }
                     
 
@@ -48,7 +50,7 @@ export default async function ({plisfindocs, cv}) {
                     plisfindocs_item.currate = cv.currate;
                     
 
-                    if (myfin002_item.qpostway == false) {
+                    if (myfin002_item.postway == false) {
                         plisfindocs_item.ddebit = cv[myfin002_item.valuefield];
                     } else {
                         plisfindocs_item.dcredit = cv[myfin002_item.valuefield];
@@ -72,10 +74,12 @@ export default async function ({plisfindocs, cv}) {
                 if (plisfindocs.items.findIndex((x) => x.account == myAccount) > -1) {
                     let myRow = plisfindocs.items.findIndex((x) => x.account == myAccount);
 
-                    if (myfin002_item.qpostway == false) {
-                        plisfindocs.items[myRow].ddebit += cv[myfin002_item.valuefield];
+                    if (myfin002_item.postway == false) {
+                        plisfindocs.items[myRow].ddebit +=
+                            cv[myfin002_item.valuefield];
                     } else {
-                        plisfindocs.items[myRow].dcredit += cv[myfin002_item.valuefield];
+                        plisfindocs.items[myRow].dcredit +=
+                            cv[myfin002_item.valuefield];
                     }
 
                 } else {
@@ -95,7 +99,7 @@ export default async function ({plisfindocs, cv}) {
                     //-------------------------
 
 
-                    if (myfin002_item.qpostway == false) {
+                    if (myfin002_item.postway == false) {
                         plisfindocs_item.ddebit = cv[myfin002_item.valuefield];
                     } else {
                         plisfindocs_item.dcredit = cv[myfin002_item.valuefield];

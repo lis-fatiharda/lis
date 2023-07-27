@@ -10,7 +10,7 @@ export default async function (dv) {
                 "items.acctype": lis.like(dv.sc.acctype),
                 "items.account": lis.like(dv.sc.account1),
                 "items.glaccount": lis.like(dv.sc.glaccount),
-                docdate: {
+                postdate: {
                     $gte: new Date(dv.sc.datefrom),
                     $lte: new Date(dv.sc.dateuntil),
                 },
@@ -31,7 +31,7 @@ export default async function (dv) {
                 "items.acctype": lis.like(dv.sc.acctype),
                 "items.account": lis.like(dv.sc.account1),
                 "items.glaccount": lis.like(dv.sc.glaccount),
-                docdate: {
+                postdate: {
                     $gte: new Date(dv.sc.datefrom),
                     $lte: new Date(dv.sc.dateuntil),
                 },

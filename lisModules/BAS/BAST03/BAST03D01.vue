@@ -108,7 +108,7 @@
           <l-btn color="info"  icon="visibility" @click="btnShow(dv)" />
           <l-btn color="primary"  icon="edit" @click="btnEdit(dv)" />
           <l-btn color="secondary"  icon="add" @click="btnInsert(dv)" />
-          <l-btn color="pink-4"  icon="print" @click="btnPrint(dv)" />
+          <l-btn color="deep-orange"  icon="print" @click="btnPrint(dv)" />
         </l-btn-group>
    
       <!--Table Layer---------------------------->
@@ -182,16 +182,21 @@
       />
     </l-div>
     <BAST03D02 :dv="dv" :tabInfo="tabInfo" v-if="dv.lisDialog == 'BAST03D02'" />
+    <div v-show="false">
+        <BAST03D01PDF :dv="dv" />
+    </div>
   </div>
 </template>
 
 <script>
 import BAST03D02 from "./BAST03D02.vue";
+import BAST03D01PDF from "./BAST03D01PDF.vue";
 
 export default {
   props: ["lv", "goToTransaction", "currentTab", "tabInfo"],
   components: {
     BAST03D02,
+    BAST03D01PDF,
   },
 
   data() {
@@ -280,44 +285,20 @@ export default {
     async btnSearch(prop) {
       this.dv = await this.lis.function("BAST03/01-btnSearch", prop);
       console.log(prop);
-      // await this.$Axios.post("SALT01/01-btnSearch", prop).then((res) => {
-      //   this.dv = res.data;
-      // });
       this.dv.selectedRow = "";
     },
     async btnEdit(prop) {
       this.dv = await this.lis.function("BAST03/01-btnEdit", prop);
-      // await this.$Axios
-      //   .post("BAST03/01-btnEdit", prop)
-      //   .then((res) => {
-      //     this.dv = res.data;
-      //   })
-      //   .catch((err) => {
-      //     this.$q.notify({
-      //       type: "negative",
-      //       message: err.response.data,
-      //       actions: [{ label: "X", color: "white", dense: true }],
-      //     });
-      //   });
     },
     async btnShow(prop) {
       this.dv = await this.lis.function("BAST03/01-btnShow", prop);
-      // await this.$Axios.post("BAST03/01-btnShow", prop).then((res) => {
-      //   this.dv = res.data;
-      // });
     },
     async btnInsert(prop) {
       this.dv = await this.lis.function("BAST03/01-btnInsert", prop);
-      // await this.$Axios.post("BAST03/01-btnInsert", prop).then((res) => {
-      //   this.dv = res.data;
-      // });
     },
-    async btnPrint(prop) {
-      this.dv = await this.lis.function("BAST03/01-btnPrint", prop);
-      // await this.$Axios.post("BAST03/01-btnPrint", prop).then((res) => {
-      //   this.dv = res.data;
-      // });
-    },
+    async btnPrint() {
+            this.lis.printPDF("BAST03D01PDF", "Malzeme Kartları Raporu");
+        },
     async init(prop) {
       this.dv = await this.lis.function("BAST03/01-init", this.dv);
     },

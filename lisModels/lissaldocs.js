@@ -134,7 +134,6 @@ const schema = new mongoose.Schema(
         docnum: { type: String, label: "Dökümam no", default: "" },
         extdoctype: { type: String, label: "Harici Döküman tipi", default: "" },
         extdocnum: { type: String, label: "Harici Dökümam no", default: "" },
-        
 
         saldept: { type: String, label: "Satış bölümü", default: "" },
         project: { type: String, label: "Proje", default: "" },
@@ -303,7 +302,7 @@ const schema = new mongoose.Schema(
         //*************************************** */
         freighter: { type: String, label: "Nakliyeci", default: "" },
         shipping: { type: String, label: "Teslimat Şekli", default: "" },
-
+        paymcond: { type: String, label: "Ödeme Koşulları", default: "" },
         //*********E-DELIVERY E-INVOICE********** */
         isprinted: {
             type: Boolean,
@@ -324,11 +323,11 @@ const schema = new mongoose.Schema(
         },
         einvonumber: { type: String, label: "E-Belge No", default: "" },
         einvouuid: { type: String, label: "UUID", defaut: "" },
-        qpostway: {
-            type: Number,
+        postway: {
+            type: Boolean,
             enum: [0, 1],
-            label: "0:Gelen|1:Giden",
-            default: 1,
+            label: "Hareket Yönü",
+            default: false,
         }, //belge yönü
         //*********SUBTOTAL-GRANDTOTAL********** */
         gross: { type: Number, label: "Brüt", default: 0 },

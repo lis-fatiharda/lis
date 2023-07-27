@@ -92,10 +92,12 @@ export default {
         {
           type: "string",
           value: "capgrp",
-          label: this.$gl(
-            "İş Merkezi Kapasite Grubu",
-            "Work Center Capacity Group"
-          ),
+          label: this.$gl("İş Merkezi Kapasite Grubu", "Work Center Capacity Group"),
+        },
+        {
+          type: "string",
+          value: "confirmation",
+          label: this.$gl("Onay Numarası", "Confirmation"),
         },
         //  {
         //      type: "zoom",

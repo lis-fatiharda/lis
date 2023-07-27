@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 const itemsSchema = new mongoose.Schema({
     itemnum: { type: Number, label: "Kalem no", default: 10 },
     acctype: { type: String, label: "Hesap Tipi", default: "" },
-    glaccount: { type: String, label: "Hesap", default: "" },
+    glaccount: { type: String, label: "T.D.Hesap", default: "" },
     gltext: { type: String, label: "T/D Hesap Açıklaması", default: "" },
     account: { type: String, label: "Hesap", default: "" },
     atext: { type: String, label: "Hesap Açıklaması", default: "" },

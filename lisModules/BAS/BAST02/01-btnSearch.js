@@ -10,13 +10,22 @@ export default async function (dv) {
 
             custorvend:
                 (dv.sc.custOrVend === null) |
-                (dv.sc.custOrVend === 99) |
-                (dv.sc.custOrVend === "")
+                    (dv.sc.custOrVend === 99) |
+                    (dv.sc.custOrVend === "")
                     ? { $gte: 0 }
                     : dv.sc.custOrVend,
             _deleted: false,
         })
         .catch((err) => console.log(err));
 
+    // for (let i in dv.lisCustomerList) {
+    //     let item;
+    //     item = dv.lisCustomerList[i];
+    //     let olisbas004 = await lisbas004.findOne({
+    //         sector: item.sector,
+    //     });
+    //     dv.lisCustomerList[i].sector = olisbas004.stext;
+        
+    // }
     return dv;
 }

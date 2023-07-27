@@ -1,0 +1,14 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.efatura.izibiz.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:GetInvoice>
+         <!--Optional:-->
+         <SESSION_ID>#SESSION_ID#</SESSION_ID>
+         <!--Optional:-->
+         <LIMIT>10</LIMIT>
+         <COMPRESSED>N</COMPRESSED>
+         <READ_INCLUDED>false</READ_INCLUDED>
+         
+      </ws:GetInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>

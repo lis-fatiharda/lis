@@ -7,7 +7,6 @@ export default async function (dv) {
       account: lis.like(dv.sc.account),
       stext: lis.like(dv.sc.stext),
       
-      acclevel: 2,
       _deleted: false,
     })
     .catch((err) => console.log(err));

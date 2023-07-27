@@ -188,7 +188,7 @@ export default {
           specialstock: null,
          
           batchnum: "",
-          qpostway: 0,
+          postway: 0,
 
           docdatestrt: new Date(),
           docdateend: new Date(),

@@ -15,7 +15,7 @@ const itemsSchema = new mongoose.Schema({
     stockplace: { type: String, label: "Stokyeri", default: "" },
     specialstock: { type: String, label: "Özel stok tipi", default: "" },
     batchnum: { type: String, label: "Parti no", default: "" },
-    qpostway: { type: Number, label: "Hareket yönü", default: 0 }, // 0:Giriş|1:Çıkış
+    postway: { type: Boolean, label: "Hareket yönü", default: false }, // 0:Giriş|1:Çıkış
     stocktype: { type: Number, label: "Stok tipi", default: 0 }, // 0:Kullanılabilir|1:Kalite|2:Bloke|3:rezerve
     isstocktran: { type: Boolean, label: "Transfer Hareketi", default: false },
     //-
@@ -34,7 +34,7 @@ const itemsSchema = new mongoose.Schema({
 
     //** Production Infos */
     workcenter: { type: String, label: "İş Merkezi", default: "" },
-    confirmation: { type: String, label: "Onay Numarası", default: "" },
+    operation: { type: String, label: "Onay Numarası", default: "" },
     confirmpos: { type: String, label: "Onay Sırası", default: "" },
 
     //** COST */

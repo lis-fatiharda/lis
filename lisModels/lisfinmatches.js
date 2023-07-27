@@ -5,7 +5,9 @@ import mongoose from "mongoose";
 const schema = new mongoose.Schema(
     {
         company: { type: String, label: "Firma", default: "01" },
-        
+        acctype: { type: String, label: "Hesap Tipi", default: "" },
+        account: { type: String, label: "Hesap", default: "" },
+        atext: { type: String, label: "Hesap Açıklaması", default: "" },
         //--
         debitdoctype: { type: String, label: "Döküman tipi", default: "" },
         debitdocnum: { type: String, label: "Döküman no", default: "" },
@@ -17,7 +19,7 @@ const schema = new mongoose.Schema(
 
         //--
 
-        dmatched: { 
+        dmatched: {
             type: Number,
             label: "Eşlenmiş Tutar (Belge P.Br.)",
             default: 0,
@@ -25,6 +27,16 @@ const schema = new mongoose.Schema(
         hmatched: {
             type: Number,
             label: "Eşlenmiş Tutar (Firma P.Br.)",
+            default: 0,
+        },
+        debitcurrdiff: {
+            type: Number,
+            label: "Kur Farkı Borç",
+            default: 0,
+        },
+        creditcurrdiff: {
+            type: Number,
+            label: "Kur Farkı Alacak",
             default: 0,
         },
     },

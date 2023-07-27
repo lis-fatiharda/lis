@@ -12,9 +12,15 @@ export default async function (dv) {
   // Save the Document*********************
   if (dv.modi == 0) {
     // Get customer Number**************
-    dv.liscustomers.customer = await NumRange.getNewNumber({
+    let num = await liscustomers.find({
       company: dv.sc.company,
-      numrange: "BAST02",
+      custorvend: dv.sc.custorvend,
+    })
+    let nmrng = num.custorvend == 0 ? "candnumrange" : num.custorvend == 1 ? "cusnumrange" : "vennumrange";
+    dv.liscustomers.customer = await Numrange.getNewNumber({
+      company: dv.sc.company,
+      //numrange: "BAST02",
+      numrange: nmrng,
       manuelNumber: dv.liscustomers.customer,
     });
 

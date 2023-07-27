@@ -2,7 +2,7 @@
     <l-div>
         <!--Tittle Layer-->
 
-        <l-card>
+        <l-card0>
             <l-toolbar :class="`bg-${tabInfo.moduleColor}`">
                 <l-toolbar>
                     <l-icon size="md" name="assignment_ind" />
@@ -54,7 +54,7 @@
             </l-div-flex>
 
             <l-separator inset />
-            <div class="row q-pa-xs q-gutter-xs">
+            <l-div-flex>
                 <l-select :label="this.$gl(`Sektör`, `Sector`)" v-model="dv.liscustomers.sector" options="lisbas004"
                     optValue="sector" optTitle="stext" optCaptions="sector" width="120px" />
                 <l-select :label="this.$gl(`Ülke`, `Country`)" v-model="dv.liscustomers.country" options="lisbas005"
@@ -68,7 +68,7 @@
                 <l-select :label="this.$gl(`Para Birimi`, `Currency`)" v-model="dv.liscustomers.currency"
                     options="lisbas007" optValue="unit" optTitle="stext" optCaptions="unit" :optFilter="{ unittype: 1 }"
                     width="200px" />
-            </div>
+            </l-div-flex>
 
             <!-- ****************************** -->
 
@@ -702,7 +702,7 @@
                     </l-tab-panel>
                 </l-tab-panels>
             </l-card>
-        </l-card>
+        </l-card0>
         <l-dialog v-model="isAlertMessage" persistent transition-show="scale" transition-hide="scale">
             <l-card class="bg-teal text-white" style="width: 300px">
                 <l-card-section>

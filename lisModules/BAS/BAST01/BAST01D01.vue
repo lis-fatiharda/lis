@@ -1,6 +1,6 @@
 <template>
     <div>
-        <l-div v-if="dv.lisDialog == 'BAST01D01'">
+        <l-div v-if="dv.lisDialog == 'BAST01D01'"> 
             <!--Tittle Layer-->
             <l-card0>
                 <l-toolbar :class="`bg-${tabInfo.moduleColor}`">
@@ -242,6 +242,11 @@
             :tabInfo="tabInfo"
             v-if="dv.lisDialog == 'LISFIN003'"
         />
+        <LISBAS017
+            :dv="dv"
+            :tabInfo="tabInfo"
+            v-if="dv.lisDialog == 'LISBAS017'"
+        />
     </div>
 </template>
 
@@ -249,6 +254,7 @@
 import BAST01D02 from "./BAST01D02.vue";
 import LISFIN002 from "./SUPS/lisfin002/LISFIN002.vue";
 import LISFIN003 from "./SUPS/lisfin003/LISFIN003.vue";
+import LISBAS017 from "./SUPS/lisbas017/LISBAS017.vue";
 
 export default {
     props: ["tabInfo", "currentTab"],
@@ -256,6 +262,7 @@ export default {
         BAST01D02,
         LISFIN002,
         LISFIN003,
+        LISBAS017,
     },
 
     data() {

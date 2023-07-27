@@ -32,7 +32,7 @@ export default async function (dv) {
                     "items.account": lis.like(myAccount.account),
                     "items.glaccount": lis.like(myAccount.glaccount),
 
-                    docdate: {
+                    postdate: {
                         $lt: dv.sc.datefrom,
                     },
 
@@ -61,7 +61,7 @@ export default async function (dv) {
                     //"items.glaccount": { $regex: myAccount.glaccount + ".*" },
                     "items.account": lis.like(myAccount.account),
                     "items.glaccount": lis.like(myAccount.glaccount),
-                    docdate: {
+                    postdate: {
                         $gte: new Date(dv.sc.datefrom),
                         $lte: new Date(dv.sc.dateuntil),
                     },

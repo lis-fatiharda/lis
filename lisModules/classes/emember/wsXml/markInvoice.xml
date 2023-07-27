@@ -1,0 +1,13 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.efatura.izibiz.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:MarkInvoice>
+         <!--Optional:-->
+         <SESSION_ID>#SESSION_ID#</SESSION_ID>
+         <!--Optional:-->
+         <INVOICE_UUID>#UUID#</INVOICE_UUID>
+         <!--Optional:-->
+         <ACTION>READ</ACTION>
+      </ws:MarkInvoice>
+   </soapenv:Body>
+</soapenv:Envelope>

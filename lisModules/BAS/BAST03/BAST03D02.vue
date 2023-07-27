@@ -1,7 +1,7 @@
 <template>
   <l-div>
     <!--Tittle Layer-->
-    <l-card0 class="q-pa-xs">
+    <l-card0>
       <l-toolbar :class="`bg-${tabInfo.moduleColor}`">
         <l-toolbar class="q-gutter-xs">
           <l-icon size="md" name="inventory" />
@@ -127,7 +127,6 @@
         />
       </l-div-flex>
 
-      <hr />
     </l-card0>
 
     <l-card>
@@ -157,7 +156,13 @@
               </div>
             </l-card-section>
             <l-separator inset />
-            <l-card-section class="row q-gutter-xs"> </l-card-section>
+            <l-card-section class="row q-gutter-xs">
+              <q-option-group
+      v-model="dv.lismaterials.acctype"
+      :options="accountingOpts"
+      dense
+    />
+            </l-card-section>
           </l-card>
 
           <l-card style="width: 49%; min-width: 320px">
@@ -191,7 +196,7 @@
             </l-card-section>
             <l-separator inset />
             <l-card-section class="row q-gutter-md">
-              <l-card class="row q-gutter-xs q-pa-xs bg-brown-1">
+              <l-div-flex>
                 <l-select
                   :label="this.$gl(`Satış Bölümü`, `Sales Department`)"
                   v-model="dv.lismaterials.saldept"
@@ -212,9 +217,9 @@
                   :optFilter="{ unittype: 0 }"
                   width="200px"
                 />
-              </l-card>
+              </l-div-flex>
 
-              <l-card class="row q-gutter-xs q-pa-xs bg-brown-1">
+              <l-div-flex>
                 <l-select
                   :label="this.$gl(`Para Birimi`, `Currency`)"
                   v-model="dv.lismaterials.salcurrency"
@@ -244,7 +249,7 @@
                   style="width: 170px"
                   class="bg-teal-1"
                 />
-              </l-card>
+              </l-div-flex>
             </l-card-section>
           </l-card>
           <l-card style="width: 49%; min-width: 320px">
@@ -351,7 +356,7 @@
           </l-card>
           <l-card style="width: 49%; min-width: 320px">
             <l-card-section class="row q-gutter-xs">
-              <l-card class="q-gutter-xs bg-brown-1">
+              <l-div>
                 <div class="q-gutter-xs row">
                   <l-input
                     type="Number"
@@ -502,7 +507,7 @@
                     width="200px"
                   />
                 </div>
-              </l-card>
+              </l-div>
             </l-card-section>
           </l-card>
           <l-card style="width: 49%; min-width: 320px">
@@ -1164,7 +1169,26 @@ export default {
         lid: "BAST03",
         lockkey: this.dv.lismaterials.material,
       },
-
+      accountingOpts: [{
+          label: 'Standart',
+          value: 0
+        },
+        {
+          label: 'Yürüyen Ağırlıklı Ortalama',
+          value: 1
+        },
+        {
+          label: 'Ortalama',
+          value: 2
+        },
+        {
+          label: 'LIFO',
+          value: 3
+        },
+        {
+          label: 'FIFO',
+          value: 4
+        }],
       scWarehouse: [],
       scStockplace: [],
     };

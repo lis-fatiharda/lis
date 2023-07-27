@@ -195,7 +195,7 @@
             <l-btn color="info" icon="visibility" @click="btnShow(dv)" />
             <l-btn color="primary" icon="edit" @click="btnEdit(dv)" />
             <l-btn color="secondary" icon="add" @click="btnInsert(dv)" />
-            <l-btn color="negative" icon="print" @click="btnDelete(dv)" />
+            <l-btn color="deep-orange" icon="print" @click="btnDelete(dv)" />
         </l-btn-group>
 
         <l-checkbox label="Belge Ön İzleme" icon="print" />

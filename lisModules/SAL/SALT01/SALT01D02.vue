@@ -63,7 +63,7 @@
                 <l-select
                     :label="this.$gl(`Belge Tipi`, `Document Type`)"
                     v-model="dv.lissaldocs.doctype"
-                    @select="this.setDocChar();"
+                    @select="this.setDocChar()"
                     options="lissal001"
                     optValue="doctype"
                     optTitle="stext"
@@ -329,7 +329,7 @@ import FINT02D02mini from "../../FIN/FINT02/FINT02D02mini.vue";
 import SALT02D01 from "../SALT02/SALT02D01.vue";
 
 export default {
-    props: ["dv", "tabInfo"],
+    props: ["dv", "tabInfo", "isDialog"],
     components: {
         SALT02D01,
         SALT01D03,
@@ -626,15 +626,16 @@ export default {
             this.dv.isShowFinDocDialog = false;
         },
         cancel() {
-            this.dv.isShowFinDocDialog = false;
-            this.tabInfo.blockGoToTransaction = false;
-            this.dv.lisDialog = "SALT01D01";
+            if (this.isDialog == undefined) {
+                this.dv.isShowFinDocDialog = false;
+                this.tabInfo.blockGoToTransaction = false;
+                this.dv.lisDialog = "SALT01D01";
+            } else {
+                this.$emit("cancel");
+            }
         },
     },
     async mounted() {
-        console.log("02 Mounted çalıştı");
-        let tmpDv = {};
-
         await this.lis.function("SALT01/02-init", this.dv);
 
         if ((this.dv.modi <= 0) & (this.dv.lissaldocs.customer != ""))

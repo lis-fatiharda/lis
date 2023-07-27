@@ -1,8 +1,8 @@
 <template>
     <l-card style="width: 100%; min-width: 320px">
-        <div class="text-overline q-pa-xs">
+        <!-- <div class="text-overline q-pa-xs">
             {{ this.$gl("İndirimler", "Discounts") }}
-        </div>
+        </div> -->
         <l-table
             name="SALT01D01"
             :tableData="dv.lissaldocs.discount"

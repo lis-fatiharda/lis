@@ -1,7 +1,7 @@
-export default async function (dv) {
-  console.log("qqqqq");
-  let newNumPart = new LisNumParts();
-  console.log(newNumPart);
+import { LisNumParts } from "../../../lisModels/lisnumranges.js";
 
-  return newNumPart;
+export default async function (dv) {
+    let newNumPart = new LisNumParts();
+
+    return newNumPart;
 }

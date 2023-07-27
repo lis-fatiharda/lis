@@ -1,23 +1,24 @@
-
 export default async function (dv) {
-
     const plisedndocsSelected = dv.lisedndocsList.filter(
         (e) => e._selected === true
     );
 
     //----fetch SESSION_ID----
 
-    const mySession_Id = await emember.login().catch((err) => {
+    const mySession_Id = await Emember.login().catch((err) => {
         throw new Error("SESSION_ID Alınamadı!");
     });
 
     for (let i in plisedndocsSelected) {
-        const plisedndocs = plisedndocsSelected[i];
+        const plisedndocs = await lisedndocs.findOne({
+            _id: plisedndocsSelected[i],
+        });
 
-        //----Check E-Invoice Status----
-
+        if (plisedndocs == null) continue;
         if (plisedndocs.edoctype == 1) {
-            await emember
+            //----Check E-Invoice Status----
+
+            await Emember
                 .checkInvoiceStatus(mySession_Id, plisedndocs)
                 .then((res) => {
                     return;
@@ -29,7 +30,7 @@ export default async function (dv) {
 
         //----Check E-Archive Status----
         if (plisedndocs.edoctype == 2) {
-            await emember
+            await Emember
                 .checkInvoiceStatus(mySession_Id, plisedndocs)
                 .catch((err) => {
                     throw new Error("E-Arşiv Statüsü Güncellenemedi!");
@@ -38,7 +39,7 @@ export default async function (dv) {
 
         //----Check E-Delivery Status----
         if (plisedndocs.edoctype == 3) {
-            await emember
+            await Emember
                 .checkInvoiceStatus(mySession_Id, plisedndocs)
                 .catch((err) => {
                     throw new Error("E-İrsaliye Statüsü Güncellenemedi!");

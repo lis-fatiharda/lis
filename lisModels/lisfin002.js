@@ -4,11 +4,11 @@ import mongoose from "mongoose";
 
 const itemsSchema = new mongoose.Schema({
     itemnum: { type: Number, label: "Kalem no", default: 10 },
-    qpostway: { type: Boolean, label: "Hareket yönü", default: false }, // false:Borç|true:Alacak
+    postway: { type: Boolean, label: "Hareket yönü", default: false }, // false:Borç|true:Alacak
     acctype: { type: String, label: "Hesap Tipi", default: "" },
     account: { type: String, label: "Hesap", default: "" },
     glaccount: { type: String, label: "Tek Düzen Hesap No", default: "" },
-    valuefield: { type: String, label: "Değer Alanı", default: ""  },
+    valuefield: { type: String, label: "Değer Alanı", default: "" },
     stext: { type: String, label: "Açıklama", default: "" },
     currency: { type: String, label: "Para birimi", default: "" },
     runcode: { type: String, label: "Runcode", default: "" },

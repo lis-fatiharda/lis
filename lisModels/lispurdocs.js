@@ -333,7 +333,7 @@ const schema = new mongoose.Schema(
         freighter: { type: String, label: "Nakliyeci", default: "" },
         shipping: { type: String, label: "Teslim Tipi", default: "" },
         station: { type: String, label: "İstasyon", default: "" },
-
+        paymcond: { type: String, label: "Ödeme Koşulları", default: "" },
 
         //*********E-DELIVERY E-INVOICE********** */
         isprinted: {
@@ -355,11 +355,10 @@ const schema = new mongoose.Schema(
         },
         einvonumber: { type: String, label: "E-Belge No", default: "" },
         einvouuid: { type: String, label: "UUID", defaut: "" },
-        qpostway: {
-            type: Number,
-            enum: [0, 1],
-            label: "0:Gelen|1:Giden",
-            default: 1,
+        postway: {
+            type: Boolean,
+            label: "Hareket Yönü",
+            default: false,
         }, //belge yönü
         //*********SUBTOTAL-GRANDTOTAL********** */
         gross: { type: Number, label: "Brüt", default: 0 },

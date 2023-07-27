@@ -1,13 +1,26 @@
 <template>
-  <l-card style="width: 49%; min-width: 320px">
-    <l-card-section class="row q-gutter-xs"> </l-card-section>
-  </l-card>
-
-  <l-card style="width: 50%; min-width: 320px">
-    <l-card-section class="row q-gutter-xs"> </l-card-section>
-  </l-card>
+  
   <l-card style="width: 100%">
-    <q-markup-table style="width: 100%" separator="cell" bordered>
+    <l-div>
+      <l-select
+        :label="this.$gl(`Ödeme Tipi`, `Payment Type`)"
+        options="lisbas017"
+        v-model="dv.lispurdocs.paymcond"
+        optValue="paymcond"
+        optTitle="stext"
+        optCaptions="paymcond"
+        width="180px"
+        @select="fetchChngPay($event)" 
+      />
+    </l-div>
+    <l-table
+        name="PURT01D01"
+        :tableData="dv.lispurdocs.payplan"
+        :columns="myColumnsPplan"
+        :width="'100%'"
+        @change="fetchChng($event)"     
+        />
+     <!-- <q-markup-table style="width: 100%" separator="cell" bordered>
       <thead>
         <tr class="bg-blue-grey-2">
           <th style="width: 35px">
@@ -99,7 +112,7 @@
           </td>
         </tr>
       </tbody>
-    </q-markup-table>
+    </q-markup-table>  -->
     <l-chip
       dense
       justify="right"
@@ -117,16 +130,73 @@
 <script>
 export default {
   props: ["dv", "tabInfo"],
+data() {
+  return{
+       myColumnsPplan: [
+                {
+                    type: "selectmenu",
+                    label: this.$gl("Ödeme Tipi", "Pay Type"),
+                    value: "paytype",
+                    options: "lisbas011",
+                    optValue: "paytype",
+                    optTitles: {
+                      paytype: "Ödeme Tipi  ",
+                        stext: "Açıklama",
+                    },
+                },
+                {
+                    label: this.$gl("Ödeme Günü", "Pay Day"),
+                    type: "number",
+                    value: "payday",
+                },
+                {
+                    label: this.$gl(`Ödeme Tarihi`, `Pay Date`),
+                    value: "paydate",
+                    type: "datetime",
+                },
+                {
+                    label: this.$gl("Yüzde%", "Percent%"),
+                    type: "number",
+                    value: "paypercent",
+                },
+                {
+                    label: this.$gl("Ödeme Tutarı", "Pay Amount"),
+                    type: "number",
+                    fraction: 2,
+                    value: "payamount",
+                },
+                {
+                    label: this.$gl("Not","Note"),
+                    type: "string",
+                    value: "ltext",
+                },
+                
+                
+            ],}},
 
   methods: {
     async pushNewPayplan() {
       let myReturn = await this.lis.function("PURT01/pushNewPayplan", this.dv);
       this.dv.lispurdocs.payplan.push(myReturn);
-      // this.$Axios.post("PURT01/pushNewPayplan", this.dv).then((res) => {
-      //     console.log(res.data);
-      //     this.dv.lispurdocs.payplan.push(res.data);
-      // });
+      
     },
+    async fetchChngPay(event){
+      console.log("event",event);
+      let myPayPlan = await this.lis.function("PURT01/pushPayplan", {event, company : this.dv.lispurdocs.company});
+      console.log("myPayPlan",myPayPlan);
+      this.dv.lispurdocs.payplan = [];
+      for (let k in myPayPlan.items) {
+        let tmpPayPlan2 = myPayPlan.items[k];
+        this.dv.lispurdocs.payplan.push(tmpPayPlan2);
+      };
+      for (let s in this.dv.lispurdocs.payplan) {
+        let tmpPayPlan3 =this.dv.lispurdocs.payplan[s];
+        this.dv.lispurdocs.payplan[s].payamount = (tmpPayPlan3.paypercent / 100) * this.dv.lispurdocs.grandtotal;
+        this.dv.lispurdocs.payplan[s].paydate = this.lis.addDays(this.dv.lispurdocs.validfrom, tmpPayPlan3.payday);
+
+      };
+    },
+
     removePayplan(index) {
       this.dv.lispurdocs.payplan.splice(index, 1);
     },

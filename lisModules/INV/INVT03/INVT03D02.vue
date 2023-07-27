@@ -269,7 +269,7 @@ export default {
         },
         {
           label: this.$gl("Har.Yönü", "Direction of Movement"),
-          value: "qpostway",
+          value: "postway",
           type: "select",
           options: [
             {

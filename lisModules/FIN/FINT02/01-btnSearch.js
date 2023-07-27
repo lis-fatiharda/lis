@@ -16,7 +16,7 @@ export default async function (dv) {
         $gte: dv.sc.postdatestart,
         $lte: dv.sc.postdateend,
       },
-      docdate: {
+      postdate: {
         $gte: dv.sc.docdatestart,
         $lte: dv.sc.docdateend,
       },

@@ -1,8 +1,8 @@
 export default async function (dv) {
-  dv.lisbomdocs = await lisbomdocs.findOne({
-    company: dv.lisbomdocs.company,
-    doctype: dv.lisbomdocs.doctype,
-    docnum: dv.lisbomdocs.docnum,
+  dv.lisprddocs = await lisprddocs.findOne({
+    company: dv.lisprddocs.company,
+    doctype: dv.lisprddocs.doctype,
+    docnum: dv.lisprddocs.docnum,
   });
 
   // Fill the Select-----------------------------------------------------------

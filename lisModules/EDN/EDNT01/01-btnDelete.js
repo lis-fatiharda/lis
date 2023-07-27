@@ -1,6 +1,7 @@
-
 export default async function (dv) {
-    let lisedndocsDeleted = dv.lisedndocsList.filter((e) => e._selected == true);
+    let lisedndocsDeleted = dv.lisedndocsList.filter(
+        (e) => e._selected == true
+    );
 
     if (lisedndocsDeleted.length == 0)
         throw new Error("Lütfen Bir Satır Seçiniz!");

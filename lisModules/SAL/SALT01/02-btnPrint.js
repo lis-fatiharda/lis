@@ -3,7 +3,6 @@ export default async function (dv) {
 
     const olisedndocs = new lisedndocs(lisedndocs.prototype.schema.tree);
     olisedndocs.company = dv.lissaldocs.company;
-    olisedndocs.postway = 1;
     olisedndocs.doctype = dv.lissaldocs.doctype;
     olisedndocs.docnum = dv.lissaldocs.docnum;
     olisedndocs.customer = dv.lissaldocs.customer;
@@ -14,8 +13,9 @@ export default async function (dv) {
     olisedndocs.currency = dv.lissaldocs.currency;
     olisedndocs.createdby = global.sys_user;
     olisedndocs.edoctype = dv.lissaldocs.edoctype;
-    olisedndocs.qpostway = dv.lissaldocs.qpostway;
+    olisedndocs.postway = true;
     olisedndocs.edocstat = 1;
+    olisedndocs.einvotype = dv.lissaldocs.einvotype;
 
     const oliscustomers = await liscustomers.findOne({
         company: dv.lissaldocs.company,
@@ -43,7 +43,7 @@ export default async function (dv) {
     const olisedndocsSave = new lisedndocs(olisedndocs);
     await olisedndocsSave.save().catch((err) => {
         console.log(err);
-        throw new Error("Kuyruğa GÖnderilemedi!");
+        throw new Error("Kuyruğa Gönderilemedi!");
     });
     await lissaldocs.updateOne(
         {
@@ -54,8 +54,6 @@ export default async function (dv) {
         },
         { $set: { isprinted: true } }
     );
-
-    console.log("İşlem Başarılı.");
 
     return dv;
 }
