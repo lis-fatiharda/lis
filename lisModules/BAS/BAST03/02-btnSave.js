@@ -1,7 +1,7 @@
 export default async function (dv) {
   if (dv.modi == 0) {
     // Get Material Number**************
-    dv.lismaterials.material = await NumRange.getNewNumber({
+    dv.lismaterials.material = await Numrange.getNewNumber({
       company: dv.sc.company,
       numrange: "BAST03",
       manuelNumber: dv.lismaterials.material,

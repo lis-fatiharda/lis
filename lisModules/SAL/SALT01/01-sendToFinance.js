@@ -9,7 +9,7 @@ export default async function (dv) {
     for (let k in salDocListSelected) {
         dv.lissaldocs = await lissaldocs.findById(salDocListSelected[k]._id);
 
-        if (dv.lissaldocs.isprinted == true) continue;
+        if (dv.lissaldocs.isfinance == true) continue;
 
         // Lock the document
         let isLocked = await System.lock(
@@ -29,7 +29,12 @@ export default async function (dv) {
         // Create Finance Document
         dv.lissaldocs.isfinance = true;
 
-        dv.lisfindocs = await Finance.createFinFromSal(dv.lissaldocs);
+        dv.lisfindocs = await Finance.createFinFromSal(dv.lissaldocs).catch(
+            async (err) => {
+                await System.unlock(dv.lockKeyParams);
+                throw new Error(err.message);
+            }
+        );
 
         // Save The Finance Document
 

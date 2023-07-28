@@ -30,7 +30,10 @@ export default async function (dv) {
 
         // Send the document
 
-        await btnPrint(dv);
+        await btnPrint(dv).catch(async (err) => {
+            await System.unlock(dv.lockKeyParams);
+            throw new Error(err.message);
+        });
 
         // Unlock the document
 

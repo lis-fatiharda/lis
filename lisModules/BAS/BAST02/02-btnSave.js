@@ -12,15 +12,28 @@ export default async function (dv) {
   // Save the Document*********************
   if (dv.modi == 0) {
     // Get customer Number**************
-    let num = await liscustomers.find({
+    let num = await liscustomers.findOne({
       company: dv.sc.company,
-      custorvend: dv.sc.custorvend,
+      custorvend: dv.liscustomers.custorvend,
     })
-    let nmrng = num.custorvend == 0 ? "candnumrange" : num.custorvend == 1 ? "cusnumrange" : "vennumrange";
+    let nmrng = await lisbas001.findOne({
+      company: dv.sc.company,
+    })
+    if (num.custorvend == 0) {
+      var numrang = nmrng.candnumrange;
+    };
+    if (num.custorvend == 1) {
+      var numrang = nmrng.cusnumrange;
+    };
+    if (num.custorvend == 2) {
+      var numrang = nmrng.vennumrange;
+    };
+
+    //let nmrng = num.custorvend == 0 ? "candnumrange" : num.custorvend == 1 ? "cusnumrange" : "vennumrange";
     dv.liscustomers.customer = await Numrange.getNewNumber({
       company: dv.sc.company,
       //numrange: "BAST02",
-      numrange: nmrng,
+      numrange: numrang,
       manuelNumber: dv.liscustomers.customer,
     });
 
