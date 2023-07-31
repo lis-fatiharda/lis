@@ -30,7 +30,7 @@
             </q-bar>
         </l-card>
         <l-card>
-            <l-card-section horizontal>
+            <l-card-section>
                 <l-div-flex>
                     <l-select
                         :label="this.$gl(`Firma`, `Company`)"
@@ -74,129 +74,130 @@
                         v-model="mv.lisfin002.isintegration"
                         color="pink"
                     />
+                    <!-- -->
+                    <l-checkbox
+                        :label="
+                            this.$gl(`Cari Kart`, `Customer Card`)
+                        "
+                        v-model="mv.lisfin002.iscustomer"
+                        color="pink"
+                    />
+                    <l-checkbox
+                        :label="
+                            this.$gl(`Banka (Borç)`, `Bank 1`)
+                        "
+                        v-model="mv.lisfin002.isbankDebit"
+                        color="pink"
+                    />
+                    <l-checkbox
+                        :label="
+                            this.$gl(`Banka (Alacak)`, `Bank 2`)
+                        "
+                        v-model="mv.lisfin002.isbankCredit"
+                        color="pink"
+                    />
                 </l-div-flex>
-                <l-separator vertical />
 
-                <div>
-                    <div>
+                <l-separator/>
+                <l-div-flex>
                         <l-chip square dense>
                             <q-avatar color="primary" text-color="white"
                                 >A</q-avatar
                             >
                             Demirbaş
                         </l-chip>
-                    </div>
-                    <div>
                         <l-chip square dense>
                             <q-avatar color="red" text-color="white"
                                 >C</q-avatar
                             >
                             Maliyet Merkezi
                         </l-chip>
-                    </div>
 
-                    <div>
+                    
                         <l-chip square dense>
                             <q-avatar color="amber" text-color="white"
                                 >L</q-avatar
                             >
                             Akreditif Çek No
                         </l-chip>
-                    </div>
-                    <div>
+                  
                         <l-chip square dense>
                             <q-avatar color="red" text-color="white"
                                 >M</q-avatar
                             >
                             Ay
                         </l-chip>
-                    </div>
-
-                    <div>
+                    
                         <l-chip square dense>
                             <q-avatar color="red" text-color="white"
                                 >R</q-avatar
                             >
                             Personel
                         </l-chip>
-                    </div>
-                    <div>
+                   
                         <l-chip square dense>
                             <q-avatar color="brown" text-color="white"
                                 >P</q-avatar
                             >
                             Ürün
                         </l-chip>
-                    </div>
-
-                    <div>
+                  
                         <l-chip square dense>
                             <q-avatar color="brown" text-color="white"
                                 >T</q-avatar
                             >
                             Malzeme Tipi
                         </l-chip>
-                    </div>
-                    <div>
+                  
                         <l-chip square dense>
                             <q-avatar color="brown" text-color="white"
                                 >X</q-avatar
                             >
                             Malzeme
                         </l-chip>
-                    </div>
-
-                    <div>
+                   
                         <l-chip square dense>
                             <q-avatar color="negative" text-color="white"
                                 >Y</q-avatar
                             >
                             KDV Anahtarı
                         </l-chip>
-                    </div>
-                    <div>
+                 
                         <l-chip square dense>
                             <q-avatar color="secondary" text-color="white"
                                 >Z</q-avatar
                             >
                             Banka
                         </l-chip>
-                    </div>
-
-                    <div>
+                 
                         <l-chip square dense>
                             <q-avatar color="secondary" text-color="white"
                                 >B</q-avatar
                             >
                             Para Birimi
                         </l-chip>
-                    </div>
-                    <div>
+                  
                         <l-chip square dense>
                             <q-avatar color="amber" text-color="white"
                                 >E</q-avatar
                             >
                             Tesis
                         </l-chip>
-                    </div>
-
-                    <div>
+               
                         <l-chip square dense>
                             <q-avatar color="amber" text-color="white"
                                 >W</q-avatar
                             >
                             Depo
                         </l-chip>
-                    </div>
-                    <div>
+               
                         <l-chip square dense>
                             <q-avatar color="amber" text-color="white"
                                 >S</q-avatar
                             >
                             Stok Yeri
                         </l-chip>
-                    </div>
-                </div>
+                </l-div-flex>
             </l-card-section>
         </l-card>
         <!--Searching Criterias Layer-->
@@ -310,8 +311,5 @@ export default {
             this.mv.lisfin002.items.push(myReturn);
         },
     },
-    // mounted() {
-    //     this.init(this.mv);
-    // },
 };
 </script>

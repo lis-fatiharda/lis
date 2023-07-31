@@ -250,6 +250,14 @@ const schema = new mongoose.Schema(
         items: [salItemsSchema],
         payplan: [payPlanSchema],
         notes: [notesSchema],
+
+        //*********shipment************* */
+
+        drivername: { type: String, label: "Şoför adı", default: "" },
+        driversurname: { type: String, label: "Şoför soyadı", default: "" },
+        driverid: { type: String, label: "Şoför TC no", default: "" },
+        driverplate: { type: String, label: "Plaka", default: "" },
+
         //*********DEL-INV ADRESSES********** */
         isgrcrecv: {
             type: Boolean,

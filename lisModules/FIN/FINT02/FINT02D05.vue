@@ -1,11 +1,14 @@
 <template>
     <l-div-flex>
-        <l-card style="width: 100%">
+        <l-card style="width: 100%" bordered>
             <l-div-flex class="text-overline">
                 <l-select
                     :label="this.$gl(`Kayıt Anahtarı`, `Post Key`)"
                     v-model="cv.postkey"
-                    @selectedRow="cv.stext = $event?.stext"
+                    @selectedRow="
+                        cv.stext = $event?.stext;
+                        olisfin002 = $event;
+                    "
                     options="lisfin002"
                     optValue="postkey"
                     optTitle="stext"
@@ -14,7 +17,12 @@
                     class="bg-amber-2"
                 />
 
-                <l-input label="Açıklama" v-model="cv.stext" width="250px"/>
+                <l-input
+                    label="Açıklama"
+                    v-model="cv.stext"
+                    min-width="320px"
+                    readonly
+                />
 
                 <l-space />
                 <l-chip
@@ -33,13 +41,15 @@
                     dense
                     outline
                     color="negative"
+                    @click="clearFinItem()"
                 />
             </l-div-flex>
             <l-separator inset />
-            <l-card-section class="q-gutter-xs q-pa-xs row">
+            <l-card-section class="row">
                 <l-input
-                    :label="this.$gl(`Müşteri Kodu`, `Customer Code`)"
+                    :label="this.$gl(`Cari Kodu`, `Customer Code`)"
                     v-model="cv.customer"
+                    v-if="olisfin002?.iscustomer == true"
                 >
                     <l-chip
                         class="bg-white"
@@ -62,26 +72,41 @@
                 </l-input>
 
                 <l-input
-                    :label="this.$gl(`Müşteri Adı`, `Customer Name`)"  
+                    :label="this.$gl(`Cari Adı`, `Customer Name`)"
                     v-model="cv.name1"
                     style="width: 300px"
+                    v-if="olisfin002?.iscustomer == true"
                 >
                 </l-input>
 
                 <l-select
-                    :label="this.$gl(`Banka`, `Bank`)"
-                    v-model="cv.bank"
+                    :label="this.$gl(`Banka (Gönderen)`, `Bank`)"
+                    v-model="cv.bankCredit"
                     options="lisbas015"
                     optValue="baccount"
                     optTitle="stext"
                     optCaptions="baccount"
                     width="250px"
+                    v-if="olisfin002?.isbankCredit == true"
                 />
+
+                <l-select
+                    :label="this.$gl(`Banka (Gelen)`, `Bank`)"
+                    v-model="cv.bankDebit"
+                    options="lisbas015"
+                    optValue="baccount"
+                    optTitle="stext"
+                    optCaptions="baccount"
+                    width="250px"
+                    v-if="olisfin002?.isbankDebit == true"
+                />
+                
 
                 <l-input
                     type="money"
                     :label="this.$gl(`Tutar`, `Amount`)"
                     v-model="cv.postamnt"
+                    v-if="cv.postkey?.length > 0"
                 />
                 <l-select
                     :label="this.$gl(`P.Br.`, `Currency`)"
@@ -92,16 +117,19 @@
                     optCaptions="unit"
                     :optFilter="{ unittype: 1 }"
                     width="135px"
+                    v-if="cv.postkey?.length > 0"
                 />
                 <l-input
                     :label="this.$gl(`Kur`, `Exchange`)"
                     type="number"
                     v-model="cv.currate"
+                    v-if="cv.postkey?.length > 0"
                 />
                 <l-date
                     :label="this.$gl(`Kur Tarihi`, `Currency Date`)"
                     v-model="cv.curdate"
                     style="width: 150px"
+                    v-if="cv.postkey?.length > 0"
                 />
             </l-card-section>
         </l-card>
@@ -122,7 +150,8 @@ export default {
                 isname1: false,
                 stext: "",
 
-                bank: "",
+                bankDebit: "",
+                bankCredit: "",
                 isbank: false,
                 banktxt: "",
                 isbanktxt: false,
@@ -136,13 +165,23 @@ export default {
                 curdate: new Date(),
                 iscurdate: false,
             },
+            olisfin002: {},
         };
     },
 
     methods: {
         async createFinFromPostkey() {
-            this.dv.lisfindocs = await this.lis.function("cls-finance.createFinFromPostkey", {plisfindocs: this.dv.lisfindocs, cv: this.cv})
+            this.dv.lisfindocs = await this.lis.function(
+                "cls-finance.createFinFromPostkey",
+                { plisfindocs: this.dv.lisfindocs, cv: this.cv }
+            );
+        },
+        async clearFinItem() {
+            this.dv.lisfindocs.items = await this.lis.function(
+                "FINT02/clearFinItem",
+                { }
+            );
         }
-    }
+    },
 };
 </script>

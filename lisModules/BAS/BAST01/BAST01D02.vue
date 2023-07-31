@@ -72,7 +72,7 @@
                                     "
                                     class="text-left"
                                 >
-                                    {{ dv.lisModelDataLabel[key]["label"] }}
+                                    {{ dv.lisModelDataLabel[key]?.label }}
                                 </th>
                             </template>
                             <th></th>
@@ -144,11 +144,12 @@
                                 (key != 'createdAt') &
                                 (key != '_deleted') &
                                 (dv.lisModelDataLabel[key]?.options !=
-                                    undefined)
+                                    undefined) &
+                                (dv.lisModelDataLabel[key]?.label != undefined)
                             "
                         >
                             <l-select
-                                :label="dv.lisModelDataLabel[key]['label']"
+                                :label="dv.lisModelDataLabel[key]?.label"
                                 v-model="dv.lisModelDataDetail[0][key]"
                                 :options="dv.lisModelDataLabel[key].options"
                                 optValue="value"
@@ -168,7 +169,8 @@
                                 (key != '_deleted') &
                                 (typeof value == 'number') &
                                 (dv.lisModelDataLabel[key]?.options ==
-                                    undefined)
+                                    undefined) &
+                                (dv.lisModelDataLabel[key]?.label != undefined)
                             "
                         >
                             <l-input
@@ -189,7 +191,8 @@
                                 (key != '_deleted') &
                                 (typeof value == 'string') &
                                 (dv.lisModelDataLabel[key]?.options ==
-                                    undefined)
+                                    undefined) &
+                                (dv.lisModelDataLabel[key]?.label != undefined)
                             "
                         >
                             <l-input
@@ -207,7 +210,8 @@
                                 (key != 'updatedAt') &
                                 (key != 'createdAt') &
                                 (key != '_deleted') &
-                                (typeof value == 'boolean')
+                                (typeof value == 'boolean') &
+                                (dv.lisModelDataLabel[key]?.label != undefined)
                             "
                         >
                             <l-checkbox

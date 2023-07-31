@@ -2,12 +2,7 @@ import fs from "fs";
 import path from "path";
 import Axios from "axios";
 import xml2js from "xml2js";
-import lisedn001 from "../../../lisModels/lisedn001.js";
-import lisedndocs from "../../../lisModels/lisedndocs.js";
-import lissaldocs from "../../../lisModels/lissaldocs.js";
 import { lisnumranges } from "../../../lisModels/lisnumranges.js";
-import NumRange from "../numrange/A-numrange.js";
-const numrange = new NumRange();
 
 export default async function (pSession_id, plisedndocs) {
 
@@ -18,14 +13,13 @@ export default async function (pSession_id, plisedndocs) {
         username: global.sys_user,
         doctype: plisedndocs.doctype,
     });
-    //console.log("olisedn001");
-    //console.log(olisedn001);
+    
     if (olisedn001 == null)
         throw new Error("Bu Belge İçin Yetkiniz Bulunmamaktadır!");
     
     //*** fetch E-InvoNumber */
 
-    let myEinvonumber = await numrange.getNewNumber({
+    let myEinvonumber = await Numrange.getNewNumber({
         company: plisedndocs.company,
         numrange: olisedn001.edeliverynumrange,
     });
@@ -53,7 +47,7 @@ export default async function (pSession_id, plisedndocs) {
         .readFileSync(
             path.join(
                 process.env.liserp_DIR,
-                "lisModules/classes/emember/wsXml/sendEinvoice.xml"
+                "lisModules/classes/emember/wsXml/sendEdelivery.xml"
             )
         )
         .toString();

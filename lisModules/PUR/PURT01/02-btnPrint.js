@@ -48,7 +48,7 @@ export default async function (dv) {
   const newUuid = UUID.v4();
   olisedndocs.einvouuid = newUuid;
   dv.lispurdocs.einvouuid = newUuid;
-  olisedndocs.edistr = await Emember.createUblFromPur(
+  olisedndocs.edistr = await Emember.createInvFromPur(
     dv.lispurdocs,
     olisedndocs
   );

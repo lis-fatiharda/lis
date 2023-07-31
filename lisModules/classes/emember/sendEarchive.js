@@ -2,12 +2,7 @@ import fs from "fs";
 import path from "path";
 import Axios from "axios";
 import xml2js from "xml2js";
-import lisedn001 from "../../../lisModels/lisedn001.js";
-import lisedndocs from "../../../lisModels/lisedndocs.js";
-import lissaldocs from "../../../lisModels/lissaldocs.js";
 import { lisnumranges } from "../../../lisModels/lisnumranges.js";
-import NumRange from "../../classes/numrange/A-numrange.js";
-const numrange = new NumRange();
 
 export default async function sendEarchive(pSession_id, plisedndocs) {
     //*** Control Document Rights */
@@ -23,7 +18,7 @@ export default async function sendEarchive(pSession_id, plisedndocs) {
 
     //*** fetch E-InvoNumber */
 
-    let myEinvonumber = await numrange.getNewNumber({
+    let myEinvonumber = await Numrange.getNewNumber({
         company: plisedndocs.company,
         numrange: olisedn001.earchivenumrange,
     });

@@ -15,7 +15,7 @@ const itemsSchema = new mongoose.Schema({
     stockplace: { type: String, label: "Stokyeri", default: "" },
     specialstock: { type: String, label: "Özel stok tipi", default: "" },
     batchnum: { type: String, label: "Parti no", default: "" },
-    postway: { type: Boolean, label: "Hareket yönü", default: false }, // 0:Giriş|1:Çıkış
+    postway: { type: Boolean, label: "Hareket yönü", default: false }, // false:Giriş|true:Çıkış
     stocktype: { type: Number, label: "Stok tipi", default: 0 }, // 0:Kullanılabilir|1:Kalite|2:Bloke|3:rezerve
     isstocktran: { type: Boolean, label: "Transfer Hareketi", default: false },
     //-

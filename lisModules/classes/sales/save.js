@@ -1,19 +1,9 @@
-import lissaldocs from "../../../lisModels/lissaldocs.js";
-import lissal001 from "../../../lisModels/lissal001.js";
-import lissal002 from "../../../lisModels/lissal002.js";
-
-import numrange from "../numrange/A-numrange.js";
-import inventory from "../inventory/A-inventory.js";
-import lisbas009 from "../../../lisModels/lisbas009.js";
-import lisfindocs from "../../../lisModels/lisfindocs.js";
-
 // ? modi: -1 = create new document by reference
 // ?        0 = create new document
 // ?        1 - update the document
 
 export default async function save(plissaldocs, pModi) {
-    const Numrange = new numrange();
-    const Inventory = new inventory();
+
 
     const olissal001 = await lissal001.findOne({
         company: plissaldocs.company,

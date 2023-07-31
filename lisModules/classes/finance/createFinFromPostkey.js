@@ -1,10 +1,3 @@
-import liscustomers from "../../../lisModels/liscustomers.js"
-import lisaccounts from "../../../lisModels/lisaccounts.js"
-import lisfindocs from "../../../lisModels/lisfindocs.js"
-
-import lisfin002 from "../../../lisModels/lisfin002.js"
-import lissal001 from "../../../lisModels/lissal001.js"
-import lissal002 from "../../../lisModels/lissal002.js"
 
 export default async function ({plisfindocs, cv}) { 
 
@@ -69,7 +62,7 @@ export default async function ({plisfindocs, cv}) {
             }
             if (myfin002_item.acctype == "G") {
 
-                let myAccount = await this.fetchAccount(cv, myfin002_item.account, plisfindocs);
+                let myAccount = await this.fetchAccount(cv, myfin002_item, plisfindocs);
 
                 if (plisfindocs.items.findIndex((x) => x.account == myAccount) > -1) {
                     let myRow = plisfindocs.items.findIndex((x) => x.account == myAccount);

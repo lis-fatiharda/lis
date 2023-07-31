@@ -1,8 +1,4 @@
-import lisinvstocks from "../../../lisModels/lisinvstocks.js";
-
-export default async function saveMovement(
-    pLisinvdocs,
-) {
+export default async function saveMovement(pLisinvdocs) {
     // Controls before save --------------------------------
 
     for (let i in pLisinvdocs.items) {
@@ -93,8 +89,17 @@ export default async function saveMovement(
                     olisinvstocks.bquantity +
                     olisinvstocks.rquantity;
             }
-            olisinvstocks = new lisinvstocks(olisinvstocks);
-            olisinvstocks.save();
+            await lisinvstocks.findOneAndUpdate(
+                {
+                    _id: olisinvstocks._id,
+                },
+                {
+                    aquantity: olisinvstocks.aquantity,
+                    qquantity: olisinvstocks.qquantity,
+                    bquantity: olisinvstocks.bquantity,
+                    rquantity: olisinvstocks.rquantity,
+                }
+            );
         }
     }
 }

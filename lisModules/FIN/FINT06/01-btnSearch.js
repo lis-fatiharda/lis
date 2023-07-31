@@ -10,6 +10,7 @@ export default async function (dv) {
                 "items.acctype": lis.like(dv.sc.acctype),
                 "items.account": lis.like(dv.sc.account1),
                 "items.glaccount": lis.like(dv.sc.glaccount),
+                "items.currency": lis.like(dv.sc.currency),
                 $and: [
                     {
                         $or: [

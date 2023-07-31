@@ -3,9 +3,9 @@ import lisbas009 from "../../../lisModels/lisbas009.js";
 import lisbas015 from "../../../lisModels/lisbas015.js";
 
 
-export default async function (pItem, pAccount, pDocument) {
+export default async function (pItem, plisfin002_item, pDocument) {
 
-    if (pAccount.indexOf("T") > -1) {
+    if (plisfin002_item.account.indexOf("T") > -1) {
         let olismaterials = (
             await lismaterials.findOne({
                 company: pDocument.company,
@@ -21,12 +21,12 @@ export default async function (pItem, pAccount, pDocument) {
 
         for (let index = 0; index < olisbas009.accgrp.length; index++) {
             let myChar = olisbas009.accgrp.substring(index, (index + 1));
-            pAccount = pAccount.replace("T", myChar);
+            plisfin002_item.account = plisfin002_item.account.replace("T", myChar);
 
         }
     }
     
-    if (pAccount.indexOf("X") > -1) {
+    if (plisfin002_item.account.indexOf("X") > -1) {
         let olismaterials = (
             await lismaterials
                 .findOne({
@@ -37,27 +37,39 @@ export default async function (pItem, pAccount, pDocument) {
         )
         for (let index = 0; index < olismaterials.mataccgrp.length; index++) {
             let myChar = olismaterials.mataccgrp.substring(index, (index + 1));
-            pAccount = pAccount.replace("X", myChar);
+            plisfin002_item.account = plisfin002_item.account.replace("X", myChar);
             
         }
     }
 
-    if (pAccount.indexOf("Y") > -1) {
+    if (plisfin002_item.account.indexOf("Y") > -1) {
         let myVatKey = pItem.vatrate.toString();
         if (myVatKey.length < 2) {
             myVatKey = "0" + myVatKey;
         }
-        pAccount = pAccount.replace("YY", myVatKey);
+        plisfin002_item.account = plisfin002_item.account.replace("YY", myVatKey);
     }
 
-    if (pAccount.indexOf("Z") > -1) {
+    if (plisfin002_item.account.indexOf("Z") > -1) {
 
 
-        pAccount = await lisbas015.findOne({ company: pDocument.company, baccount: pItem.bank });
+        let olisbas015 = undefined;
+        if (plisfin002_item.postway == false) {
+            olisbas015 = await lisbas015.findOne({
+                company: pDocument.company,
+                baccount: pItem.bankDebit,
+            });
+        } else {
+            olisbas015 = await lisbas015.findOne({
+                company: pDocument.company,
+                baccount: pItem.bankCredit,
+            });
+        }
+        
 
-        pAccount = pAccount.account;
+        plisfin002_item.account = olisbas015.account;
         
     }
 
-    return pAccount;
+    return plisfin002_item.account;
 }

@@ -8,6 +8,7 @@ export default async function (dv) {
                 "items.acctype": lis.like(dv.sc.acctype),
                 "items.account": lis.like(dv.sc.account),
                 "items.glaccount": lis.like(dv.sc.glaccount),
+                "items.currency": lis.like(dv.sc.currency),
                 postdate: {
                     $gte: new Date(dv.sc.datefrom),
                     $lte: new Date(dv.sc.dateuntil),

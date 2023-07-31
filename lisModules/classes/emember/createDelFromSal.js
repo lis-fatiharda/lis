@@ -1,48 +1,28 @@
 import fs from "fs";
 import path from "path";
-import getBaseSchema from "./getBaseSchema.js";
-import getOrderRefSchema from "./getOrderRefSchema.js";
-import getDespatchRefSchema from "./getDespatchRefSchema.js";
-import getAdditionalSchema from "./getAdditionalSchema.js";
-import getAdditionalSchemaForEarchive from "./getAdditionalSchemaForEarchive.js";
+import getBaseSchemaD from "./1-getBaseSchemaD.js";
+import getOrderRefSchemaD from "./2-getOrderRefSchemaD.js";
+import getAdditionalSchemaD from "./3-getAdditionalSchemaD.js";
 
-import getSignatureSchema from "./getSignatureSchema.js";
-import getSupplierSchema from "./getSupplierSchema.js";
-import getCustomerSchema from "./getCustomerSchema.js";
-import getTaxSchema from "./getTaxSchema.js";
-import getTaxSubSchema from "./getTaxSubSchema.js";
+import getSignatureSchemaD from "./4-getSignatureSchemaD.js";
+import getSupplierSchemaD from "./5-getSupplierSchemaD.js";
+import getCustomerSchemaD from "./6-getCustomerSchemaD.js";
 
-import getMonetaryTotalSchema from "./getMonetaryTotalSchema.js";
-import getItemSchema from "./getItemSchema.js";
-import getItemDiscSchema from "./getItemDiscSchema.js";
-import getHeadDiscSchema from "./getHeadDiscSchema.js";
+import getShipmentD from "./7-getShipmentD.js";
+import getItemSchemaD from "./9-getItemSchemaD.js";
 
-import getTaxItemSchema from "./getTaxItemSchema.js";
-import getExchangeRateSchema from "./getExchangeRateSchema.js";
-
-import lisbas001 from "../../../lisModels/lisbas001.js";
-import lisbas007 from "../../../lisModels/lisbas007.js";
-
-
-export default async function createUblFromSal(plissaldocs, plisedndocs) {
+export default async function (plissaldocs, plisedndocs) {
     const olisbas001 = await lisbas001.findOne({
         company: plissaldocs.company,
     });
 
     //**********BASESCHEMA************************************* */
     var EINVOSTR = "";
-    var BASEBLOCK = await getBaseSchema();
+    var BASEBLOCK = await getBaseSchemaD();
     //------------------------------------
 
-    if (plisedndocs.edoctype == 1) {
-        if (plissaldocs.einvotype == 0)
-            BASEBLOCK = BASEBLOCK.replace("#PROFILEID#", "TEMELFATURA");
-        if (plissaldocs.einvotype == 1)
-            BASEBLOCK = BASEBLOCK.replace("#PROFILEID#", "TICARIFATURA");
-    }
-    if (plisedndocs.edoctype == 2)
-        BASEBLOCK = BASEBLOCK.replace("#PROFILEID#", "EARSIVFATURA");
-    if (plisedndocs.edoctype == 3) return;
+    BASEBLOCK = BASEBLOCK.replace("#PROFILEID#", "TEMELIRSALIYE");
+
     //------------------------------------
 
     //BASEBLOCK = BASEBLOCK.replace("#EINVONUMBER#", plisedndocs.einvonumber);
@@ -56,11 +36,8 @@ export default async function createUblFromSal(plissaldocs, plisedndocs) {
         "#VALIDTIME#",
         lis.format(new Date(plissaldocs.validfrom), "HH:mm:SS")
     );
-    if (plissaldocs.vats.findIndex((e) => e.novatcode == "212") > -1) {
-        BASEBLOCK = BASEBLOCK.replace("#INVOICETYPECODE#", "ISTISNA");
-    } else {
-        BASEBLOCK = BASEBLOCK.replace("#INVOICETYPECODE#", "SATIS");
-    }
+
+    BASEBLOCK = BASEBLOCK.replace("#INVOICETYPECODE#", "SEVK");
 
     let noteSchema = "<cbc:Note>#NOTE#</cbc:Note>";
     let noteBlock = "";
@@ -75,23 +52,22 @@ export default async function createUblFromSal(plissaldocs, plisedndocs) {
     }
     BASEBLOCK = BASEBLOCK.replace("#NOTEBLOCK#", noteBlock);
 
-    BASEBLOCK = BASEBLOCK.replace("#CURRENCYCODE#", plissaldocs.currency);
     BASEBLOCK = BASEBLOCK.replace("#LINECOUNT#", plissaldocs.items.length);
 
     EINVOSTR += BASEBLOCK;
     console.log("111111111111111111111111111");
 
-    //**********getOrderRefSchema************************************* */
+    //**********getOrderRefSchemaD************************************* */
 
-    //var ORDERBLOCK = await getOrderRefSchema();
+    //var ORDERBLOCK = await getOrderRefSchemaD();
 
-    //**********getOrderRefSchema************************************* */
+    //**********getOrderRefSchemaD************************************* */
 
     //var DESPATCHBLOCK = await getDespatchRefSchema();
 
-    //**********getAdditionalSchema************************************* */
+    //**********getAdditionalSchemaD************************************* */
 
-    var ADDITIONALBLOCK = await getAdditionalSchema();
+    var ADDITIONALBLOCK = await getAdditionalSchemaD();
 
     ADDITIONALBLOCK = ADDITIONALBLOCK.replace(
         "#XSLTID#",
@@ -102,43 +78,23 @@ export default async function createUblFromSal(plissaldocs, plisedndocs) {
         lis.format(new Date(plissaldocs.validfrom), "yyyy-MM-dd")
     );
 
-    if (plisedndocs.edoctype == 1) {
-        let xsltStr = await fs.readFileSync(
-            path.join(
-                process.env.liserp_DIR,
-                "lisModules/classes/emember/wsXslt/eInvoice.xslt"
-            )
-        );
-        console.log("******", xsltStr);
-        const xsltStrBuffered = Buffer.from(xsltStr).toString("base64");
-        ADDITIONALBLOCK = ADDITIONALBLOCK.replace("#XSLTSTR#", xsltStrBuffered);
-    }
-    if (plisedndocs.edoctype == 2) {
-        let xsltStr = await fs.readFileSync(
-            path.join(
-                process.env.liserp_DIR,
-                "lisModules/classes/emember/wsXslt/eArchive.xslt"
-            )
-        );
-        const xsltStrBuffered = Buffer.from(xsltStr).toString("base64");
-        ADDITIONALBLOCK = ADDITIONALBLOCK.replace("#XSLTSTR#", xsltStrBuffered);
-    }
+    let xsltStr = await fs.readFileSync(
+        path.join(
+            process.env.liserp_DIR,
+            "lisModules/classes/emember/wsXslt/eDelivery.xslt"
+        )
+    );
+    console.log("******", xsltStr);
+    const xsltStrBuffered = Buffer.from(xsltStr).toString("base64");
+    ADDITIONALBLOCK = ADDITIONALBLOCK.replace("#XSLTSTR#", xsltStrBuffered);
 
     EINVOSTR += ADDITIONALBLOCK;
 
     console.log("222222222222222222222222");
-    if (plisedndocs.edoctype == 2) {
-        ADDITIONALBLOCK = await getAdditionalSchemaForEarchive();
-        ADDITIONALBLOCK = ADDITIONALBLOCK.replace(
-            "#XSLTDATE#",
-            lis.format(new Date(plissaldocs.validfrom), "yyyy-MM-dd")
-        );
-        EINVOSTR += ADDITIONALBLOCK;
-    }
 
-    //**********getSignatureSchema************************************* */
+    //**********getSignatureSchemaD************************************* */
 
-    var SIGNATUREBLOCK = await getSignatureSchema();
+    var SIGNATUREBLOCK = await getSignatureSchemaD();
 
     SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#TAXNO#", olisbas001.taxnum);
     SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#TAXNO#", olisbas001.taxnum);
@@ -168,9 +124,9 @@ export default async function createUblFromSal(plissaldocs, plisedndocs) {
 
     console.log("333333333333333333333333333333");
 
-    //**********getSupplierSchema************************************* */
+    //**********getSupplierSchemaD************************************* */
 
-    var SUPPLIERBLOCK = await getSupplierSchema();
+    var SUPPLIERBLOCK = await getSupplierSchemaD();
 
     SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#WEBADR#", olisbas001.website);
     SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#PARTYTAXTYPE#", "VKN");
@@ -195,9 +151,9 @@ export default async function createUblFromSal(plissaldocs, plisedndocs) {
 
     console.log("44444444444444444444444444444444444");
 
-    //**********getCustomerSchema************************************* */
+    //**********getCustomerSchemaD************************************* */
 
-    var CUSTOMERBLOCK = await getCustomerSchema();
+    var CUSTOMERBLOCK = await getCustomerSchemaD();
 
     CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#WEBADR#", plissaldocs.ircwebsite);
     CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#PARTYTAXTYPE#", "VKN");
@@ -219,138 +175,39 @@ export default async function createUblFromSal(plissaldocs, plisedndocs) {
 
     console.log("555555555555555555555555555555555555555555");
 
-    //**********getExchangeRateSchema************************************* */
+    //**********getShipmentD************************************* */
 
-    if (plissaldocs.currency != "TRY") {
-        var CURRENCYRATEBLOCK = await getExchangeRateSchema();
+    var SHIPMENTBLOCK = await getShipmentD();
 
-        CURRENCYRATEBLOCK = CURRENCYRATEBLOCK.replace(
-            "#SourceCurrencyCode#",
-            plissaldocs.currency
-        );
-        CURRENCYRATEBLOCK = CURRENCYRATEBLOCK.replace(
-            "#TargetCurrencyCode#",
-            "TRY"
-        );
-        CURRENCYRATEBLOCK = CURRENCYRATEBLOCK.replace(
-            "#CURRATE#",
-            plissaldocs.currate
-        );
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#CURRENCYCODE#", plissaldocs.currency);
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#AMNT#", "");
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#DRIVERPLATE#", plissaldocs.driverplate);
 
-        EINVOSTR += CURRENCYRATEBLOCK;
-    }
-
-    //**********getHeadDiscSchema************************************* */
-    if (Math.abs(plissaldocs.discamnt) > 0) {
-        var HEADDISCBLOCK = await getHeadDiscSchema();
-        HEADDISCBLOCK = HEADDISCBLOCK.replace(
-            "#DISCORSURC#",
-            plissaldocs.discamnt < 0 ? false : true
-        );
-        HEADDISCBLOCK = HEADDISCBLOCK.replace(
-            "#DISCREASON#",
-            "indirim/artırım"
-        );
-        HEADDISCBLOCK = HEADDISCBLOCK.replace(
-            "#CURRENCYCODE#",
-            plissaldocs.currency
-        );
-        HEADDISCBLOCK = HEADDISCBLOCK.replace(
-            "#DISCAMOUNT#",
-            Math.abs(plissaldocs.discamnt)
-        );
-        EINVOSTR += HEADDISCBLOCK;
-    }
-
-    //**********getTaxSchema************************************* */
-
-    var TAXBLOCK = await getTaxSchema();
-
-    TAXBLOCK = TAXBLOCK.replace("#CURRENCYCODE#", plissaldocs.currency);
-    TAXBLOCK = TAXBLOCK.replace("#VATAMOUNT#", plissaldocs.vatamnt);
-    TAXBLOCK = TAXBLOCK.replace("#CURRENCYCODE#", plissaldocs.currency);
-
-    var TAXSUBSCHEMA = await getTaxSubSchema(plissaldocs);
-    TAXBLOCK = TAXBLOCK.replace("#TAXSUBTOTALSCHEMA#", TAXSUBSCHEMA);
-
-    EINVOSTR += TAXBLOCK;
-
-    console.log("666666666666666666666666666666666666666");
-
-    //**********getMonetaryTotalSchema************************************* */
-
-    var MONETARYTOTALBLOCK = await getMonetaryTotalSchema(plissaldocs);
-
-    MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace(
-        "#CURRENCYCODE#",
-        plissaldocs.currency
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#DRIVERNAME#", plissaldocs.drivername);
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#DRIVERSURNAME#", plissaldocs.driversurname);
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#DRIVERID#", plissaldocs.driverid);
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#DRIVERID#", plissaldocs.driverid);
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace(
+        "#VALIDFROM#",
+        lis.format(new Date(plissaldocs.validfrom), "yyyy-MM-dd")
     );
-    MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace(
-        "#CURRENCYCODE#",
-        plissaldocs.currency
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace(
+        "#VALIDTIME#",
+        lis.format(new Date(plissaldocs.validfrom), "HH:mm:SS")
     );
-    MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace(
-        "#CURRENCYCODE#",
-        plissaldocs.currency
-    );
-    MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace(
-        "#CURRENCYCODE#",
-        plissaldocs.currency
-    );
-    MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace(
-        "#CURRENCYCODE#",
-        plissaldocs.currency
-    );
-    MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace(
-        "#CURRENCYCODE#",
-        plissaldocs.currency
-    );
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#DRIVERPLATE#", plissaldocs.driverplate);
 
-    MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace(
-        "#GROSS#",
-        plissaldocs.gross
-    );
-    MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace(
-        "#SUBTOTAL#",
-        plissaldocs.subtotal
-    );
-    MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace(
-        "#HEADGRANDTOTAL#",
-        plissaldocs.grandtotal
-    );
-    //----------------------------------------------------------------
 
-    if (plissaldocs.discamnt < 0) {
-        MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace(
-            "#DISCAMOUNT#",
-            Math.abs(plissaldocs.discamnt)
-        );
-        MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace("#INCRAMOUNT#", 0);
-    } else {
-        MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace(
-            "#INCRAMOUNT#",
-            Math.abs(plissaldocs.discamnt)
-        );
-        MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace("#DISCAMOUNT#", 0);
-    }
+    EINVOSTR += SHIPMENTBLOCK;
 
-    //----------------------------------------------------------------
+    console.log("6666666666666666666666666666666666666666666666");
 
-    MONETARYTOTALBLOCK = MONETARYTOTALBLOCK.replace(
-        "#GRANDTOTAL#",
-        plissaldocs.grandtotal
-    );
-
-    EINVOSTR += MONETARYTOTALBLOCK;
-
-    console.log("77777777777777777777777777777777777");
-
-    //**********getItemSchema************************************* */
+    //**********getItemSchemaD************************************* */
 
     for (let i in plissaldocs.items) {
         var myItem = plissaldocs.items[i];
         console.log(myItem);
-        var ITEMSBLOCK = await getItemSchema(plissaldocs);
+        var ITEMSBLOCK = await getItemSchemaD(plissaldocs);
 
         ITEMSBLOCK = ITEMSBLOCK.replace("#LINENO#", myItem.itemnum);
         ITEMSBLOCK = ITEMSBLOCK.replace("#LINENOTE#", "");
@@ -369,7 +226,6 @@ export default async function createUblFromSal(plissaldocs, plisedndocs) {
         //----------------------------------------------------------------
 
         if (myItem.discount.length > 0) {
-            
             var DISCBLOCK = "";
             for (let i in myItem.discount) {
                 const myDisc = myItem.discount[i];
@@ -396,7 +252,7 @@ export default async function createUblFromSal(plissaldocs, plisedndocs) {
             }
             ITEMSBLOCK = ITEMSBLOCK.replace("#DISCOUNTSCHEMA#", DISCBLOCK);
         } else {
-            ITEMSBLOCK = ITEMSBLOCK.replace("#DISCOUNTSCHEMA#", '');
+            ITEMSBLOCK = ITEMSBLOCK.replace("#DISCOUNTSCHEMA#", "");
         }
         //----------------------------------------------------------------
 
@@ -417,29 +273,10 @@ export default async function createUblFromSal(plissaldocs, plisedndocs) {
 
         ITEMSBLOCK = ITEMSBLOCK.replace("#SPRICE#", myItem.price);
 
-        //Item Tax Schema
-
-        var TAXSUBTOTALSCHEMA = await getTaxItemSchema(myItem);
-        ITEMSBLOCK = ITEMSBLOCK.replace(
-            "#TAXSUBTOTALSCHEMA#",
-            TAXSUBTOTALSCHEMA
-        );
-        ITEMSBLOCK = ITEMSBLOCK.replace("#CURRENCYCODE#", plissaldocs.currency);
-        ITEMSBLOCK = ITEMSBLOCK.replace("#CURRENCYCODE#", plissaldocs.currency);
-
-        ITEMSBLOCK = ITEMSBLOCK.replace("#SUBTOTAL#", myItem.subtotal);
-        ITEMSBLOCK = ITEMSBLOCK.replace("#VATAMOUNT#", myItem.vatamnt);
-        ITEMSBLOCK = ITEMSBLOCK.replace("#INDEXNUM#", 1);
-        ITEMSBLOCK = ITEMSBLOCK.replace("#VATRATE#", myItem.vatrate);
-        ITEMSBLOCK = ITEMSBLOCK.replace("#TAXNAME#", "KDV");
-        ITEMSBLOCK = ITEMSBLOCK.replace("#TAXCODE#", "0015");
-
-        console.log("8888888888888888888888888888", ITEMSBLOCK);
-
         EINVOSTR += ITEMSBLOCK;
     }
 
-    EINVOSTR += "</Invoice>";
+    EINVOSTR += "</DespatchAdvice>";
 
     console.log("****************", EINVOSTR);
 

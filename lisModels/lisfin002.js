@@ -20,7 +20,27 @@ const schema = new mongoose.Schema(
         postkey: { type: String, label: "Kayıt Anahtarı", default: "" },
         stext: { type: String, label: "Açıklama", default: "" },
         //
-        isintegration: { type: Boolean, label: "Entegrasyonlu Fiş", default: false },
+        isintegration: {
+            type: Boolean,
+            label: "Entegrasyonlu Fiş",
+            default: false,
+        },
+        //
+        iscustomer: {
+            type: Boolean,
+            label: "Cari Kart",
+            default: false,
+        },
+        isbankDebit: {
+            type: Boolean,
+            label: "Banka Borç",
+            default: false,
+        },
+        isbankCredit: {
+            type: Boolean,
+            label: "Banka Alacak",
+            default: false,
+        },
         //
         items: [itemsSchema],
         //

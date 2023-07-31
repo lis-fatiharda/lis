@@ -19,7 +19,7 @@ export default async function (dv) {
 
     const oliscustomers = await liscustomers.findOne({
         company: dv.lissaldocs.company,
-        customer: dv.lissaldocs.customer,
+        customer: dv.lissaldocs.customer, 
         _deleted: false,
     });
 
@@ -32,10 +32,19 @@ export default async function (dv) {
     const newUuid = UUID();
     olisedndocs.einvouuid = newUuid;
     dv.lissaldocs.einvouuid = newUuid;
-    olisedndocs.edistr = await Emember.createUblFromSal(
-        dv.lissaldocs,
-        olisedndocs
-    );
+
+    if (dv.lissaldocs.edoctype < 3) {
+        olisedndocs.edistr = await Emember.createInvFromSal(
+            dv.lissaldocs,
+            olisedndocs
+        );
+    } else {
+        olisedndocs.edistr = await Emember.createDelFromSal(
+            dv.lissaldocs,
+            olisedndocs
+        );
+    }
+    
 
     if (olisedndocs.edistr == undefined) throw new Error("UBL Oluşturulamadı!");
 

@@ -1,9 +1,11 @@
 <template>
   <l-table
+    name = "PRDT01D06"
     :tableData="dv.lisprddocs.operations"
     :columns="operationsColumns"
     :height="'73vh'"
     width="100%"
+    :context="contextMenu"
     @zoom="fetchZoom($event)"
     @keydown="if ($event.key == 'Insert') this.pushNewOpr($event);"
   />
@@ -48,20 +50,41 @@
       />
     </l-card0>
   </l-dialog> -->
+  <q-dialog v-model="isShowItemDetail">
+        <PRDT01D07
+        :dv="dv"
+        :item="dv.lisprddocs.operations[selectedRow]"
+        :tabInfo="tabInfo"
+    />
+    </q-dialog>
 </template>
 
 <script>
 import BOMT02D01 from "../../BOM/BOMT02/BOMT02D01.vue";
+import PRDT01D11 from "../../PRD/PRDT01/PRDT01D11.vue";
 //import COST01D01 from "../../COS/COST01/COST01D01.vue";
 
 export default {
   props: ["dv", "tabInfo"],
-  components: { BOMT02D01 },
+  components: { BOMT02D01,PRDT01D11 },
   data() {
     return {
+      contextMenu: [
+        {
+          name: "Operasyon Aktivitesi",
+          callback: async () => {
+            this.selectedRow = this.dv.lisprddocs.operations.findIndex(
+              (e) => e._selected == true
+            );
+            this.isShowItemDetail = true;
+          },
+        },
+      ],
       isShowWc: false,
       isShowCc: false,
       zoomWc: null,
+      selectedRow: 0,
+      isShowItemDetail:false,
       operationsColumns: [
         {
           type: "number",
@@ -92,7 +115,10 @@ export default {
         {
           type: "string",
           value: "capgrp",
-          label: this.$gl("İş Merkezi Kapasite Grubu", "Work Center Capacity Group"),
+          label: this.$gl(
+            "İş Merkezi Kapasite Grubu",
+            "Work Center Capacity Group"
+          ),
         },
         {
           type: "string",

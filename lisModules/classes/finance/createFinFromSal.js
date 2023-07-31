@@ -96,7 +96,7 @@ export default async function (plissaldocs) {
             if (myfin002_item.acctype == "G") {
                 let myAccount = await this.fetchAccount(
                     mySalItem,
-                    myfin002_item.account,
+                    myfin002_item,
                     plissaldocs
                 );
 

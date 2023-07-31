@@ -1,16 +1,8 @@
 // This function is login button of login component
 // ? pMod: 0: New | 1: Edit | 2: Show | 3: Delete
 
-import lisinvdocs from "../../../lisModels/lisinvdocs.js";
-
-
-import numrange from "../numrange/A-numrange.js"
-import lisinv007 from "../../../lisModels/lisinv007.js";
-
 export default async function saveMovement(pLisinvdocs, pMovecode, pMod) {
 
-    
-        const Numrange = new numrange();
         // Controls before save --------------------------------
 
         for (let i in pLisinvdocs.items) {
@@ -42,7 +34,7 @@ export default async function saveMovement(pLisinvdocs, pMovecode, pMod) {
 
         const olisinv007 = await lisinv007.findOne({
             company: pLisinvdocs.company,
-            doctype: pLisinvdocs.doctype,
+            doctype: pLisinvdocs.doctype, 
         });
 
         pLisinvdocs.docnum = await Numrange.getNewNumber({

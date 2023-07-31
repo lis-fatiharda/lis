@@ -1,20 +1,21 @@
 // System class Manage numerator
 import loginRec from "./login.js";
 import checkUserRec from "./checkUser.js";
-import createUblFromSalRec from "./createUblFromSal.js";
-import getBaseSchemaRec from "./getBaseSchema.js";
+import createInvFromSalRec from "./createInvFromSal.js";
+import createDelFromSalRec from "./createDelFromSal.js";
+import getBaseSchemaRec from "./1-getBaseSchema.js";
 
-import getDespatchRefSchemaRec from "./getDespatchRefSchema.js";
-import getOrderRefSchemaRec from "./getOrderRefSchema.js";
-import getAdditionalSchemaRec from "./getAdditionalSchema.js";
-import getSignatureSchemaRec from "./getSignatureSchema.js";
-import getSupplierSchemaRec from "./getSupplierSchema.js";
+import getDespatchRefSchemaRec from "./2-getDespatchRefSchema.js";
+import getOrderRefSchemaRec from "./2-getOrderRefSchema.js";
+import getAdditionalSchemaRec from "./3-getAdditionalSchema.js";
+import getSignatureSchemaRec from "./4-getSignatureSchema.js";
+import getSupplierSchemaRec from "./5-getSupplierSchema.js";
 
-import getTaxSchemaRec from "./getTaxSchema.js";
-import getTaxSubSchemaRec from "./getTaxSubSchema.js";
+import getTaxSchemaRec from "./8-getTaxSchema.js";
+import getTaxSubSchemaRec from "./8-getTaxSubSchema.js";
 
-import getMonetaryTotalSchemaRec from "./getMonetaryTotalSchema.js";
-import getItemSchemaRec from "./getItemSchema.js";
+import getMonetaryTotalSchemaRec from "./8-getMonetaryTotalSchema.js";
+import getItemSchemaRec from "./9-getItemSchema.js";
 
 import checkInvoiceStatus from "./checkInvoiceStatus.js";
 import sendEinvoiceRec from "./sendEinvoice.js";
@@ -29,7 +30,8 @@ const emember = class {
     login = loginRec;
     checkUser = checkUserRec;
     //-
-    createUblFromSal = createUblFromSalRec;
+    createInvFromSal = createInvFromSalRec;
+    createDelFromSal = createDelFromSalRec;
     getBaseSchema = getBaseSchemaRec;
 
     getDespatchRefSchema = getDespatchRefSchemaRec;

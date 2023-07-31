@@ -78,14 +78,16 @@
 
     <!--Butons Layer Layer---------------------->
 
-    <l-btn-group>
+   
+      
+   
+    <div class="q-pa-md q-gutter-sm">
       <l-btn color="warning" icon="search" @click="btnSearch()" />
-      <l-btn  color="info" icon="visibility" @click="btnShow()" />
-      <l-btn color="primary" icon="edit" @click="btnEdit()" />
-      <l-btn color="secondary" icon="add" @click="btnInsert()" />
+      <l-btn  color="info" icon="visibility" @click="btnShow()" label="Göster" />
+      <l-btn color="primary" icon="edit" @click="btnEdit()" label="Düzenle" />
+      <l-btn color="secondary" icon="add" @click="btnInsert()" label="Onayla" />
       <!-- <l-btn color="negative" icon="print" @click="btnDelete()" /> -->
-    </l-btn-group>
-
+    </div>
     <l-table
       name="PRDT02D01"
       :tableData="dv.prdListConf"

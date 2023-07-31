@@ -1,24 +1,24 @@
 export default async function (dv) {
   dv.prdListConf = await lisprddocs.aggregate([
-    {
-      $unwind: "$operations",
-    },
-    // {
-    //   $unwind: "$confirmations",
-    // },
-    {
-      $match: {
-        company: lis.like(dv.sc.company),
-        doctype: lis.like(dv.sc.doctype),
-        docnum: lis.like(dv.sc.docnum),
-        plant: lis.like(dv.sc.plant),
-        "operations.confirmation": lis.like(dv.sc.confirmation),
-        //"confirmations.workstart": {$gte: dv.sc.workstart},
-        //"confirmations.workend": {$lte: dv.sc.workend},
-        _deleted: dv.sc._deleted,
-        
+      {
+          $unwind: "$operations",
       },
-    },
+      // {
+      //   $unwind: "$confirmations",
+      // },
+      {
+          $match: {
+              company: lis.like(dv.sc.company),
+              plant: lis.like(dv.sc.plant),
+              doctype: lis.like(dv.sc.doctype),
+              docnum: lis.like(dv.sc.docnum),
+ 
+              "operations.operation": lis.like(dv.sc.confirmation),
+              //"confirmations.workstart": {$gte: dv.sc.workstart},
+              //"confirmations.workend": {$lte: dv.sc.workend},
+              _deleted: dv.sc._deleted,
+          },
+      },
   ]);
 
   return dv;

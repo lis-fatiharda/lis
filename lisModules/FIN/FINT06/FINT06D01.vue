@@ -109,6 +109,19 @@
                             />
                         </l-chip>
                     </l-input>
+
+                    <l-select
+                    :label="this.$gl(`P.Br.`, `Currency`)"
+                    v-model="dv.sc.currency"
+                    options="lisbas007"
+                    optValue="unit"
+                    optTitle="stext"
+                    optCaptions="unit"
+                    :optFilter="{ unittype: 1 }"
+                    width="135px"
+                    class="bg-amber-1"
+                />
+
                     <l-date
                         :label="this.$gl(`Dönem Başl.`, `Post. Date Str.`)"
                         v-model="dv.sc.datefrom"
@@ -195,6 +208,7 @@ export default {
                     acctype: "",
                     account: "",
                     glaccount: "",
+                    currency: "",
 
                     datefrom: this.lis.firstDayOfYear(),
                     dateuntil: this.lis.lastDayOfMonth(),
@@ -257,6 +271,10 @@ export default {
         async btnSearch() {
             if ((this.dv.sc.account == "") | (this.dv.sc.account == null)) {
                 this.lis.alert("E", "Lütfen Bir Hesap Seçiniz!");
+                return;
+            }
+            if (this.dv.sc.currency == "" | this.dv.sc.currency == null) {
+                this.lis.alert("E", "Lütfen Bir Para Birimi Seçiniz!")
                 return;
             }
             this.dv = await this.lis.function("FINT06/01-btnSearch", this.dv);
