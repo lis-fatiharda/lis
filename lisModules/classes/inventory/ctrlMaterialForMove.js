@@ -1,5 +1,3 @@
-import lismaterials from "../../../lisModels/lismaterials.js";
-import lisbas009 from "../../../lisModels/lisbas009.js";
 
 export default async function ctrlMaterialForMove(pCompany, pItem) {
     let olismaterials = await lismaterials.findOne({

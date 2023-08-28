@@ -119,7 +119,6 @@
             <!--Butons Layer Layer---------------------->
 
          
-                <l-btn-group>
                     <l-btn
                         color="warning"
                         icon="search"
@@ -138,15 +137,12 @@
                         @click="btnInsert(dv)"
                     />
                     <l-btn color="deep-orange" icon="print" @click="btnPrint(dv)" />
-                </l-btn-group>
+             
      
 
             <l-table
-                name="BAST02D01"
-                :tableData="dv.lisCustomerList"
+                v-model="dv.lisCustomerList"
                 :columns="myColumnsCus"
-                :height="'68vh'"
-                :width="'100%'"
                 :readonly="true"
             />
         </l-div>

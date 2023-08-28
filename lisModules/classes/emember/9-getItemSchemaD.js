@@ -1,26 +1,5 @@
 export default async function () {
-    console.log("getItemSchema");
-    const itemSchema = `<cac:InvoiceLine>
-            <cbc:ID>#LINENO#</cbc:ID>
-            <cbc:Note>#LINENOTE#</cbc:Note>
-            <cbc:InvoicedQuantity unitCode="#UNITCODE#">#QUANTITY#</cbc:InvoicedQuantity>
-            <cbc:LineExtensionAmount currencyID="#CURRENCYCODE#">#SUBTOTAL#</cbc:LineExtensionAmount>
-            #DISCOUNTSCHEMA#
-            <cac:TaxTotal>
-                        <cbc:TaxAmount currencyID="#CURRENCYCODE#">#VATAMOUNT#</cbc:TaxAmount>
-                        #TAXSUBTOTALSCHEMA#
-            </cac:TaxTotal>
-            <cac:Item>
-                <cbc:Description>#ITEMDESC#</cbc:Description>
-                <cbc:Name>#MATERIAL#</cbc:Name>#BUYERITEMSTR#
-            </cac:Item>
-            <cac:Price>
-                <cbc:PriceAmount currencyID="#CURRENCYCODE#">#SPRICE#</cbc:PriceAmount>
-            </cac:Price>
-        </cac:InvoiceLine>`;
-
-   
-    const itemSchema1 = `<cac:InvoiceLine>
+    const itemSchema = `<cac:DespatchLine>
 <cbc:ID>#LINENO#</cbc:ID>
 <cbc:DeliveredQuantity unitCode="#UNITCODE#">#QUANTITY#</cbc:DeliveredQuantity>
 <cac:OrderLineReference>
@@ -35,13 +14,20 @@ export default async function () {
 <cac:Shipment>
 <cbc:ID/>
 <cac:GoodsItem>
-
+<cac:InvoiceLine>
+<cbc:ID/>
+<cbc:InvoicedQuantity>#QUANTITY#</cbc:InvoicedQuantity>
+<cbc:LineExtensionAmount currencyID="#CURRENCYCODE#">#SUBTOTAL#</cbc:LineExtensionAmount>
+<cac:Item>
+<cbc:Name/>
+</cac:Item>
+<cac:Price>
+<cbc:PriceAmount currencyID="#CURRENCYCODE#">#SPRICE#</cbc:PriceAmount>
+</cac:Price>
+</cac:InvoiceLine>
 </cac:GoodsItem>
 </cac:Shipment>
-</cac:InvoiceLine>`;
-    
-    
-    
+</cac:DespatchLine>`;
 
     return itemSchema;
 }

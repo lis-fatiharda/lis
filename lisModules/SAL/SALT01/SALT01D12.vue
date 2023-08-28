@@ -40,12 +40,11 @@
                 </div>
                 <div>
                     <l-table
-                        name="SALT01D12"
-                        :tableData="olissal004"
+                        v-model="olissal004"
                         :columns="columns"
-                        width="100%"
                         :readonly="true"
                         :summary="false"
+                        @dblclick="copyDoc()"
                     />
                 </div>
 

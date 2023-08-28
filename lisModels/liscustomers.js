@@ -18,6 +18,8 @@ const custAddressSchema = new mongoose.Schema({
     addressname: { type: String, label: "Adres ismi", default: "" },
     country: { type: String, label: "Ülke", default: "" },
     city: { type: String, label: "Şehir", default: "" },
+    district: { type: String, label: "Semt", default: "" },
+    building: { type: String, label: "Bina No", default: "" },
     address: { type: String, label: "Adres", default: "" },
     postcode: { type: String, label: "Posta kodu", default: "" },
     telnum: { type: String, label: "Telefon no", default: "" },
@@ -206,7 +208,7 @@ const schema = new mongoose.Schema(
             default: false,
             // 0:silinmedi | 1:silindi
         },
-        createdby: {
+        _createdby: {
             type: String,
             label: "Oluşturan",
             default: global.sys_user,

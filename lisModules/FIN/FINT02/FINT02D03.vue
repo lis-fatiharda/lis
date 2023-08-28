@@ -1,7 +1,7 @@
 <template>
     <l-table
         name="FINT02D02"
-        :tableData="dv.lisfindocs.items"
+        v-model="dv.lisfindocs.items"
         :columns="itemsColumns"
         @change="calcBalanceOfDoc()"
         @keydown="if ($event.key == 'Insert') pushNewItem($event);"

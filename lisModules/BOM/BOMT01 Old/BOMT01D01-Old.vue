@@ -86,7 +86,7 @@
 
         <l-table
             name="BOMT01D01"
-            :tableData="dv.reportList"
+            v-model="dv.reportList"
             :columns="myColumnsBom"
             :height="'73vh'"
             width="100%"

@@ -12,7 +12,7 @@
   <l-card style="width: 100%">
     <l-table
             name="SALT01D01"
-            :tableData="dv.lissaldocs.payplan"
+            v-model="dv.lissaldocs.payplan"
             :columns="myColumnsPplan"
             :width="'100%'"
             @change="fetchChng($event)"

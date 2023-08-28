@@ -93,7 +93,7 @@
 
     <l-table
       name="BOMT01D01"
-      :tableData="dv.bomList"
+      v-model="dv.bomList"
       :columns="myColumnsBom"
       :height="'73vh'"
       width="100%"

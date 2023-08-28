@@ -8,6 +8,17 @@ export default async function (dv) {
     } else {
         throw new Error("Lütfen Bir Satır Seçiniz");
     }
+
+    if (
+        (dv.lisinvdocs.items[0].purdoctype?.length > 0) |
+        (dv.lisinvdocs.items[0].saldoctype?.length > 0) |
+        (dv.lisinvdocs.items[0].prddoctype?.length > 0)
+    ) {
+        throw new Error(
+            "Entegrasyonlu Bir Hareket Düzenlenemez. Lütfen Hareketin Kaynak Belgesi Üzerinden Düzenleme Yapınız!"
+        );
+    }
+
     let isLocked = await System.lock(
         dv.lisinvdocs.company,
         "INVT03",

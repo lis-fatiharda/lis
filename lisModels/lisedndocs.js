@@ -12,9 +12,9 @@ const schema = mongoose.Schema(
             default: 2,
         },
         postway: {
-            type: Boolean,
+            type: Number,
             label: "0:Gelen|1:Giden",
-            default: false,
+            default: 0,
         },
         edocstat: {
             type: Number,
@@ -86,7 +86,7 @@ const schema = mongoose.Schema(
             default: false,
         },
 
-        createdby: {
+        _createdby: {
             type: String,
             label: "Oluşturan",
             default: global.sys_user,

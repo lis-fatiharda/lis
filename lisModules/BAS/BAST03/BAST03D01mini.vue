@@ -80,7 +80,7 @@
                 <!--------------------------------->
             </l-card0>
             <!--Table Layer---------------------------->
-            <q-markup-table flat bordered dense>
+            <q-markup-table flat bordered dense class="cursor-pointer">
                 <thead>
                     <tr class="bg-blue-grey-2">
                         <th class="text-left"></th>
@@ -99,6 +99,7 @@
                                 ? 'bg-light-blue-1'
                                 : 'bg-white'
                         "
+                        @dblclick="selectMaterial()"
                     >
                         <td class="text-left">
                             <l-chip dense :label="index + 1" rounded glossy />
@@ -123,30 +124,12 @@ export default {
             dv: {
                 sc: {
                     company: "01",
-                    companyOpts: [],
                     stext: "",
                     material: "",
-                    skunitOpts: [],
-                    //*** */
-                    purDeptOpts: [],
-                    purOrderTypeOpts: [],
-                    purItemOpts: [],
-                    //*** */
-                    salDeptOpts: [],
-                    salDocTypeOpts: [],
-                    salItemOpts: [],
-                    currencyOpts: [],
-                    //*** */
-                    plantOpts: [],
-                    warehouseOpts: [],
-                    stockplaceOpts: [],
 
                     matstat: "",
-                    matstatOpts: [],
                     mattype: "",
-                    mattypeOpts: [],
                     sector: "",
-                    sectorOpts: [],
                 },
                 selectedRow: "",
                 materialList: [],
@@ -161,13 +144,11 @@ export default {
         },
         pComp(newValue) {
             this.dv.sc.company = newValue;
-            console.log("pComp", this.dv.sc.company);
         },
     },
 
     methods: {
         async btnSearch(prop) {
-            console.log(prop);
             await this.$Axios.post("BAST03/01-btnSearch", prop).then((res) => {
                 this.dv = res.data;
             });
@@ -187,59 +168,13 @@ export default {
             this.$emit("cancel", false);
         },
 
-        async init(prop) {
-            console.log("init", this.dv.sc.company);
+        async init() {
             this.dv = await this.lis.function("BAST03/01-init", this.dv);
-
-            this.dv.sc.companyOpts.forEach((e) => {
-                e.value = e.company;
-            });
-            this.dv.sc.mattypeOpts.forEach((e) => {
-                e.value = e.mattype;
-            });
-            this.dv.sc.matstatOpts.forEach((e) => {
-                e.value = e.matstat;
-            });
-            this.dv.sc.sectorOpts.forEach((e) => {
-                e.value = e.sector;
-            });
-
-            this.dv.sc.purOrderTypeOpts.forEach((e) => {
-                e.value = e.ordertype;
-            });
-            this.dv.sc.purItemOpts.forEach((e) => {
-                e.value = e.itemtype;
-            });
-            this.dv.sc.purDeptOpts.forEach((e) => {
-                e.value = e.purdept;
-            });
-
-            this.dv.sc.salDocTypeOpts.forEach((e) => {
-                e.value = e.doctype;
-            });
-            this.dv.sc.salItemOpts.forEach((e) => {
-                e.value = e.itemtype;
-            });
-            this.dv.sc.salDeptOpts.forEach((e) => {
-                e.value = e.saldept;
-            });
-
-            this.dv.sc.plantOpts.forEach((e) => {
-                e.value = e.plant;
-            });
-            this.dv.sc.warehouseOpts.forEach((e) => {
-                e.value = e.warehouse;
-            });
-            this.dv.sc.stockplaceOpts.forEach((e) => {
-                e.value = e.stockplace;
-            });
         },
     },
 
     mounted() {
         this.init(this.dv);
-        console.log("matselect worked");
-        console.log(this.pComp);
     },
 };
 </script>

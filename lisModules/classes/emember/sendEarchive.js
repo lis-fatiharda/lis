@@ -14,7 +14,9 @@ export default async function sendEarchive(pSession_id, plisedndocs) {
     });
 
     if (olisedn001 == null)
-        throw new Error("Bu Belge İçin Yetkiniz Bulunmamaktadır!");
+        throw new Error(
+            `${plisedndocs.doctype} Belge Tipi İçin Yetkiniz Bulunmamaktadır!`
+        );
 
     //*** fetch E-InvoNumber */
 
@@ -134,7 +136,7 @@ export default async function sendEarchive(pSession_id, plisedndocs) {
                         isintegrator: true,
                     });
                     let oldNumber = (olisnumranges =
-                        olisnumranges._doc.numparts[0].valcurrent - 1);
+                        olisnumranges.numparts[0].valcurrent - 1);
 
                     lisnumranges.updateOne(
                         {
@@ -188,7 +190,7 @@ export default async function sendEarchive(pSession_id, plisedndocs) {
                 isintegrator: true,
             });
             let oldNumber = (olisnumranges =
-                olisnumranges._doc.numparts[0].valcurrent - 1);
+                olisnumranges.numparts[0].valcurrent - 1);
 
             lisnumranges.updateOne(
                 {

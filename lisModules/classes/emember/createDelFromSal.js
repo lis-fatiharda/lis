@@ -148,28 +148,28 @@ export default async function (plissaldocs, plisedndocs) {
     SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#PERSON#", "");
 
     EINVOSTR += SUPPLIERBLOCK;
-
+ 
     console.log("44444444444444444444444444444444444");
 
     //**********getCustomerSchemaD************************************* */
 
     var CUSTOMERBLOCK = await getCustomerSchemaD();
 
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#WEBADR#", plissaldocs.ircwebsite);
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#PARTYTAXTYPE#", "VKN");
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#TAXNO#", plissaldocs.irctaxnum);
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#CUSNAME#", plissaldocs.ircname1);
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#ADRESS#", plissaldocs.address);
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#BUILDING#", "");
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#STATE#", "");
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#CITY#", plissaldocs.irccity);
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#POBOX#", plissaldocs.ircpostcode);
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#COUNTRY#", plissaldocs.irccountry);
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#TAXDEPT#", plissaldocs.irctaxdept);
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#TEL#", plissaldocs.irctelnum);
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#FAX#", plissaldocs.ircfaxnum);
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#EMAIL#", plissaldocs.ircemail);
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replace("#PERSON#", "");
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#WEBADR#", plissaldocs.grcwebsite);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#PARTYTAXTYPE#", "VKN");
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#TAXNO#", plissaldocs.grctaxnum);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#CUSNAME#", plissaldocs.grcname1);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#ADRESS#", plissaldocs.grcaddress);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#BUILDING#", plissaldocs.grcbuilding);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#STATE#", plissaldocs.district);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#CITY#", plissaldocs.grccity);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#POBOX#", plissaldocs.grcpostcode);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#COUNTRY#", plissaldocs.grccountry);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#TAXDEPT#", plissaldocs.grctaxdept);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#TEL#", plissaldocs.grctelnum);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#FAX#", plissaldocs.grcfaxnum);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#EMAIL#", plissaldocs.grcemail);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#PERSON#", "");
 
     EINVOSTR += CUSTOMERBLOCK;
 
@@ -179,8 +179,14 @@ export default async function (plissaldocs, plisedndocs) {
 
     var SHIPMENTBLOCK = await getShipmentD();
 
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#STATE#", plissaldocs.grcdistrict);
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#CITY#", plissaldocs.grccity);
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#POBOX#", plissaldocs.grcpostcode);
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#DISTRICT#", plissaldocs.grcdistrict);
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#COUNTRY#", plissaldocs.grccountry);
+
     SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#CURRENCYCODE#", plissaldocs.currency);
-    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#AMNT#", "");
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#SUBTOTAL#", plissaldocs.subtotal);
     SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#DRIVERPLATE#", plissaldocs.driverplate);
 
     SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#DRIVERNAME#", plissaldocs.drivername);
@@ -209,20 +215,20 @@ export default async function (plissaldocs, plisedndocs) {
         console.log(myItem);
         var ITEMSBLOCK = await getItemSchemaD(plissaldocs);
 
-        ITEMSBLOCK = ITEMSBLOCK.replace("#LINENO#", myItem.itemnum);
+        ITEMSBLOCK = ITEMSBLOCK.replaceAll("#LINENO#", myItem.itemnum);
         ITEMSBLOCK = ITEMSBLOCK.replace("#LINENOTE#", "");
-        let olisbas007 = await lisbas007.findOne({
+        let olisbas007 = await lisbas007.findOne({ 
             company: plissaldocs.company,
             unit: myItem.qunit,
         });
-        ITEMSBLOCK = ITEMSBLOCK.replace("#UNITCODE#", olisbas007.unitcode);
-        ITEMSBLOCK = ITEMSBLOCK.replace("#QUANTITY#", myItem.quantity);
-        ITEMSBLOCK = ITEMSBLOCK.replace("#CURRENCYCODE#", plissaldocs.currency);
-        ITEMSBLOCK = ITEMSBLOCK.replace("#CURRENCYCODE#", plissaldocs.currency);
-        ITEMSBLOCK = ITEMSBLOCK.replace("#CURRENCYCODE#", plissaldocs.currency);
-        ITEMSBLOCK = ITEMSBLOCK.replace("#CURRENCYCODE#", plissaldocs.currency);
-        ITEMSBLOCK = ITEMSBLOCK.replace("#SUBTOTAL#", myItem.subtotal);
-        ITEMSBLOCK = ITEMSBLOCK.replace("#CURRENCYCODE#", plissaldocs.currency);
+        ITEMSBLOCK = ITEMSBLOCK.replaceAll("#UNITCODE#", olisbas007.unitcode);
+        ITEMSBLOCK = ITEMSBLOCK.replaceAll("#QUANTITY#", myItem.quantity);
+        ITEMSBLOCK = ITEMSBLOCK.replaceAll("#CURRENCYCODE#", plissaldocs.currency);
+        ITEMSBLOCK = ITEMSBLOCK.replaceAll("#CURRENCYCODE#", plissaldocs.currency);
+        ITEMSBLOCK = ITEMSBLOCK.replaceAll("#CURRENCYCODE#", plissaldocs.currency);
+        ITEMSBLOCK = ITEMSBLOCK.replaceAll("#CURRENCYCODE#", plissaldocs.currency);
+        ITEMSBLOCK = ITEMSBLOCK.replaceAll("#SUBTOTAL#", myItem.subtotal);
+        ITEMSBLOCK = ITEMSBLOCK.replaceAll("#CURRENCYCODE#", plissaldocs.currency);
         //----------------------------------------------------------------
 
         if (myItem.discount.length > 0) {

@@ -54,7 +54,7 @@ export default async function (pItem, plisfin002_item, pDocument) {
 
 
         let olisbas015 = undefined;
-        if (plisfin002_item.postway == false) {
+        if (plisfin002_item.postway == 0) {
             olisbas015 = await lisbas015.findOne({
                 company: pDocument.company,
                 baccount: pItem.bankDebit,

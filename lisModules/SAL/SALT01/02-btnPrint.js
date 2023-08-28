@@ -11,9 +11,9 @@ export default async function (dv) {
     olisedndocs.edndocdate = new Date();
     olisedndocs.grandtotal = dv.lissaldocs.grandtotal;
     olisedndocs.currency = dv.lissaldocs.currency;
-    olisedndocs.createdby = global.sys_user;
+    olisedndocs._createdby = global.sys_user;
     olisedndocs.edoctype = dv.lissaldocs.edoctype;
-    olisedndocs.postway = true;
+    olisedndocs.postway = 1;
     olisedndocs.edocstat = 1;
     olisedndocs.einvotype = dv.lissaldocs.einvotype;
 
@@ -23,10 +23,7 @@ export default async function (dv) {
         _deleted: false,
     });
 
-    olisedndocs.alias = oliscustomers.einvmember.filter((e) => {
-        return e.UNIT == "PK";
-    })[0].ALIAS[0];
-    olisedndocs.taxnum = dv.lissaldocs.irctaxnum;
+    
 
     //--------------------------------------
     const newUuid = UUID();
@@ -34,11 +31,19 @@ export default async function (dv) {
     dv.lissaldocs.einvouuid = newUuid;
 
     if (dv.lissaldocs.edoctype < 3) {
+        olisedndocs.alias = oliscustomers.einvmember.filter((e) => {
+            return e.UNIT == "PK";
+        })[0].ALIAS[0];
+        olisedndocs.taxnum = dv.lissaldocs.irctaxnum;
         olisedndocs.edistr = await Emember.createInvFromSal(
             dv.lissaldocs,
             olisedndocs
         );
     } else {
+        olisedndocs.alias = oliscustomers.edelmember.filter((e) => {
+            return e.UNIT == "PK";
+        })[0].ALIAS[0];
+        olisedndocs.taxnum = dv.lissaldocs.grctaxnum;
         olisedndocs.edistr = await Emember.createDelFromSal(
             dv.lissaldocs,
             olisedndocs

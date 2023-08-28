@@ -8,7 +8,7 @@ const schema = new mongoose.Schema(
         doctype: { type: String, label: "Sipariş belge tipi", default: "" },
         stext: { type: String, label: "Açıklama", default: "" },
         findoctype: { type: String, label: "Muhasebe Belge tipi", default: "" },
-        
+
         // Document Characteristics
         reqtype: {
             type: Number,
@@ -68,7 +68,12 @@ const schema = new mongoose.Schema(
         isfirstinvo: {
             type: Boolean,
             label: "Ön Ödemeli mi?",
-            default: 0,
+            default: false,
+        },
+        isonlybyref: {
+            type: Boolean,
+            label: "Sadece Belge Akışı",
+            default: false,
         },
         movecode: {
             type: String,

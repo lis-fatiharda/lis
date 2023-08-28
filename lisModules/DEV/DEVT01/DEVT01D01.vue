@@ -76,7 +76,7 @@
         </l-btn-group>
 
         <!--Table Layer---------------------------->
-        <l-table name="DEVT01D01" :tableData="dv.olismodels" :columns="tableColumns" :readonly="true"> </l-table>
+        <l-table name="DEVT01D01" v-model="dv.olismodels" :columns="tableColumns" :readonly="true"> </l-table>
     </l-div>
     <DEVT01D02 :dv="dv" :tabInfo="tabInfo" v-if="dv.lisDialog == 'DEVT01D02'" />
 </template>

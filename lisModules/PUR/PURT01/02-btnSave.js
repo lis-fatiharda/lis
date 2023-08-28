@@ -13,8 +13,7 @@ export default async function (dv) {
   //   }
   // }
   // Save The Document ****************
-  await Purchase.save(dv.lispurdocs, dv.modi);
-  dv.lispurdocs = {};
+  dv.lispurdocs = await Purchase.save(dv.lispurdocs, dv.modi);
 
   return dv;
 }

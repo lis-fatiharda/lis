@@ -116,7 +116,7 @@
 
         <l-table
             name="accountTable"
-            :tableData="dv.reportList"
+            v-model="dv.reportList"
             :columns="columns"
             :context="contextMenu"
             :width="'100%'"

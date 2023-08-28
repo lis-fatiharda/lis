@@ -201,38 +201,37 @@
         </l-card0>
         <!--Butons Layer Layer---------------------->
 
-        <l-btn-group>
+       
             <!-- <l-btn color="warning" icon="search" @click="btnSearch(dv)" @keypress.enter=""/> -->
-            <l-btn color="warning" icon="search" @click="btnSearch(dv)" />
-            <l-btn color="info" icon="visibility" @click="btnShow(dv)" />
-            <l-btn color="primary" icon="edit" @click="btnEdit(dv)" />
-            <l-btn color="secondary" icon="add" @click="btnInsert(dv)" />
-            <l-btn color="deep-orange" icon="print" @click="btnPrint(dv)" />
-        </l-btn-group>
+            <l-btn color="warning" icon="search" @click="btnSearch()" />
+            <l-btn color="info" icon="visibility" @click="btnShow()" />
+            <l-btn color="primary" icon="edit" @click="btnEdit()" />
+            <l-btn color="secondary" icon="add" @click="btnInsert()" />
+            <l-btn color="deep-orange" icon="print" @click="btnPrint()" />
+        
         <q-toggle
             :label="dv.toggle"
             color="pink"
-            :true-value="this.$gl(`Ağaç Görünümü`, `Tree View`)"
-            :false-value="this.$gl(`Tablo Görünümü`, `Table View`)"
+            :true-value="this.$gl(`Ağaç`, `Tree View`)"
+            :false-value="this.$gl(`Tablo`, `Table View`)"
             v-model="dv.toggle"
         />
         <l-chip
             :label="this.$gl(`İmza`, `Signature`)"
             clickable
             outline
+            icon="edit"
             color="negative"
             text-color="white"
         />
         <!--Table Layer---------------------------->
 
         <l-table
-            name="PURT01D01"
-            :tableData="dv.purDocList"
+            v-model="dv.purDocList"
             :columns="myColumnsPur"
             :context="contextMenu"
-            :height="'68vh'"
-            :width="'100%'"
             :readonly="true"
+            @dblclick="btnEdit()"
         />
         <l-dialog
             v-model="isCallFlow.isShow"
@@ -319,6 +318,16 @@ export default {
             ],
             myColumnsPur: [
                 {
+                    label: this.$gl(`Firma`, `Company`),
+                    value: "company",
+                    type: "string",
+                },
+                {
+                    label: this.$gl(`İş Alanı`, `Business Area`),
+                    value: "busarea",
+                    type: "string",
+                },
+                {
                     label: "Belge Tipi",
                     value: "doctype",
                     type: "string",
@@ -328,29 +337,24 @@ export default {
                     value: "docnum",
                     type: "string",
                 },
-                {
-                    //label: "İş Alanı",
-                    label: this.$gl(`İş Alanı`, `Business Area`),
-                    value: "busarea",
-                    type: "string",
-                },
+                
                 {
                     label: this.$gl(`Belge Tarihi`, `Document Date`),
                     value: "validfrom",
                     type: "datetime",
-                    _textColor: "red",
+                    textColor: "red",
                 },
                 {
                     label: "Tedarikçi Kodu",
                     value: "vendor",
                     type: "string",
-                    _textColor: "blue",
+                    textColor: "blue",
                 },
                 {
                     label: "Tedarikçi Adı",
                     value: "name1",
                     type: "string",
-                    _textColor: "blue",
+                    textColor: "blue",
                 },
                 {
                     label: "Proje",
@@ -361,38 +365,38 @@ export default {
                     label: "Brüt",
                     value: "gross",
                     type: "number",
-                    _textColor: "#23978c",
+                    textColor: "#23978c",
                 },
                 {
                     label: "İndirim",
                     value: "discamnt",
                     type: "number",
-                    _textColor: "#23978c",
+                    textColor: "#23978c",
                 },
                 {
                     label: "Net",
                     value: "subtotal",
                     type: "number",
-                    _textColor: "#23978c",
+                    textColor: "#23978c",
                 },
                 {
                     label: "Genel Toplam",
                     value: "grandtotal",
                     type: "number",
-                    _textColor: "#23978c",
+                    textColor: "#23978c",
                 },
                 {
                     label: "P.Br.",
                     value: "currency",
                     type: "string",
-                    _textColor: "#23978c",
+                    textColor: "#23978c",
                 },
 
                 {
                     label: "Belge Statüsü",
                     value: "docstat",
                     type: "select",
-                    _textColor: "red",
+                    textColor: "red",
                     options: [
                         {
                             label: `Açık`,
@@ -408,16 +412,22 @@ export default {
                         },
                     ],
                 },
+                {
+                    label: this.$gl(`Muhasebeleşti`, `is Finance?`),
+                    value: "isfinance",
+                    type: "checkbox",
+                },
             ],
 
             dv: {
                 lisDialog: "PURT01D01",
                 modi: 2,
                 selectedRow: "",
-                toggle: "Tablo Görünümü",
+                toggle: "Tablo",
                 isShowFinDoc: false,
                 isShowFinDocDialog: false,
                 isShowCopyDocs: false,
+                ovariant :{},
                 sc: {
                     company: "01",
 
@@ -479,17 +489,17 @@ export default {
                 }
             );
         },
-        async btnSearch(prop) {
-            this.dv = await this.lis.function("PURT01/01-btnSearch", prop);
+        async btnSearch() {
+            this.dv = await this.lis.function("PURT01/01-btnSearch", this.dv);
         },
-        async btnEdit(prop) {
-            this.dv = await this.lis.function("PURT01/01-btnEdit", prop);
+        async btnEdit() {
+            this.dv = await this.lis.function("PURT01/01-btnEdit", this.dv);
         },
-        async btnShow(prop) {
-            this.dv = await this.lis.function("PURT01/01-btnShow", prop);
+        async btnShow() {
+            this.dv = await this.lis.function("PURT01/01-btnShow", this.dv);
         },
-        async btnInsert(prop) {
-            this.dv = await this.lis.function("PURT01/01-btnInsert", prop);
+        async btnInsert() {
+            this.dv = await this.lis.function("PURT01/01-btnInsert", this.dv);
         },
         async btnPrint() {
             this.lis.printPDF("PURT01D01PDF", "Satın Alma Belgeleri Raporu");
@@ -513,7 +523,7 @@ export default {
 // `);
 //             this.dv = await this.lis.function("PURT01/01-btnPrint", prop);
 //         },
-        async init(prop) {
+        async init() {
             this.dv = await this.lis.function("PURT01/01-init", this.dv);
         },
     },

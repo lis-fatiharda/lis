@@ -5,7 +5,7 @@ export default function calcPrice(pSalDoc) {
     pSalDoc.vatamnt = 0;
     pSalDoc.grandtotal = 0;
     pSalDoc.vats = [];
-  //  var grandTotalBeforeDisc = 0;
+  //  var grandTotalBeforeDisc = 0; 
   //  var grossBeforeDisc = 0;
   //  var tmpGross = 0;
 //

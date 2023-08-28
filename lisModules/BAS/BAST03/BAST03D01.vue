@@ -103,13 +103,12 @@
       <!--Butons Layer Layer---------------------->
 
 
-        <l-btn-group>
           <l-btn color="warning"  icon="search" @click="btnSearch(dv)" />
           <l-btn color="info"  icon="visibility" @click="btnShow(dv)" />
           <l-btn color="primary"  icon="edit" @click="btnEdit(dv)" />
           <l-btn color="secondary"  icon="add" @click="btnInsert(dv)" />
           <l-btn color="deep-orange"  icon="print" @click="btnPrint(dv)" />
-        </l-btn-group>
+      
    
       <!--Table Layer---------------------------->
       <!-- <q-markup-table flat bordered dense separator="cell">
@@ -174,7 +173,7 @@
       </q-markup-table> -->
       <l-table
         name="BAST03D01"
-        :tableData="dv.materialList"
+        v-model="dv.materialList"
         :columns="myColumnsMat"
         :height="'75vh'"
         :width="'100%'"

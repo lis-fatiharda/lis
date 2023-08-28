@@ -72,12 +72,10 @@
               label="Sil"
               color="pink"
             />
-
-            
           </div>
-         <br>
-          <l-separator  inset />
-          <br>
+          <br />
+          <l-separator inset />
+          <br />
           <div class="row q-gutter-xs">
             {{ this.$gl("Operasyon Bilgileri", "Operation Information") }}
           </div>
@@ -96,10 +94,12 @@
               style="width: 150px"
               readonly
             />
-       
+
             <l-input
               v-model="dv.lisprddocs.operations.oprcontrol"
-              :label="this.$gl(`Operasyon Kontrol Tipi`, `Operation Control Type`)"
+              :label="
+                this.$gl(`Operasyon Kontrol Tipi`, `Operation Control Type`)
+              "
               dense
               style="width: 150px"
               readonly
@@ -120,7 +120,9 @@
             />
             <l-input
               v-model="dv.lisprddocs.operations.capgrp"
-              :label="this.$gl(`İş Mer. Kap. Grubu`, `Work Center Capacity Group`)"
+              :label="
+                this.$gl(`İş Mer. Kap. Grubu`, `Work Center Capacity Group`)
+              "
               dense
               style="width: 150px"
               readonly
@@ -131,53 +133,55 @@
               dense
               style="width: 300px"
             />
-        </div>
+          </div>
         </l-card-section>
       </l-card>
 
-       <l-card>
-            <l-tabs v-model="tab">
-                <l-tab
-                    name="Üretilenler"
-                    :label="this.$gl(`Üretilenler`, `Produced`)"
-                />
-                <l-tab
-                    name="Tüketilenler"
-                    :label="this.$gl(`Tüketilenler`, `Consumed`)"
-                />
-                <l-tab
-                    name="Araçlar"
-                    :label="this.$gl(`Araçlar`, `Tools`)"
-                />
-            </l-tabs>
+      <l-card>
+        <l-tabs v-model="tab">
+          <l-tab
+            name="Üretilenler"
+            :label="this.$gl(`Üretilenler`, `Produced`)"
+          />
+          <l-tab
+            name="Tüketilenler"
+            :label="this.$gl(`Tüketilenler`, `Consumed`)"
+          />
+          <l-tab
+            name="Aktiviteler"
+            :label="this.$gl(`Aktiviteler`, `Activities`)"
+          />
+          <l-tab name="Araçlar" :label="this.$gl(`Araçlar`, `Tools`)" />
+        </l-tabs>
 
-            <l-tab-panels v-model="tab" animated>
-                 
-               <l-tab-panel name="Üretilenler" >
-                    <PRDT02D04 :dv="dv" :tabInfo="tabInfo" />
-                </l-tab-panel>
+        <l-tab-panels v-model="tab" animated>
+          <l-tab-panel name="Üretilenler">
+            <PRDT02D04 :dv="dv" :tabInfo="tabInfo" />
+          </l-tab-panel>
 
-                <l-tab-panel name="Tüketilenler" >
-                    <PRDT02D05 :dv="dv" :tabInfo="tabInfo" />
-                </l-tab-panel>
+          <l-tab-panel name="Tüketilenler">
+            <PRDT02D05 :dv="dv" :tabInfo="tabInfo" />
+          </l-tab-panel>
 
-              
-                <l-tab-panel name="Araçlar" >
-                    <PRDT02D07 :dv="dv" :tabInfo="tabInfo" />
-                </l-tab-panel>
+          <l-tab-panel name="Aktiviteler">
+            <PRDT02D08 :dv="dv" :tabInfo="tabInfo" />
+          </l-tab-panel>
 
-            </l-tab-panels>
-        </l-card> 
+          <l-tab-panel name="Araçlar">
+            <PRDT02D07 :dv="dv" :tabInfo="tabInfo" />
+          </l-tab-panel>
+        </l-tab-panels>
+      </l-card>
     </l-card0>
   </l-div>
 </template> 
 
 <script>
 // import PRDT01D03 from "./PRDT01D03.vue";
- import PRDT02D04 from "./PRDT02D04.vue";
- import PRDT02D05 from "./PRDT02D05.vue";
+import PRDT02D04 from "./PRDT02D04.vue";
+import PRDT02D05 from "./PRDT02D05.vue";
 // import PRDT01D06 from "./PRDT01D06.vue";
- import PRDT02D07 from "./PRDT02D07.vue";
+import PRDT02D07 from "./PRDT02D07.vue";
 // import PRDT01D08 from "./PRDT01D08.vue";
 // import PRDT01D09 from "./PRDT01D09.vue";
 // import PRDT01D10 from "./PRDT01D10.vue";
@@ -186,10 +190,10 @@ export default {
   props: ["dv", "tabInfo"],
   components: {
     // PRDT01D03,
-     PRDT02D04,
-     PRDT02D05,
+    PRDT02D04,
+    PRDT02D05,
     // PRDT01D06,
-       PRDT02D07,
+    PRDT02D07,
     // PRDT01D08,
     // PRDT01D09,
     // PRDT01D10,

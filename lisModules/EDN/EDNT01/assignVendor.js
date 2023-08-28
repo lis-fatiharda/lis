@@ -1,4 +1,3 @@
-
 export default async function (dv) {
     let listSelected = dv.lisedndocsList.filter((e) => e._selected == true);
 
@@ -9,11 +8,12 @@ export default async function (dv) {
             _deleted: false,
         });
 
-        if (oliscustomer == null)
-            throw new Error("Vergi No İle Eşleşen Bir Cari Kaydı Bulunamadı!");
-        
-        
-        lisedndocs.updateOne(
+        if (oliscustomer == null) return {
+            return: false,
+            taxnum: listSelected[i].taxnum,
+        };
+
+        await lisedndocs.updateOne(
             { _id: listSelected[i]._id },
             {
                 $set: {
@@ -23,4 +23,5 @@ export default async function (dv) {
             }
         );
     }
+    return true;
 }

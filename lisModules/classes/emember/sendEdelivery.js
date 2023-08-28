@@ -15,7 +15,9 @@ export default async function (pSession_id, plisedndocs) {
     });
     
     if (olisedn001 == null)
-        throw new Error("Bu Belge İçin Yetkiniz Bulunmamaktadır!");
+        throw new Error(
+            `${plisedndocs.doctype} Belge Tipi İçin Yetkiniz Bulunmamaktadır!`
+        );
     
     //*** fetch E-InvoNumber */
 
@@ -67,6 +69,8 @@ export default async function (pSession_id, plisedndocs) {
         headers: { "Content-Type": "text/xml" },
     };
 
+    let isError = false;
+
     await Axios.post(
         "https://proxyws.izibiz.com.tr/EIWSOIBProxy/EFaturaOIBProxy?wsdl",
         XMLBLOCK,
@@ -74,38 +78,94 @@ export default async function (pSession_id, plisedndocs) {
     )
         .then((res) => {
             xml2js.parseString(res.data, async function (err, result) {
-                console.log("**********result", result);
+                
+                let errorStr = undefined;
+                if (
+                    result["S:Envelope"]["S:Body"][0][
+                            "ns2:SendDespatchAdviceResponse"
+                        ][0]["SendDespatchAdviceResponse"][0].ERROR_TYPE[0][
+                            "ERROR_CODE"
+                        ][0] !=
+                    undefined
+                ) {
+                    errorStr =
+                        result["S:Envelope"]["S:Body"][0][
+                            "ns2:SendDespatchAdviceResponse"
+                        ][0]["SendDespatchAdviceResponse"][0].ERROR_TYPE[0][
+                            "ERROR_SHORT_DES"
+                        ][0]; 
+                }
 
-                await lisedndocs.updateOne(
-                    { _id: plisedndocs._id },
-                    {
-                        $set: {
-                            edocstat: 2,
-                            processedby: global.sys_user,
-                            processedat: new Date(),
-                            processstat: "Sent",
-                            processstatstr: res.data,
-                            einvonumber: myEinvonumber,
-                            edistr: plisedndocs.edistr,
-                        },
-                    }
-                );
+                if (errorStr == undefined) {
+                    await lisedndocs.updateOne(
+                        { _id: plisedndocs._id },
+                        {
+                            $set: {
+                                edocstat: 2,
+                                processedby: global.sys_user,
+                                processedat: new Date(),
+                                processstat: "Sent",
+                                processstatstr: res.data,
+                                einvonumber: myEinvonumber,
+                                edistr: plisedndocs.edistr,
+                            },
+                        }
+                    );
 
-                await lissaldocs
-                    .updateOne(
+                    await lissaldocs
+                        .updateOne(
+                            {
+                                company: plisedndocs.company,
+                                doctype: plisedndocs.doctype,
+                                docnum: plisedndocs.docnum,
+                            },
+                            { $set: { einvonumber: myEinvonumber } }
+                        )
+                        .catch((err) => {
+                            console.log(err);
+                            throw new Error(err);
+                        });
+                } else {
+                    await lisedndocs.updateOne(
+                        { _id: plisedndocs._id },
+                        {
+                            $set: {
+                                edocstat: 3,
+                                processedby: global.sys_user,
+                                processedat: new Date(),
+                                processstat: "Error",
+                                processstatstr: errorStr,
+                            }, 
+                        }
+                    );
+                    //--- update numrange back ---
+
+                    let olisnumranges = await lisnumranges.findOne({
+                        company: plisedndocs.company,
+                        numrange: olisedn001.edeliverynumrange,
+                        isintegrator: true,
+                    });
+                    let oldNumber = (olisnumranges =
+                        olisnumranges.numparts[0].valcurrent - 1);
+
+                    lisnumranges.updateOne(
                         {
                             company: plisedndocs.company,
-                            doctype: plisedndocs.doctype,
-                            docnum: plisedndocs.docnum,
+                            numrange: olisedn001.edeliverynumrange,
+                            isintegrator: true,
                         },
-                        { $set: { einvonumber: myEinvonumber } }
-                    )
-                    .catch((err) => {
-                        console.log(err);
-                        throw new Error(err);
-                    });
+                        {
+                            $set: {
+                                "numparts.0.valcurrent": oldNumber,
+                            },
+                        }
+                    );
 
-                return;
+                    //---------------------------
+                    isError = true;
+                         
+                    
+                }
             });
         })
         .catch(async (err) => {
@@ -141,7 +201,7 @@ export default async function (pSession_id, plisedndocs) {
                 isintegrator: true,
             });
             let oldNumber = (olisnumranges =
-                olisnumranges._doc.numparts[0].valcurrent - 1);
+                olisnumranges.numparts[0].valcurrent - 1);
 
             lisnumranges.updateOne(
                 {
@@ -158,6 +218,9 @@ export default async function (pSession_id, plisedndocs) {
 
             //---------------------------
 
-            throw new Error("E-Belge Gönderilemedi!");
+            throw new Error("E-İrsaliye Gönderilemedi!");
         });
+    
+    
+    if(isError == true) throw new Error("E-İrsaliye Gönderilemedi!");
 };

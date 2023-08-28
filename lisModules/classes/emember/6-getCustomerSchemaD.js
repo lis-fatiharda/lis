@@ -15,14 +15,14 @@ export default async function getCustomerSchema() {
     <cac:PhysicalLocation>
     <cbc:ID>Teknopark Şube</cbc:ID>
     <cac:Address>
-    <cbc:ID>1234567895</cbc:ID>
-    <cbc:StreetName>Çifte Havuzlar mah. YTÜ Yıldız Teknopark, Eski Londra Asfaltı Cad.</cbc:StreetName>
-    <cbc:BuildingNumber>D-2 Blok Kat:0 No:Z07</cbc:BuildingNumber>
-    <cbc:CitySubdivisionName>Esenler</cbc:CitySubdivisionName>
-    <cbc:CityName>İSTANBUL</cbc:CityName>
-    <cbc:PostalZone>34000</cbc:PostalZone>
+    <cbc:ID>#TAXNO#</cbc:ID>
+    <cbc:StreetName>#ADRESS#</cbc:StreetName>
+    <cbc:BuildingNumber>#BUILDING#</cbc:BuildingNumber>
+    <cbc:CitySubdivisionName>#STATE#</cbc:CitySubdivisionName>
+    <cbc:CityName>#CITY#</cbc:CityName>
+    <cbc:PostalZone>#POBOX#</cbc:PostalZone>
     <cac:Country>
-    <cbc:Name>Türkiye</cbc:Name>
+    <cbc:Name>#COUNTRY#</cbc:Name>
     </cac:Country>
     </cac:Address>
     </cac:PhysicalLocation>

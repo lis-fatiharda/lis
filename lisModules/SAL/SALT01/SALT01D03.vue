@@ -1,10 +1,9 @@
 <template>
     <l-table
-        name="SALT01D03"
-        :tableData="dv.lissaldocs.items"
+        v-model="dv.lissaldocs.items"
         :columns="itemsColumns"
         :context="contextMenu"
-        @change="calcPrice()"
+        @afterChange="calcPrice()"
         @zoom="zoomMaterialRow = $event.row"
         @keydown="if ($event.key == 'Insert') this.pushNewItem($event);"
     />
@@ -30,11 +29,11 @@
 
     <q-dialog v-model="isShowItemDetail">
         <SALT01D31
-        :dv="dv"
-        :cpdItemTypes="cpdItemTypes"
-        :item="dv.lissaldocs.items[selectedRow]"
-        :tabInfo="tabInfo"
-    />
+            :dv="dv"
+            :cpdItemTypes="cpdItemTypes"
+            :item="dv.lissaldocs.items[selectedRow]"
+            :tabInfo="tabInfo"
+        />
     </q-dialog>
     <BAST03D01mini
         :pComp="dv.sc.company"
@@ -77,14 +76,14 @@
             filled
         />
         <l-input
-        type="money"
+            type="money"
             :label="this.$gl(`KDV Tutarı`, `VAT Amount`)"
             v-model="dv.lissaldocs.vatamnt"
             readonly
             filled
         />
         <l-input
-        type="money"
+            type="money"
             :label="this.$gl(`Genel Toplam`, `Overall Total`)"
             v-model="dv.lissaldocs.grandtotal"
             readonly
@@ -104,6 +103,10 @@ export default {
         SALT01D31,
         SALT02D01,
     },
+
+    inherit: false,
+    inheritAttrs: false,
+    
     data() {
         return {
             isCallFlow: { isShow: false },
@@ -138,6 +141,12 @@ export default {
                         };
                     },
                 },
+                { name: "separator" },
+                {
+                    name: "Malzeme Varyantı",
+                    callback: async () => {
+                    },
+                },
 
                 { name: "separator" },
                 {
@@ -159,19 +168,22 @@ export default {
                     label: this.$gl("Kalem", "Item"),
                     value: "itemnum",
                 },
+
                 {
                     type: "selectmenu",
                     label: this.$gl("Kalem Tipi", "Item Type"),
                     value: "itemtype",
                     options: "lissal002",
                     optValue: "itemtype",
+                    optFilter: {
+                        doctype: this.dv.lissaldocs.doctype,
+                    },
                     optTitles: {
-                        doctype: "Belge Tipi",
                         itemtype: "Kalem Tipi",
                         stext: "Açıklama",
                     },
                 },
-                
+
                 {
                     type: "zoom",
                     label: this.$gl("Malzeme Kodu", "Material"),
@@ -189,43 +201,52 @@ export default {
                     value: "quantity",
                     fraction: 3,
                 },
+
                 {
                     type: "selectmenu",
                     label: this.$gl("Miktar Br.", "Quantity Unit"),
                     value: "qunit",
-                    options: "lisbas007",
+                    options: "lismaterials.matunits",
                     optValue: "unit",
-                    optTitles: { unit: "Birim", stext: "Açıklama" },
-                    optFilter: { unittype: 0 },
+                    optTitles: { unit: "Birim" },
+                    optFilter: { company: this.dv.lissaldocs.company, material: "$material"},
                 },
+
                 {
                     type: "selectmenu",
                     label: this.$gl("Tesis", "Plant"),
                     value: "plant",
-                    options: "lisbas002",
+                    options: "lismaterials.matstock",
                     optValue: "plant",
                     optTitles: { plant: "Tesis", stext: "Açıklama" },
-                    optFilter: { company: this.dv.lissaldocs.company },
+                    optFilter: { company: this.dv.lissaldocs.company, material: "$material" },
                 },
                 {
                     type: "selectmenu",
                     label: this.$gl("Depo", "Warehouse"),
                     value: "warehouse",
-                    options: "lisinv003",
+                    options: "lismaterials.matstock",
                     optValue: "warehouse",
                     optTitles: { warehouse: "Depo", stext: "Açıklama" },
                     optFilter: {
                         company: this.dv.lissaldocs.company,
-                        plant: this.dv.lissaldocs.plant,
+                        material: "$material",
+                        "matstock.plant": "$plant",
                     },
                 },
                 {
                     type: "selectmenu",
                     label: this.$gl("Stok Yeri", "stockplace"),
                     value: "stockplace",
-                    options: "lisinv004",
+                    options: "lismaterials.matstock",
                     optValue: "stockplace",
                     optTitles: { stockplace: "Stok Yeri", stext: "Açıklama" },
+                    optFilter: {
+                        company: this.dv.lissaldocs.company,
+                        material: "$material",
+                        "matstock.plant": "$plant",
+                        "matstock.warehouse": "$warehouse"
+                    },
                 },
                 {
                     type: "selectmenu",
@@ -360,6 +381,7 @@ export default {
                 "SALT01/pushNewItem",
                 this.dv
             );
+
             myReturn.itemnum =
                 this.dv.lissaldocs.items[this.dv.lissaldocs.items.length - 1]
                     .itemnum + 10;
@@ -400,6 +422,10 @@ export default {
         async removeItem(index) {
             this.dv.lissaldocs.items.splice(index, 1);
         },
+    },
+    created() {
+
+        console.log("SALT01D03 - $attrs", this.$attrs)
     },
 };
 </script>

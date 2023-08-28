@@ -39,6 +39,11 @@ const schema = new mongoose.Schema(
             label: "Kur Farkı Alacak",
             default: 0,
         },
+        _createdby: {
+            type: String,
+            label: "Oluşturan",
+            default: global.sys_user,
+        },
     },
     {
         timestamps: true,

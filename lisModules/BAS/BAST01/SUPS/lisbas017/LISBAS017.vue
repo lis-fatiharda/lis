@@ -204,7 +204,7 @@
 
             <l-table
                 name="LISBAS017"
-                :tableData="mv.lisbas017List"
+                v-model="mv.lisbas017List"
                 :columns="myColumnsBas017"
                 :context="contextMenu"
                 :height="'70vh'"

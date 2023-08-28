@@ -10,6 +10,7 @@ export default async function (dv) {
         $gte: dv.sc.validfrom,
         $lte: dv.sc.validuntil,
       },
+      
 
       _deleted: dv.sc._deleted,
     })

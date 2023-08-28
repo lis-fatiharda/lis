@@ -41,7 +41,7 @@ export default async function (dv) {
             material: dv.lissaldocs.items[0].material,
             _deleted: false,
         });
-        dv.lissaldocs.items[0].mtext = olismaterials.stext;
+        dv.lissaldocs.items[0].mtext = olismaterials.mtext;
         dv.lissaldocs.items[0].mattype = olismaterials.mattype;
 
         dv.lissaldocs.items[0].quantity = 1;

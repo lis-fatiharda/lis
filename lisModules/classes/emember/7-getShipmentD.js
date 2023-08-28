@@ -2,7 +2,7 @@ export default async function () {
     const shipmentSchema = `<cac:Shipment>
 <cbc:ID/>
 <cac:GoodsItem>
-<cbc:ValueAmount currencyID="#CURRENCYCODE#">#AMNT#</cbc:ValueAmount>
+<cbc:ValueAmount currencyID="#CURRENCYCODE#">#SUBTOTAL#</cbc:ValueAmount>
 </cac:GoodsItem>
 <cac:ShipmentStage>
 <cac:TransportMeans>
@@ -35,6 +35,13 @@ export default async function () {
 </cac:Country>
 </cac:PostalAddress>
 </cac:CarrierParty>
+<cac:DeliveryAddress>
+<cbc:CitySubdivisionName>#STATE#</cbc:CitySubdivisionName>
+<cbc:CityName>#CITY#</cbc:CityName>
+<cbc:PostalZone>#POBOX#</cbc:PostalZone>
+<cbc:District>#DISTRICT#</cbc:District>
+<cac:Country>#COUNTRY#</cac:Country>
+</cac:DeliveryAddress>
 <cac:Despatch>
 <cbc:ActualDespatchDate>#VALIDFROM#</cbc:ActualDespatchDate>
 <cbc:ActualDespatchTime>#VALIDTIME#</cbc:ActualDespatchTime>

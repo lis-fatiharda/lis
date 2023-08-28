@@ -1,6 +1,6 @@
 <template>
   <l-table
-    :tableData="dv.lisprddocs.components"
+    v-model="dv.lisprddocs.components"
     :columns="componentsColumns"
     :height="'73vh'"
     width="100%"
@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     async pushNewCmp(event) {
-      console.log("pushNepushNewCmpwPrd", event);
+      console.log("pushNewCmp", event);
       let myReturn = await this.lis.function("PRDT01/pushNewCmp", this.dv);
       myReturn.operation =
         this.dv.lisprddocs.components[this.dv.lisprddocs.components.length - 1]

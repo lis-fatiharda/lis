@@ -9,17 +9,6 @@ const schema = new mongoose.Schema(
         stext: { type: String, label: "Açıklama", default: "" },
         findoctype: { type: String, label: "Muhasebe Belge tipi", default: "" },
 
-        isgoodsmove: {
-            type: Number,
-            label: "Stok hareketi var mı?",
-            options: [
-                { value: 0, stext: "Yok" },
-                { value: 1, stext: "Çıkış" },
-                { value: 2, stext: "Giriş" },
-            ],
-            default: 0,
-        },
-
         // Document Characteristics
         offtype: {
             type: Number,
@@ -83,6 +72,11 @@ const schema = new mongoose.Schema(
         isfirstinvo: {
             type: Boolean,
             label: "Ön Ödemeli mi?",
+            default: false,
+        },
+        isonlybyref: {
+            type: Boolean,
+            label: "Sadece Belge Akışı",
             default: false,
         },
         movecode: {

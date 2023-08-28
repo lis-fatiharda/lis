@@ -89,7 +89,7 @@
             <l-div>
                 <l-table
                     name="FINT02D02"
-                    :tableData="dv.lisfindocs.items"
+                    v-model="dv.lisfindocs.items"
                     :columns="myColumnsFint02D02"
                     :height="'78vh'"
                     :width="'100%'"

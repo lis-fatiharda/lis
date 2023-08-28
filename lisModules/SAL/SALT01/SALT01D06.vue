@@ -5,7 +5,7 @@
         </div> -->
         <l-table
             name="SALT01D01"
-            :tableData="dv.lissaldocs.discount"
+            v-model="dv.lissaldocs.discount"
             :columns="myColumnsDisc"
             :width="'100%'"
             @change="calcPrice()"

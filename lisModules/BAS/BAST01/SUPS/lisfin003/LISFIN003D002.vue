@@ -84,7 +84,7 @@
         <!--Searching Criterias Layer-->
         <l-table
             name="LISFIN003D002"
-            :tableData="mv.lisfin003.postkeys"
+            v-model="mv.lisfin003.postkeys"
             :columns="myColumnsfin02postkeys"
             :height="'70vh'"
             :width="'50%'"

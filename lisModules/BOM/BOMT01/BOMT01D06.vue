@@ -1,6 +1,6 @@
 <template>
   <l-table
-    :tableData="dv.lisbomdocs.operations"
+    v-model="dv.lisbomdocs.operations"
     :columns="operationsColumns"
     :height="'73vh'"
     width="100%"

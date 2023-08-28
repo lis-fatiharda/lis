@@ -7,8 +7,8 @@ const schema = new mongoose.Schema(
         company: { type: String, label: "Firma Kodu", default: "" },
         plant: { type: String, label: "Tesis Kodu", default: "" },
         material: { type: String, label: "Malzeme Kodu", default: "" },
-        variantkey: { type: String, label: "Vayant Anahtarı", default: "" },
-        voptions: { type: String, label: "Varyant", default: "" },
+        mtext: { type: String, label: "Malzeme Adı", default: "" },
+        variant: { type: Object, label: "Varyant", default: {} },
         //*************************** */
         warehouse: { type: String, label: "Depo", default: "" },
         stockplace: { type: String, label: "Stokyeri", default: "" },
@@ -35,7 +35,7 @@ const schema = new mongoose.Schema(
         amount: { type: Number, label: "Toplam Tutar", default: 0 },
         //******************* */
         _deleted: { type: Boolean, label: "Silindi mi?", default: false },
-        createdby: {
+        _createdby: {
             type: String,
             label: "Oluşturan",
             default: global.sys_user,

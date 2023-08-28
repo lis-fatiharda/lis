@@ -5,11 +5,11 @@
         </div>
         <l-separator inset />
         <div class="q-gutter-xs row">
-            <l-input label="Belgeyi Oluşturan" readonly  dense v-model="dv.lissaldocs.createdby"/>
+            <l-input label="Belgeyi Oluşturan" readonly  dense v-model="dv.lissaldocs._createdby"/>
             <l-datetime label="Tarih" :readonly = "true" v-model="dv.lissaldocs.createdAt"/>    
         </div>
         <div class="q-gutter-xs row">
-            <l-input label="Belgeyi Değiştiren" readonly  dense v-model="dv.lissaldocs.createdby"/>
+            <l-input label="Belgeyi Değiştiren" readonly  dense v-model="dv.lissaldocs._createdby"/>
             <l-datetime label="Tarih" :readonly = "true" v-model="dv.lissaldocs.createdAt"/>    
         </div>
     </l-card>

@@ -13,7 +13,7 @@
 
     <l-table
         name="BAST06D02"
-        :tableData="dv.materialList"
+        v-model="dv.materialList"
         :columns="myColumnsMat"
         :height="'80vh'"
         :width="'100%'"

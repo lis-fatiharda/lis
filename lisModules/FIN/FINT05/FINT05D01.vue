@@ -187,7 +187,7 @@
 
         <l-table
             name="debitTable"
-            :tableData="dv.reportListDebit"
+            v-model="dv.reportListDebit"
             :columns="debitColumns"
             :context="contextMenu"
             :width="'100%'"
@@ -200,7 +200,7 @@
 
         <l-table
             name="creditTable"
-            :tableData="dv.reportListCredit"
+            v-model="dv.reportListCredit"
             :columns="creditColumns"
             :context="contextMenu"
             :width="'100%'"

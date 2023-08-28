@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 const itemsSchema = new mongoose.Schema({
     itemnum: { type: Number, label: "Kalem no", default: 10 },
-    postway: { type: Boolean, label: "Hareket yönü", default: false }, // false:Borç|true:Alacak
+    postway: { type: Number, label: "Hareket yönü", default: 0 }, // false:Borç|true:Alacak
     acctype: { type: String, label: "Hesap Tipi", default: "" },
     account: { type: String, label: "Hesap", default: "" },
     glaccount: { type: String, label: "Tek Düzen Hesap No", default: "" },

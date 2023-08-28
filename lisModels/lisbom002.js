@@ -8,7 +8,7 @@ const schema = new mongoose.Schema(
         type: { type: String, label: "Eleman Tipi", default: "" },
         stext: { type: String, label: "Açıklama", default: "" },
         isexpstop: { type: Boolean, label: "Çözülüm Sonu", default: false },
-        iscalcul: { type: Boolean, label: "Maliyet Hesapla", default: false },
+        ispricing: { type: Boolean, label: "Maliyet Hesapla", default: false },
         isreserve: { type: Boolean, label: "Rezerve Et", default: false },
         _deleted: { type: Boolean, label: "Silindi mi?", default: false },
     },

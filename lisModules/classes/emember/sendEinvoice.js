@@ -12,10 +12,12 @@ export default async function (pSession_id, plisedndocs) {
         username: global.sys_user,
         doctype: plisedndocs.doctype,
     });
-    
+
     if (olisedn001 == null)
-        throw new Error("Bu Belge İçin Yetkiniz Bulunmamaktadır!");
-    
+        throw new Error(
+            `${plisedndocs.doctype} Belge Tipi İçin Yetkiniz Bulunmamaktadır!`
+        );
+
     //*** fetch E-InvoNumber */
 
     let myEinvonumber = await Numrange.getNewNumber({
@@ -55,7 +57,7 @@ export default async function (pSession_id, plisedndocs) {
     XMLBLOCK = XMLBLOCK.replace("#RALIAS#", plisedndocs.alias);
 
     // ---- UBL string to BASE64 fromat ----
-    
+
     const xmlBase64 = Buffer.from(plisedndocs.edistr).toString("base64");
     XMLBLOCK = XMLBLOCK.replace("#XMLIN64BITFORMAT#", xmlBase64);
 
@@ -72,7 +74,6 @@ export default async function (pSession_id, plisedndocs) {
     )
         .then((res) => {
             xml2js.parseString(res.data, async function (err, result) {
-
                 await lisedndocs.updateOne(
                     { _id: plisedndocs._id },
                     {
@@ -138,7 +139,7 @@ export default async function (pSession_id, plisedndocs) {
                 isintegrator: true,
             });
             let oldNumber = (olisnumranges =
-                olisnumranges._doc.numparts[0].valcurrent - 1);
+                olisnumranges.numparts[0].valcurrent - 1);
 
             lisnumranges.updateOne(
                 {
@@ -157,4 +158,4 @@ export default async function (pSession_id, plisedndocs) {
 
             throw new Error("E-Belge Gönderilemedi!");
         });
-};
+}

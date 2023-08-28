@@ -14,7 +14,7 @@ const schema = new mongoose.Schema(
         acclevel: {
             type: Number,
             //label: "Hesap Seviyesi",
-            enum: [0, 1, 2],// 0: Ana Hesap | 1: Üst Hesap | 2: Direct Güncellenebilir Hesap
+            enum: [0, 1, 2], // 0: Ana Hesap | 1: Üst Hesap | 2: Direct Güncellenebilir Hesap
             default: 0,
         },
         stext: { type: String, label: "Hesap Açıklaması", default: "" },
@@ -51,6 +51,11 @@ const schema = new mongoose.Schema(
         costobject: { type: String, label: "Maliyet Objesi", default: "" },
         //----
         _deleted: { type: Boolean, label: "Silindi mi?", default: false }, // 0:silinmedi | 1:silindi
+        _createdby: {
+            type: String,
+            label: "Oluşturan",
+            default: global.sys_user,
+        },
     },
     {
         timestamps: true,

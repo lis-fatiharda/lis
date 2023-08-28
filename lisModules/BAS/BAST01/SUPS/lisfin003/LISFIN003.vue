@@ -196,7 +196,7 @@
 
             <l-table
                 name="LISFIN003"
-                :tableData="mv.lisfin003List"
+                v-model="mv.lisfin003List"
                 :columns="myColumnsFin002"
                 :context="contextMenu"
                 :height="'70vh'"

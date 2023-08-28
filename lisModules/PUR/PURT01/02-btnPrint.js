@@ -13,7 +13,7 @@ export default async function (dv) {
   olisedndocs.docdate = new Date();
   olisedndocs.grandtotal = dv.lispurdocs.grandtotal;
   olisedndocs.currency = dv.lispurdocs.currency;
-  olisedndocs.createdby = global.sys_user;
+  olisedndocs._createdby = global.sys_user;
 
   //----------------------------
 

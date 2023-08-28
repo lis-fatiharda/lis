@@ -16,40 +16,40 @@ const numPartsSchema = new mongoose.Schema({
 
 //**************** */
 const schema = new mongoose.Schema(
-  {
-    company: {
-      type: String,
-      default: "",
+    {
+        company: {
+            type: String,
+            default: "",
+        },
+        numrange: {
+            type: String,
+            default: "",
+        },
+        stext: {
+            type: String,
+            default: "",
+        },
+        ismanuel: {
+            type: Boolean,
+            default: false,
+        },
+        isintegrator: {
+            type: Boolean,
+            label: "Entegratör numaratörü mü?",
+            default: false,
+        },
+        numparts: [numPartsSchema],
+        valcurrent: { type: String, default: "0" },
+        _createdby: {
+            type: String,
+            label: "Oluşturan",
+            default: global.sys_user,
+        },
     },
-    numrange: {
-      type: String,
-      default: "",
-    },
-    stext: {
-      type: String,
-      default: "",
-    },
-    ismanuel: {
-      type: Boolean,
-      default: false,
-    },
-    isintegrator: {
-      type: Boolean,
-      label: "Entegratör numaratörü mü?",
-      default: false,
-    },
-    numparts: [numPartsSchema],
-    valcurrent: { type: String, default: "0" },
-    createdby: {
-      type: String,
-      label: "Oluşturan",
-      default: global.sys_user,
-    },
-  },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
+    {
+        timestamps: true,
+        versionKey: false,
+    }
 );
 
 const lisnumranges = mongoose.model("lisnumranges", schema);

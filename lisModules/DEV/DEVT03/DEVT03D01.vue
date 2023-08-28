@@ -52,7 +52,7 @@
                     </l-tab-panel>
 
                     <l-tab-panel name="function">
-                        <lisfunction />
+                        <lisFunction />
                     </l-tab-panel>
 
                     <l-tab-panel name="message">
@@ -70,6 +70,10 @@
                     <l-tab-panel name="objectMove">
                         <objectMove />
                     </l-tab-panel>
+                    <l-tab-panel name="objectNew">
+                        <objectNew />
+                    </l-tab-panel>
+
                     <l-tab-panel name="printPDF">
                         <printPDF />
                     </l-tab-panel>
@@ -92,8 +96,8 @@
 
 
 
-                    <l-tab-panel name="like">
-                        <like />
+                    <l-tab-panel name="createUUID">
+                        <createUUID />
                     </l-tab-panel>
 
                     <!------------->
@@ -149,6 +153,12 @@
                         <lastDayOfYear />
                     </l-tab-panel>
 
+                    <l-tab-panel name="getWeek">
+                        <getWeek />
+                    </l-tab-panel>
+
+                    
+
                 </l-tab-panels>
             </template>
         </q-splitter>
@@ -158,13 +168,16 @@
 <script>
 // https://quasarframework.github.io/quasar-ui-qmarkdown/examples
 import alert from "./components/basic/alert.vue";
-import lisfunction from "./components/basic/function.vue";
+import lisFunction from "./components/basic/lisFunction.vue";
 import message from "./components/basic/message.vue";
 import objectAssign from "./components/basic/objectAssign.vue";
 import objectClear from "./components/basic/objectClear.vue";
 import objectCopy from "./components/basic/objectCopy.vue";
 import objectMove from "./components/basic/objectMove.vue";
+import objectNew from "./components/basic/objectNew.vue";
 import printPDF from "./components/basic/printPDF.vue";
+import createUUID from "./components/basic/createUUID.vue";
+
 //
 import round from "./components/calculation/round.vue";
 //
@@ -188,6 +201,8 @@ import getMiliSecDiff from "./components/date/getMiliSecDiff.vue";
 import getMinDiff from "./components/date/getMinDiff.vue";
 import getMonth from "./components/date/getMonth.vue";
 import getSecDiff from "./components/date/getSecDiff.vue";
+import getWeek from "./components/date/getWeek.vue";
+
 
 import getYear from "./components/date/getYear.vue";
 import lastDayOfMonth from "./components/date/lastDayOfMonth.vue";
@@ -196,36 +211,7 @@ import lastDayOfYear from "./components/date/lastDayOfYear.vue";
 
 export default {
     props: ["tabInfo"],
-    components: {
-        alert,
-        lisfunction,
-        message,
-        objectAssign,
-        objectClear,
-        objectCopy,
-        objectMove,
-        printPDF,
-        round,
-        like,
-        systemVars,
-        icons,
-        addDays,
-        addHours,
-        firstDayOfMonth,
-        firstDayOfYear,
-        format,
-        getDay,
-        getDayOfWeek,
-        getDayDiff,
-        getHourDiff,
-        getMiliSecDiff,
-        getMinDiff,
-        getMonth,
-        getSecDiff,
-        getYear,
-        lastDayOfMonth,
-        lastDayOfYear,
-    },
+    
     data() {
         return {
             splitterModel: 300,
@@ -279,7 +265,13 @@ export default {
                             label: "objectMove",
                         },
                         {
+                            label: "objectNew",
+                        },
+                        {
                             label: "printPDF",
+                        },
+                        {
+                            label: "createUUID",
                         },
                     ],
                 },
@@ -352,6 +344,9 @@ export default {
 
                         {
                             label: "format",
+                        },
+                        {
+                            label: "getWeek",
                         },
                     ],
                 },

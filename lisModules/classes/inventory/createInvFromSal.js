@@ -1,4 +1,4 @@
-export default async function createInvFromPur(pLissaldocs, pMod) {
+export default async function createInvFromSal(pLissaldocs, pMod) {
     let olisinvdocs = {};
 
     let olissal001 = await lissal001.findOne({
@@ -6,27 +6,97 @@ export default async function createInvFromPur(pLissaldocs, pMod) {
         doctype: pLissaldocs.doctype,
     });
 
-    if (olissal001.movecode == "") throw new Error("Hareket Kodu Bulunamadı!");
+    if (olissal001.movecode == "") throw new Error("Belge Tipi Bulunamadı!");
 
-    olisinvdocs = new lisinvdocs(lisinvdocs.prototype.schema.tree).toObject();
-    //olisinvdocs = olisinvdocs._doc;
-
-    lis.objectMove(pLissaldocs, olisinvdocs);
-    olisinvdocs.items = [];
-
-    for (let i in pLissaldocs.items) {
-        let olisinvdocsitems = new lisinvdocs(
+    if (pMod <= 0) {
+        olisinvdocs = new lisinvdocs(
             lisinvdocs.prototype.schema.tree
-        )._doc.items[0].toObject();
+        ).toObject();
 
-        //olisinvdocsitems = olisinvdocsitems._doc.items[0]._doc;
-        lis.objectMove(pLissaldocs.items[i], olisinvdocsitems);
-        olisinvdocsitems.refdoctype = pLissaldocs.doctype;
-        olisinvdocsitems.refdocnum = pLissaldocs.docnum;
-        olisinvdocsitems.refitemnum = pLissaldocs.items[i].itemnum;
-        olisinvdocs.items.push(olisinvdocsitems);
+        lis.objectMove(pLissaldocs, olisinvdocs);
+        olisinvdocs.items = [];
+
+        for (let i in pLissaldocs.items) {
+            let olisinvdocsitems = new lisinvdocs(
+                lisinvdocs.prototype.schema.tree
+            )._doc.items[0].toObject();
+
+            const olisinv006 = await Inventory.ctrlMoveCode(
+                pLissaldocs.company,
+                pLissaldocs.items[i].material,
+                olissal001.movecode,
+                pLissaldocs.items[i].itemtype,
+                pLissaldocs.items[i].specialstock
+            );
+
+            lis.objectMove(pLissaldocs.items[i], olisinvdocsitems);
+            olisinvdocsitems.saldoctype = pLissaldocs.doctype;
+            olisinvdocsitems.saldocnum = pLissaldocs.docnum;
+            olisinvdocsitems.salitemnum = pLissaldocs.items[i].itemnum;
+            olisinvdocsitems.vendor = pLissaldocs.vendor;
+            olisinvdocsitems.customer = pLissaldocs.customer;
+            lis.objectMove(olisinv006, olisinvdocsitems);
+            //
+            const olismaterials = await lismaterials.findOne({
+                company: pLissaldocs.company,
+                material: pLissaldocs.items[i].material,
+            });
+
+            const olisbas009 = await lisbas009.findOne({
+                company: pLissaldocs.company,
+                mattype: olismaterials.mattype,
+            });
+            olisinvdocsitems.invmanag = olisbas009.invmanag;
+            olisinvdocsitems.ordertype = pLissaldocs.items[i].itemtype;
+            olisinvdocs.items.push(olisinvdocsitems);
+        }
+    }
+    if (pMod == 1) {
+        olisinvdocs = await lisinvdocs.findOne({
+            company: pLissaldocs.company,
+            saldoctype: pLissaldocs.doctype,
+            saldocnum: pLissaldocs.docnum,
+        });
+
+        olisinvdocs.items = [];
+
+        for (let i in pLissaldocs.items) {
+            let olisinvdocsitems = new lisinvdocs(
+                lisinvdocs.prototype.schema.tree
+            )._doc.items[0].toObject();
+
+            const olisinv006 = await Inventory.ctrlMoveCode(
+                pLissaldocs.company,
+                pLissaldocs.items[i].material,
+                olissal001.movecode,
+                pLissaldocs.items[i].itemtype,
+                pLissaldocs.items[i].specialstock
+            );
+
+            lis.objectMove(pLissaldocs.items[i], olisinvdocsitems);
+            olisinvdocsitems.saldoctype = pLissaldocs.doctype;
+            olisinvdocsitems.saldocnum = pLissaldocs.docnum;
+            olisinvdocsitems.salitemnum = pLissaldocs.items[i].itemnum;
+            olisinvdocsitems.vendor = pLissaldocs.vendor;
+            olisinvdocsitems.customer = pLissaldocs.customer;
+            lis.objectMove(olisinv006, olisinvdocsitems);
+            //
+            const olismaterials = await lismaterials.findOne({
+                company: pLissaldocs.company,
+                material: pLissaldocs.items[i].material,
+            });
+
+            const olisbas009 = await lisbas009.findOne({
+                company: pLissaldocs.company,
+                mattype: olismaterials.mattype,
+            });
+            olisinvdocsitems.invmanag = olisbas009.invmanag;
+            olisinvdocsitems.ordertype = pLissaldocs.items[i].itemtype;
+            olisinvdocs.items.push(olisinvdocsitems);
+        }
     }
 
-    this.saveMovement(olisinvdocs, olissal001.movecode, pMod);
+    await this.saveMovement(olisinvdocs, olissal001.movecode, pMod);
+
     return olisinvdocs;
 }

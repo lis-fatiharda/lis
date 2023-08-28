@@ -104,7 +104,7 @@
         >
             <l-table
                 name="BOMT01D02"
-                :tableData="dv.lisbomdocs.materials"
+                v-model="dv.lisbomdocs.materials"
                 :columns="myColumnsBomItem"
                 :height="'97px'"
                 :summary="false"
@@ -138,7 +138,7 @@
                 >
                     <l-table
                         name="BOMT01D02"
-                        :tableData="operation.activities"
+                        v-model="operation.activities"
                         :columns="myColumnsBomItem"
                         :height="'97px'"
                         :summary="false"
@@ -156,7 +156,7 @@
                 >
                     <l-table
                         name="BOMT01D02"
-                        :tableData="operation.components"
+                        v-model="operation.components"
                         :columns="myColumnsBomItem"
                         :height="'200px'"
                         :summary="false"

@@ -1,4 +1,5 @@
 <template>
+    <l-div-flex style="width: 100%">
     <l-card style="width: 49%; min-width: 320px">
         <l-card-section>
             <div class="text-overline">
@@ -6,10 +7,9 @@
             </div>
         </l-card-section>
         <l-separator inset />
-        <l-card-section class="q-gutter-xs">
+        <l-card-section>
             <l-div-flex>
                 <l-checkbox
-                    
                     dense
                     :label="this.$gl(`Aynı Firma`, `Same Company`)"
                     v-model="dv.lissaldocs.isgrcrecv"
@@ -23,7 +23,6 @@
                             `Company Receiving the Goods`
                         )
                     "
-                    
                     dense
                     v-model="dv.lissaldocs.grcrecv"
                 >
@@ -50,106 +49,138 @@
                     </l-chip>
                 </l-input>
                 <l-select
-                v-model="dv.lissaldocs.grcadrnum"
+                    v-model="dv.lissaldocs.grcadrnum"
                     :options="grcAdrList"
-                  :label="this.$gl(`Adres No`, `Address No`)"
-                  style="min-width: 120px"
-                  class="bg-yellow-1"
-                  optValue="adrnum"
-                  optTitle="addressname"
-                  optCaptions="address"
-                  @select="fetchGrcAdrnum()"
+                    :label="this.$gl(`Adres No`, `Address No`)"
+                    style="min-width: 120px"
+                    class="bg-yellow-1"
+                    optValue="adrnum"
+                    optTitle="addressname"
+                    optCaptions="address"
+                    @select="fetchGrcAdrnum()"
                 />
-               
             </l-div-flex>
             <l-input
-                
                 dense
                 :label="this.$gl(`Ünvan`, `Title`)"
                 v-model="dv.lissaldocs.grctitle"
             />
             <l-input
-                
                 dense
                 :label="this.$gl(`İsim`, `Name`)"
                 v-model="dv.lissaldocs.grcname1"
             />
             <l-input
-                
                 dense
                 :label="this.$gl(`Adres`, `Address`)"
                 v-model="dv.lissaldocs.grcaddress"
             />
-            <l-input
-                
-                dense
-                :label="this.$gl(`Şehir`, `City`)"
-                v-model="dv.lissaldocs.city"
-            />
-            <l-input
-                
-                dense
-                :label="this.$gl(`Posta Kodu`, `Post Code`)"
-                v-model="dv.lissaldocs.grcpostcode"
-            />
-            <div class="row q-gutter-md q-pa-xs">
+
+            <l-div-flex>
                 <l-input
-                    
                     dense
                     :label="this.$gl(`Ülke`, `Country`)"
                     v-model="dv.lissaldocs.grccountry"
+                    :class="dv.lissaldocs.edoctype == 3? 'bg-blue-1': 'bg-white'"
                 />
                 <l-input
-                    
+                    dense
+                    :label="this.$gl(`Şehir`, `City`)"
+                    v-model="dv.lissaldocs.grccity"
+                    :class="dv.lissaldocs.edoctype == 3? 'bg-blue-1': 'bg-white'"
+                />
+                <l-input
+                    dense
+                    :label="this.$gl(`Semt`, `District`)"
+                    v-model="dv.lissaldocs.grcdistrict"
+                    :class="dv.lissaldocs.edoctype == 3? 'bg-blue-1': 'bg-white'"
+                />
+                <l-input
+                    dense
+                    :label="this.$gl(`Kapı No`, `Building`)"
+                    v-model="dv.lissaldocs.grcbuilding"
+                    :class="dv.lissaldocs.edoctype == 3? 'bg-blue-1': 'bg-white'"
+                />
+
+                <l-input
+                    dense
+                    :label="this.$gl(`Posta Kodu`, `Post Code`)"
+                    v-model="dv.lissaldocs.grcpostcode"
+                    :class="dv.lissaldocs.edoctype == 3? 'bg-blue-1': 'bg-white'"
+                />
+
+                
+                <l-input
                     dense
                     :label="this.$gl(`Dil`, `Language`)"
                     v-model="dv.lissaldocs.grclangu"
                 />
-            </div>
+            </l-div-flex>
+
             <l-div-flex>
                 <l-input
-                    
-                    dense
                     :label="this.$gl(`Telefon`, `Telephone Number`)"
                     v-model="dv.lissaldocs.grctelnum"
                 />
                 <l-input
-                    
-                    dense
                     :label="this.$gl(`Fax`, `Fax`)"
                     v-model="dv.lissaldocs.grcfaxnum"
                 />
                 <l-input
-                    
-                    dense
                     :label="this.$gl(`E-Mail`, `E-Mail`)"
                     v-model="dv.lissaldocs.grcemail"
                 />
                 <l-input
-                    
-                    dense
                     :label="this.$gl(`Web Sitesi`, `Website`)"
                     v-model="dv.lissaldocs.grcwebsite"
                 />
             </l-div-flex>
-            <l-input
-                
-                dense
-                :label="this.$gl(`Satış Bölümü`, `Sales Department`)"
-                v-model="dv.lissaldocs.grcsaldept"
-            />
+
+            <l-separator />
             <l-div-flex>
                 <l-input
-                    
+                    label="Şoför adı"
+                    v-model="dv.lissaldocs.drivername"
+                    :class="dv.lissaldocs.edoctype == 3? 'bg-blue-1': 'bg-white'"
+                />
+                <l-input
+                    dense
+                    label="Şoför soyadı"
+                    v-model="dv.lissaldocs.driversurname"
+                    :class="dv.lissaldocs.edoctype == 3? 'bg-blue-1': 'bg-white'"
+                />
+                <l-input
+                    dense
+                    label="Şoför TC no"
+                    v-model="dv.lissaldocs.driverid"
+                    :class="dv.lissaldocs.edoctype == 3? 'bg-blue-1': 'bg-white'"
+                />
+                <l-input
+                    dense
+                    label="Plaka"
+                    v-model="dv.lissaldocs.driverplate"
+                    :class="dv.lissaldocs.edoctype == 3? 'bg-blue-1': 'bg-white'"
+                />
+            </l-div-flex>
+
+            <l-separator />
+
+            <l-div-flex>
+                <l-input
                     dense
                     :label="this.$gl(`Vergi Dairesi`, `Tax Administration`)"
                     v-model="dv.lissaldocs.grctaxdept"
                 />
                 <l-input
-                    
                     dense
                     :label="this.$gl(`Vergi No`, `Tax No`)"
                     v-model="dv.lissaldocs.grctaxnum"
+                />
+
+                <l-input
+                    dense
+                    :label="this.$gl(`Satış Bölümü`, `Sales Department`)"
+                    v-model="dv.lissaldocs.grcsaldept"
                 />
             </l-div-flex>
         </l-card-section>
@@ -165,7 +196,6 @@
         <l-card-section>
             <l-div-flex>
                 <l-checkbox
-                    
                     dense
                     :label="this.$gl(`Aynı Firma`, `Same Company`)"
                     v-model="dv.lissaldocs.isircrecv"
@@ -179,7 +209,6 @@
                             `Company Receiving Invoice`
                         )
                     "
-                    
                     dense
                     v-model="dv.lissaldocs.ircrecv"
                 >
@@ -207,110 +236,107 @@
                 </l-input>
 
                 <l-select
-                v-model="dv.lissaldocs.grcadrnum"
+                    v-model="dv.lissaldocs.grcadrnum"
                     :options="grcAdrList"
-                  :label="this.$gl(`Adres No`, `Address No`)"
-                  style="min-width: 120px"
-                  class="bg-yellow-1"
-                  optValue="adrnum"
-                  optTitle="addressname"
-                  optCaptions="address"
-                  @select="fetchGrcAdrnum()"
+                    :label="this.$gl(`Adres No`, `Address No`)"
+                    style="min-width: 120px"
+                    class="bg-yellow-1"
+                    optValue="adrnum"
+                    optTitle="addressname"
+                    optCaptions="address"
+                    @select="fetchGrcAdrnum()"
                 />
-              
             </l-div-flex>
             <l-input
-                
                 dense
                 :label="this.$gl(`Ünvan`, `Title`)"
                 v-model="dv.lissaldocs.irctitle"
             />
             <l-input
-                
                 dense
                 :label="this.$gl(`İsim`, `Name`)"
                 v-model="dv.lissaldocs.ircname1"
             />
             <l-input
-                
                 dense
                 :label="this.$gl(`Adres`, `Address`)"
                 v-model="dv.lissaldocs.ircaddress"
             />
-            <l-input
-                
-                dense
-                :label="this.$gl(`Şehir`, `City`)"
-                v-model="dv.lissaldocs.city"
-            />
-            <l-input
-                
-                dense
-                :label="this.$gl(`Posta Kodu`, `Post Code`)"
-                v-model="dv.lissaldocs.ircpostcode"
-            />
+
             <l-div-flex>
                 <l-input
-                    
-                    dense
                     :label="this.$gl(`Ülke`, `Country`)"
                     v-model="dv.lissaldocs.irccountry"
                 />
                 <l-input
-                    
-                    dense
+                    :label="this.$gl(`Şehir`, `City`)"
+                    v-model="dv.lissaldocs.irccity"
+                />
+                
+                
+                 <l-input
+                    :label="this.$gl(`Semt`, `District`)"
+                    v-model="dv.lissaldocs.ircdistrict"
+                />
+                <l-input
+                    :label="this.$gl(`Kapı No`, `Building`)"
+                    v-model="dv.lissaldocs.ircbuilding"
+                />
+                <l-input
+                    :label="this.$gl(`Posta Kodu`, `Post Code`)"
+                    v-model="dv.lissaldocs.ircpostcode"
+                />
+                <l-input
                     :label="this.$gl(`Dil`, `Language`)"
                     v-model="dv.lissaldocs.irclangu"
                 />
             </l-div-flex>
             <l-div-flex>
                 <l-input
-                    
                     dense
                     :label="this.$gl(`Telefon`, `Phone Number`)"
                     v-model="dv.lissaldocs.irctelnum"
                 />
                 <l-input
-                    
                     dense
                     :label="this.$gl(`Fax`, `Fax`)"
                     v-model="dv.lissaldocs.ircfaxnum"
                 />
                 <l-input
-                    
                     dense
                     :label="this.$gl(`E-Mail`, `E-Mail`)"
                     v-model="dv.lissaldocs.ircemail"
                 />
                 <l-input
-                    
                     dense
                     :label="this.$gl(`Web Sitesi`, `Website`)"
                     v-model="dv.lissaldocs.ircwebsite"
                 />
             </l-div-flex>
-            <l-input
-                
-                dense
-                :label="this.$gl(`Satış Bölümü`, `Sales Department`)"
-                v-model="dv.lissaldocs.ircsaldept"
-            />
+
+            <l-separator />
+
             <l-div-flex>
                 <l-input
-                    
                     dense
                     :label="this.$gl(`Vergi Dairesi`, `Tax Administration`)"
                     v-model="dv.lissaldocs.irctaxdept"
                 />
                 <l-input
-                    
                     dense
                     :label="this.$gl(`Vergi No`, `Tax Number`)"
                     v-model="dv.lissaldocs.irctaxnum"
                 />
+
+                <l-input
+                    dense
+                    :label="this.$gl(`Satış Bölümü`, `Sales Department`)"
+                    v-model="dv.lissaldocs.ircsaldept"
+                />
             </l-div-flex>
         </l-card-section>
     </l-card>
+    </l-div-flex>
 </template>
 
 <script>
@@ -320,7 +346,7 @@ export default {
         return {
             grcAdrList: [],
             ircAdrList: [],
-        }
+        };
     },
 
     methods: {

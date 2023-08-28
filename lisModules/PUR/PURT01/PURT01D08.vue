@@ -15,7 +15,7 @@
     </l-div>
     <l-table
         name="PURT01D01"
-        :tableData="dv.lispurdocs.payplan"
+        v-model="dv.lispurdocs.payplan"
         :columns="myColumnsPplan"
         :width="'100%'"
         @change="fetchChng($event)"     

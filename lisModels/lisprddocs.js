@@ -6,6 +6,7 @@ const prodsSchema = new mongoose.Schema({
     type: { type: String, label: "Giriş Tipi", default: "" }, // 0: Ürün | 1: Eş değer yanürün | 2: yanürün | 3: fire
     operation: { type: String, label: "Operasyon No", default: "" },
     material: { type: String, label: "Malzeme Kodu", default: "" },
+    variant: { type: Object, label: "Varyant", default: {} },
     quantity: { type: Number, label: "Temel Miktar", default: 1 },
     qunit: { type: String, label: "Birim", default: "" },
 
@@ -25,9 +26,7 @@ const activitiesSchema = new mongoose.Schema({
     iscost: { type: Boolean, label: "Maliyete ekle", default: false },
 
     stat: { type: Boolean, label: "Aktivite statüsü", default: false }, // false: Planlanan | true: Gerçekleşen
-    cvalue: { type: Number, label: "Gerçekleşen operasyon süresi", default: 0 },
-    cunit: { type: String, label: "Birimi", default: "" },
-    cprice: { type: Number, label: "Birim çalışma süresi tutarı", default: 0 },
+    price: { type: Number, label: "Birim çalışma süresi tutarı", default: 0 },
 });
 
 const operationsSchema = new mongoose.Schema({
@@ -45,6 +44,7 @@ const equipmentsSchema = new mongoose.Schema({
     value: { type: Number, label: "Tahmini operasyon süresi", default: 0 },
     unit: { type: String, label: "Birimi", default: "" },
     material: { type: String, label: "Malzeme Kodu", default: "" },
+    variant: { type: Object, label: "Varyant", default: {} },
     stext: { type: String, label: "Açıklama", default: "" },
 
     iscost: { type: Boolean, label: "Maliyete ekle", default: false },
@@ -56,6 +56,7 @@ const componentsSchema = new mongoose.Schema({
     type: { type: String, label: "Ürün Tipi", default: "" },
     operation: { type: String, label: "Operasyon No", default: "" },
     material: { type: String, label: "Malzeme Kodu", default: "" },
+    variant: { type: Object, label: "Varyant", default: {} },
     quantity: { type: Number, label: "Tüketilecek Miktar", default: 1 },
     qunit: { type: String, label: "Birim", default: "" },
 
@@ -105,7 +106,11 @@ const schema = new mongoose.Schema(
         },
 
         //************** */
-        createdby: { type: String, label: "Oluşturan", default: "" },
+        _createdby: {
+            type: String,
+            label: "Oluşturan",
+            default: global.sys_user,
+        },
         _deleted: { type: Boolean, label: "Silindi mi?", default: false }, // 0:silinmedi | 1:silindi
     },
     {

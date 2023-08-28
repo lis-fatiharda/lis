@@ -5,13 +5,23 @@ import mongoose from "mongoose";
 const schema = new mongoose.Schema(
     {
         company: { type: String, label: "Firma Kodu", default: "" },
-        code: { type: String, label: "Hareket kodu", default: "" },
+        movecode: { type: String, label: "Hareket kodu", default: "" },
         stext: { type: String, label: "Açıklama", default: "" },
         invmanag: { type: String, label: "Env.Yön.Tipi", default: "" },
-        specialstock: { type: String, label: "Ö.S.Tipi", default: "*" },
+        ordertype: { type: String, label: "Sipariş.Tipi", default: "" },
+        specialstock: { type: String, label: "Ö.S.Tipi", default: "S" },
         //******************************* */
-        doctype: { type: String, label: "Belge Tipi", default: "*" },
-        postway: { type: Boolean, label: "Hareket Yönü", default: false },
+        doctype: { type: String, label: "Belge Tipi", default: "" },
+        postway: {
+            type: Number,
+            label: "Hareket Yönü",
+            default: 0,
+            options: [
+                { value: 0, stext: "Giriş" },
+                { value: 1, stext: "Çıkış" },
+                { value: 2, stext: "Transfer" },
+            ],
+        },
         fromstocktype: {
             type: Number,
             label: "Stoktan",

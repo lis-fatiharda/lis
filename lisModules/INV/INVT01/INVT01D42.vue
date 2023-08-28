@@ -44,14 +44,15 @@
             />
 
             <l-select
-                :label="this.$gl(`Hareket Kodu`, `Movement Code`)"
-                v-model="dv.sc.trantype"
-                :options="dv.sc.trantypeOpts"
-                optValue="trantype"
-                :optTitles="['trantype']"
-                :optCaptions="['stext']"
-                style="width: 120px"
-            />
+      :label="this.$gl(`Hareket Kodu`, `Transaction Code`)"
+      v-model="dv.olisinvdocs.movecode"
+      options="lisinv006"
+      optValue="code"
+      optTitle="stext"
+      optCaptions="code"
+      width="135px"
+      :readonly="true"
+    />
 
             <l-datetime
                 :label="this.$gl(`Belge Tarihi`, `Document Date`)"
@@ -69,12 +70,9 @@
         </l-card-section-flex>
         <l-card-section>
             <l-table
-                name="INVT01D42"
-                :tableData="dv.olisinvdocs.items"
+                v-model="dv.olisinvdocs.items"
                 :context="contextMenu"
                 :columns="myColumns"
-                width="100%"
-                height="60vh"
                 @keyup="if ($event.key == 'Insert') this.pushNewItem();"
             />
         </l-card-section>
@@ -124,7 +122,7 @@ export default {
                 olisinvdocs: {},
                 sc: {
                     
-                    trantype: "",
+                    moveCode: "",
                 },
             },
         };

@@ -53,6 +53,8 @@
                 />
             </l-div-flex>
 
+            <l-separator/>
+
             <!-- Listing Documents  -->
             <l-div v-if="dv.lisDialogDetail == 'listDocs'">
                 <q-markup-table :seperator="'cell'" flat bordered dense>
@@ -228,6 +230,7 @@
                     clickable
                     @click="btnDelete(dv)"
                     color="red-6"
+                    class="text-white"
                 ></l-chip>
             </l-div>
         </l-card>

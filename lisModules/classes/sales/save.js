@@ -3,25 +3,31 @@
 // ?        1 - update the document
 
 export default async function save(plissaldocs, pModi) {
-
-
     const olissal001 = await lissal001.findOne({
         company: plissaldocs.company,
         doctype: plissaldocs.doctype,
     });
 
+    if (olissal001 == null) throw new Error("Belge Tipi Bulunamadı!");
+    //--
+
     // Controls before Save ****************
+
+    if ((plissaldocs.currency == null) | (plissaldocs.currency == "")) {
+        throw new Error("Lütfen Para Birimi Giriniz!");
+    }
+
     for (let i in plissaldocs.items) {
-        
         if (olissal001.deltype > 0) {
             await Inventory.ctrlMaterialForMove(
                 plissaldocs.company,
                 plissaldocs.items[i]
-            )
+            );
             await Inventory.ctrlMoveCode(
                 plissaldocs.company,
                 plissaldocs.items[i].material,
                 olissal001.movecode,
+                plissaldocs.items[i].itemtype,
                 plissaldocs.items[i].specialstock
             );
         }
@@ -41,24 +47,30 @@ export default async function save(plissaldocs, pModi) {
         const olissal002 = await lissal002.findOne({
             company: plissaldocs.company,
             doctype: plissaldocs.doctype,
-            itemtype: plissaldocs.items[i].itemtype
+            itemtype: plissaldocs.items[i].itemtype,
         });
 
         if (olissal002 == null) throw new Error("Kalem Tipi Bulunamadı!");
     }
     // Control reference document
-    await this.ctrlChildDocForDel(plissaldocs)
+    await this.ctrlChildDocForDel(plissaldocs);
 
-    await this.ctrlRefDocument(plissaldocs)
+    await this.ctrlRefDocument(plissaldocs);
+
+    // Control for stock movements
+
+    if ((olissal001.deltype == 2) | (olissal001.deltype == 4)) {
+        await Inventory.ctrlInvFromSal(plissaldocs, pModi);
+    }
 
     // Update reference document
-    await this.updRefDocument(plissaldocs)
+    await this.updRefDocument(plissaldocs);
     plissaldocs = await this.removeDeletedItems(plissaldocs);
 
-    // CTRL for lisfindoc*********************
+    // CTRL for lisfindocs*********************
 
     if (plissaldocs.isfinance == true) {
-        let isHaveFinDoc = lisfindocs.find({
+        let isHaveFinDoc = await lisfindocs.find({
             company: plissaldocs.company,
             saldoctype: plissaldocs.doctype,
             saldocnum: plissaldocs.docnum,
@@ -76,15 +88,10 @@ export default async function save(plissaldocs, pModi) {
         plissaldocs.docnum = await Numrange.getNewNumber({
             company: olissal001.company,
             numrange: olissal001.numrange,
-        })
-
-        // Save the Document
-        plissaldocs._id = undefined;
-        const olissaldocs = new lissaldocs(plissaldocs);
-        await olissaldocs.save().catch((err) => {
-            throw new Error(err);
         });
 
+        // create the Document
+        await lissaldocs.create(plissaldocs);
     } else {
         // Save the Document
         await lissaldocs
@@ -100,7 +107,6 @@ export default async function save(plissaldocs, pModi) {
     if ((olissal001.deltype == 2) | (olissal001.deltype == 4)) {
         await Inventory.createInvFromSal(plissaldocs, pModi);
     }
-
 
     return plissaldocs;
 }

@@ -35,6 +35,11 @@ const schema = new mongoose.Schema({
         default: "off",
     },
     _deleted: { type: Boolean, label: "Silindi mi?", default: false },
+    _createdby: {
+        type: String,
+        label: "Oluşturan",
+        default: global.sys_user,
+    },
 });
 
 const lisworkcenters = mongoose.model("lisworkcenters", schema);

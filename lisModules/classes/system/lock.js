@@ -24,7 +24,7 @@ async function lock(Pcompany, Plid, Plockkey, Pcreatedby) {
   olislocks.company = Pcompany;
   olislocks.lid = Plid;
   olislocks.lockkey = Plockkey;
-  olislocks.createdby = Pcreatedby;
+  olislocks._createdby = Pcreatedby;
   olislocks.createdat = new Date().toString();
   console.log(olislocks);
 

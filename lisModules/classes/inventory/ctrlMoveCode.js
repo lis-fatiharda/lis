@@ -1,11 +1,9 @@
-import lisinv006 from "../../../lisModels/lisinv006.js";
-import lisbas009 from "../../../lisModels/lisbas009.js";
-import lismaterials from "../../../lisModels/lismaterials.js";
 
 export default async function ctrlMoveCode(
     pCompany,
     pMaterial,
     pMoveCode,
+    pOrderType,
     pSpecialStock
 ) {
     const olismaterials = await lismaterials.findOne({
@@ -22,8 +20,9 @@ export default async function ctrlMoveCode(
 
     const olisinv006 = await lisinv006.findOne({
         company: pCompany,
-        code: pMoveCode,
+        movecode: pMoveCode,
         invmanag: olisbas009.invmanag,
+        ordertype: pOrderType,
         specialstock: pSpecialStock,
     });
 
@@ -32,6 +31,8 @@ export default async function ctrlMoveCode(
             pMoveCode +
                 "-" +
                 olisbas009.invmanag +
+                "-" +
+                pOrderType +
                 "-" +
                 pSpecialStock +
                 " / Hareket Kodu Bulunamadı!"

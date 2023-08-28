@@ -65,9 +65,9 @@ export default async function (pCompany, pSession_id) {
                     olisedndocs.currency =
                         myHeader["PAYABLE_AMOUNT"][0]["$"]["currencyID"];
 
-                    olisedndocs.createdby = global.sys_user;
+                    olisedndocs._createdby = global.sys_user;
                     olisedndocs.edoctype = 1;
-                    olisedndocs.postway = false;
+                    olisedndocs.postway = 0;
                     olisedndocs.edocstat = 1;
 
                     olisedndocs.processstat = myHeader["GIB_STATUS_CODE"][0];

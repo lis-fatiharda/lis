@@ -1,6 +1,3 @@
-import lisaccounts from "../../../lisModels/lisaccounts.js";
-import liscustomers from "../../../lisModels/liscustomers.js";
-
 
 export default async function (pliscustomer) {
 
@@ -10,7 +7,7 @@ export default async function (pliscustomer) {
 
     if (myAccount == null ) {
         
-        let olisaccounts = (new lisaccounts(lisaccounts.prototype.schema.tree)).toObject();
+        let olisaccounts = await lis.objectNew('lisaccounts')
 
         olisaccounts.company = pliscustomer.company;
         olisaccounts.acctype = pliscustomer.acctype;
@@ -30,14 +27,10 @@ export default async function (pliscustomer) {
         olisaccounts.iscostcenter = 0;
         olisaccounts.iscostobject = 0;
 
-        olisaccounts = new lisaccounts(olisaccounts);
+        await lisaccounts.create(olisaccounts);
 
 
-        olisaccounts.save().catch((error) => {
-            throw new Error(error);
-        });
-
-        liscustomers.findOneAndUpdate({ _id: pliscustomer._id }, { account: pliscustomer.account }).catch((error) => {
+        await liscustomers.findOneAndUpdate({ _id: pliscustomer._id }, { account: pliscustomer.account }).catch((error) => {
             throw new Error(error);
         });
 

@@ -202,7 +202,7 @@
 
         <l-table
             name="FINT02D01"
-            :tableData="dv.reportList"
+            v-model="dv.reportList"
             :columns="myColumnsFin2"
             :context="contextMenu"
             :readonly="true"
@@ -263,13 +263,13 @@ export default {
                     label: this.$gl(`Belge Tipi`, `Document Type`),
                     value: "doctype",
                     type: "string",
-                    _textColor: "blue",
+                    textColor: "blue",
                 },
                 {
                     label: this.$gl(`Belge No`, `Document No`),
                     value: "docnum",
                     type: "string",
-                    _textColor: "blue",
+                    textColor: "blue",
                 },
                 {
                     label: this.$gl(`Yevm. No`, `Post No`),
@@ -280,7 +280,7 @@ export default {
                     label: this.$gl(`Yevm. Tarihi`, `Post Date.`),
                     value: "postdate",
                     type: "date",
-                    _textColor: "red",
+                    textColor: "red",
                 },
                 {
                     label: this.$gl(`Sat.Say.`, `Items`),
@@ -297,7 +297,7 @@ export default {
                     label: this.$gl(`Belge Tarihi`, `Document Date`),
                     value: "docdate",
                     type: "date",
-                    _textColor: "red",
+                    textColor: "red",
                 },
                 {
                     label: this.$gl(
@@ -306,7 +306,7 @@ export default {
                     ),
                     value: "ddebit",
                     type: "number",
-                    _textColor: "green",
+                    textColor: "green",
                 },
                 {
                     label: this.$gl(
@@ -315,7 +315,7 @@ export default {
                     ),
                     value: "dcredit",
                     type: "number",
-                    _textColor: "green",
+                    textColor: "green",
                 },
                 {
                     label: this.$gl(
@@ -324,7 +324,7 @@ export default {
                     ),
                     value: "hdebit",
                     type: "number",
-                    _textColor: "green",
+                    textColor: "green",
                 },
                 {
                     label: this.$gl(
@@ -333,7 +333,7 @@ export default {
                     ),
                     value: "hcredit",
                     type: "number",
-                    _textColor: "green",
+                    textColor: "green",
                 },
 
                 {

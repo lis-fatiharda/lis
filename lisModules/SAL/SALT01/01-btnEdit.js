@@ -43,6 +43,6 @@ export default async function (dv) {
         dv.lissaldocs = [];
         throw new Error("Kilitli Belge!");
     }
-
+ 
     return dv;
 }

@@ -485,7 +485,7 @@ optTitle="label"
                 
                 dense
                 readonly
-                v-model="dv.liscrmdocs.createdby"
+                v-model="dv.liscrmdocs._createdby"
                 :label="this.$gl(`Oluşturan`, `Created by`)"
                 style="width: 240px"
               />

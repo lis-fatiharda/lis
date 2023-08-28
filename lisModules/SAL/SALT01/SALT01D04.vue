@@ -94,7 +94,7 @@
                 @click="copyFromOpenItems()"
             />
         </l-div-flex>
-        <l-table :tableData="openitems" :columns="itemsColumns" :readonly="true" />
+        <l-table v-model="openitems" :columns="itemsColumns" :readonly="true" />
     </l-card>
 </template>
 

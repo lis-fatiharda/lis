@@ -31,7 +31,10 @@
                     />
                 </div>
             </l-toolbar>
-            
+        <!-- </l-card0> 
+    </l-div>
+    
+</template> -->
             <div class="row q-pa-xs q-gutter-xs">
                 <l-select
                     :label="this.$gl(`Firma`, `Company`)"

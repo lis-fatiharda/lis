@@ -24,7 +24,7 @@
         <l-select
           :label="this.$gl(`Firma`, `Company`)"
           v-model="dv.lismaterials.company"
-           options="lisbas001"
+          options="lisbas001"
           optValue="company"
           optTitle="stext"
           optCaptions="company"
@@ -32,16 +32,14 @@
         />
 
         <l-input
-          
           dense
           :label="this.$gl(`Malzeme Kodu`, `Material Code`)"
           v-model="dv.lismaterials.material"
         />
         <l-input
-          
           dense
           :label="this.$gl(`Malzeme Adı`, `Material Name`)"
-          v-model="dv.lismaterials.stext"
+          v-model="dv.lismaterials.mtext"
           class="bg-blue-1"
         />
         <l-select
@@ -117,22 +115,17 @@
           optCaptions="matstat"
           width="120px"
         />
-
         <l-checkbox
           :label="this.$gl(`Sil`, `Delete`)"
           v-model="dv.lismaterials._deleted"
-          
           dense
           color="pink"
         />
       </l-div-flex>
-
     </l-card0>
 
     <l-card>
-      <l-tabs
-        v-model="tab"
-      >
+      <l-tabs v-model="tab">
         <l-tab name="Genel" :label="this.$gl(`Genel`, `General`)" />
         <l-tab name="Teknik" :label="this.$gl(`Teknik`, `Technical`)" />
         <l-tab name="Birimler" :label="this.$gl(`Birimler`, `Units`)" />
@@ -158,10 +151,10 @@
             <l-separator inset />
             <l-card-section class="row q-gutter-xs">
               <q-option-group
-      v-model="dv.lismaterials.acctype"
-      :options="accountingOpts"
-      dense
-    />
+                v-model="dv.lismaterials.acctype"
+                :options="accountingOpts"
+                dense
+              />
             </l-card-section>
           </l-card>
 
@@ -180,7 +173,6 @@
             <l-card-section class="row q-gutter-xs">
               <l-input
                 type="textarea"
-                
                 dense
                 :label="
                   this.$gl(`Malzeme Uzun Açıklama`, `Material Long Description`)
@@ -235,7 +227,6 @@
                   type="Number"
                   :label="this.$gl(`Satış Fiyatı`, `Sale Price`)"
                   v-model="dv.lismaterials.salprice"
-                  
                   dense
                   style="width: 170px"
                   class="bg-teal-1"
@@ -244,7 +235,6 @@
                   type="Number"
                   :label="this.$gl(`Fiyat Birimi`, `Price Unit`)"
                   v-model="dv.lismaterials.salpunit"
-                  
                   dense
                   style="width: 170px"
                   class="bg-teal-1"
@@ -302,7 +292,6 @@
             <l-card-section class="row q-gutter-xs">
               <l-input
                 type="textarea"
-                
                 dense
                 :label="
                   this.$gl(`Malzeme Uzun Açıklama`, `Material Long Description`)
@@ -315,22 +304,17 @@
                 <l-input
                   :label="this.$gl(`GTIP`, `Hs Code`)"
                   v-model="dv.lismaterials.gtip"
-                  
                   dense
                 />
 
-                <l-checkbox
-                  :label="this.$gl(`Varyant?`, `Variant?`)"
-                  v-model="dv.lismaterials.isvariant"
-                  
-                  dense
-                />
-
-                <l-input
-                  :label="this.$gl(`Varyant Anahtarı`, `Variant Key`)"
-                  v-model="dv.lismaterials.variantkey"
-                  
-                  dense
+                <l-select
+                  :label="this.$gl(`Varyant`, `Variant`)"
+                  v-model="dv.lismaterials.varkey"
+                  options="lisvariants"
+                  optValue="varkey"
+                  optTitle="stext"
+                  optCaptions="varkey"
+                  width="200px"
                 />
               </div>
             </l-card-section>
@@ -346,7 +330,6 @@
             <l-card-section class="row q-gutter-xs">
               <l-input
                 type="textarea"
-                
                 dense
                 :label="this.$gl(`Üretim Notu`, `Production Notes`)"
                 v-model="dv.lismaterials.prodtext"
@@ -362,7 +345,6 @@
                     type="Number"
                     :label="this.$gl(`Boyut`, `Dimension`)"
                     v-model="dv.lismaterials.dimension"
-                    
                     dense
                   />
                 </div>
@@ -371,7 +353,6 @@
                     type="Number"
                     :label="this.$gl(`Brüt Ağırlık`, `Gross Weight`)"
                     v-model="dv.lismaterials.brutweight"
-                    
                     dense
                   />
 
@@ -391,7 +372,6 @@
                     type="Number"
                     :label="this.$gl(`Net Ağırlık`, `Net Weight`)"
                     v-model="dv.lismaterials.netweight"
-                    
                     dense
                   />
 
@@ -411,7 +391,6 @@
                     type="Number"
                     :label="this.$gl(`Uzunluk`, `Length`)"
                     v-model="dv.lismaterials.length"
-                    
                     dense
                   />
 
@@ -431,7 +410,6 @@
                     type="Number"
                     :label="this.$gl(`Yükseklik`, `Height`)"
                     v-model="dv.lismaterials.height"
-                    
                     dense
                   />
 
@@ -451,7 +429,6 @@
                     type="Number"
                     :label="this.$gl(`Genişlik`, `Width`)"
                     v-model="dv.lismaterials.width"
-                    
                     dense
                   />
 
@@ -472,7 +449,6 @@
                     type="Number"
                     :label="this.$gl(`Hacim`, `Volume`)"
                     v-model="dv.lismaterials.volume"
-                    
                     dense
                   />
 
@@ -492,7 +468,6 @@
                     type="Number"
                     :label="this.$gl(`Yüzey`, `Surface`)"
                     v-model="dv.lismaterials.surface"
-                    
                     dense
                   />
 
@@ -524,15 +499,13 @@
             <l-card class="q-gutter-xs q-pa-xs row">
               <l-input
                 :label="this.$gl(`Per Unit`, `Per Unit`)"
-                v-model="unit.perunit"
-                
+                v-model="unit.perskunit"
                 dense
                 type="number"
               />
               <l-input
                 :label="this.$gl(`Stok Birimi`, `Stock Unit`)"
                 v-model="dv.lismaterials.skunit"
-                
                 dense
                 readOnly
               />
@@ -540,7 +513,6 @@
               <l-input
                 :label="this.$gl(`Birim Değeri`, `Unit Value`)"
                 v-model="unit.value"
-                
                 dense
                 type="number"
               />
@@ -621,7 +593,6 @@
                   this.$gl(`Tesiste Varsayılan Giriş`, `Plant Default Login`)
                 "
                 v-model="stock.recdef"
-                
                 dense
               />
               <l-checkbox
@@ -629,7 +600,6 @@
                   this.$gl(`Tesiste Varsayılan Çıkış`, `Plant Default Exit`)
                 "
                 v-model="stock.issdef"
-                
                 dense
               />
 
@@ -692,7 +662,6 @@
                   this.$gl(`Minimum Sipariş Seviyesi`, `Minimum Order Level`)
                 "
                 v-model="dv.lismaterials.purminlot"
-                
                 dense
                 style="width: 220px"
               />
@@ -702,7 +671,6 @@
                   this.$gl(`Maximum Sipariş Seviyesi`, `Maximum Order Level`)
                 "
                 v-model="dv.lismaterials.purmaxlot"
-                
                 dense
                 style="width: 220px"
               />
@@ -713,7 +681,7 @@
             <l-card-section class="row q-gutter-xs">
               <l-select
                 :label="this.$gl(`Sipariş Tipi`, `Order Type`)"
-                v-model="dv.lismaterials.doctype"
+                v-model="dv.lismaterials.purdoctype"
                 options="lissal001"
                 optValue="doctype"
                 optTitle="stext"
@@ -722,7 +690,7 @@
               />
               <l-select
                 :label="this.$gl(`Sipariş Kalem Tipi`, `Order Item Type`)"
-                v-model="dv.lismaterials.itemtype"
+                v-model="dv.lismaterials.puritemtype"
                 options="lispur002"
                 optValue="itemtype"
                 optTitle="stext"
@@ -745,7 +713,6 @@
                   <l-checkbox
                     :label="this.$gl(`Tolerans Kullan`, `Use Tolerance`)"
                     v-model="dv.lismaterials.ispurtolerance"
-                    
                     dense
                   />
                 </l-card-section>
@@ -754,14 +721,12 @@
                     type="Number"
                     :label="this.$gl(`Alt Tolerans (%)`, `Lower Tolerance (%)`)"
                     v-model="dv.lismaterials.purlowertol"
-                    
                     dense
                   />
                   <l-input
                     type="Number"
                     :label="this.$gl(`Üst Tolerans (%)`, `Upper Tolerance (%)`)"
                     v-model="dv.lismaterials.puruppertol"
-                    
                     dense
                   />
                 </l-card-section>
@@ -813,7 +778,6 @@
                   this.$gl(`Minimum Sipariş Seviyesi`, `Minimum Order Level`)
                 "
                 v-model="dv.lismaterials.salminlot"
-                
                 dense
                 style="width: 220px"
               />
@@ -823,7 +787,6 @@
                   this.$gl(`Maximum Sipariş Seviyesi`, `Maximum Order Level`)
                 "
                 v-model="dv.lismaterials.salmaxlot"
-                
                 dense
                 style="width: 220px"
               />
@@ -832,7 +795,6 @@
                 type="Number"
                 :label="this.$gl(`Satış Fiyatı`, `Sale Price`)"
                 v-model="dv.lismaterials.salprice"
-                
                 dense
                 style="width: 170px"
                 class="bg-teal-1"
@@ -841,7 +803,6 @@
                 type="Number"
                 :label="this.$gl(`Fiyat Birimi`, `Price Unit`)"
                 v-model="dv.lismaterials.salpunit"
-                
                 dense
                 style="width: 170px"
                 class="bg-teal-1"
@@ -853,7 +814,7 @@
             <l-card-section class="row q-gutter-xs">
               <l-select
                 :label="this.$gl(`Satış Tipi`, `Sales Type`)"
-                v-model="dv.lismaterials.doctype"
+                v-model="dv.lismaterials.saldoctype"
                 options="lissal001"
                 optValue="doctype"
                 optTitle="stext"
@@ -862,7 +823,7 @@
               />
               <l-select
                 :label="this.$gl(`Satış Kalem Tipi`, `Sales Item Type`)"
-                v-model="dv.lismaterials.itemtype"
+                v-model="dv.lismaterials.salitemtype"
                 options="lissal002"
                 optValue="itemtype"
                 optTitle="stext"
@@ -874,7 +835,6 @@
                 type="Number"
                 :label="this.$gl(`KDV`, `VAT`)"
                 v-model="dv.lismaterials.salvatkey"
-                
                 dense
               />
             </l-card-section>
@@ -886,7 +846,6 @@
                   <l-checkbox
                     :label="this.$gl(`Tolerans Kullan`, `Use Tolerance`)"
                     v-model="dv.lismaterials.issaltolerance"
-                    
                     dense
                   />
                 </l-card-section>
@@ -895,14 +854,12 @@
                     type="Number"
                     :label="this.$gl(`Alt Tolerans (%)`, `Lower Tolerance (%)`)"
                     v-model="dv.lismaterials.sallowertol"
-                    
                     dense
                   />
                   <l-input
                     type="Number"
                     :label="this.$gl(`Üst Tolerans (%)`, `Upper Tolerance (%)`)"
                     v-model="dv.lismaterials.saluppertol"
-                    
                     dense
                   />
                 </l-card-section>
@@ -925,7 +882,6 @@
                       this.$gl(`Son Satınalma Fiyatı`, `Last Purchase Price`)
                     "
                     v-model="dv.lismaterials.lpurprice"
-                    
                     dense
                     style="width: 170px"
                   />
@@ -952,7 +908,6 @@
                       )
                     "
                     v-model="dv.lismaterials.lowprice"
-                    
                     dense
                     style="width: 170px"
                   />
@@ -973,7 +928,6 @@
                     type="Number"
                     :label="this.$gl(`Son hareket fiyatı`, `Last move price`)"
                     v-model="dv.lismaterials.lmoveprice"
-                    
                     dense
                     style="width: 170px"
                   />
@@ -996,7 +950,6 @@
                       this.$gl(`Yeniden Değerleme Fiyatı`, `Revaluation Price`)
                     "
                     v-model="dv.lismaterials.lrevprice"
-                    
                     dense
                     style="width: 170px"
                   />
@@ -1023,13 +976,11 @@
                 <l-input
                   :label="this.$gl(`Hesap Grubu`, `Account Group`)"
                   v-model="dv.lismaterials.mataccgrp"
-                  
                   dense
                 />
                 <l-input
                   :label="this.$gl(`Satış Hesap Grubu`, `Sales Account Group`)"
                   v-model="dv.lismaterials.matsalaccgrp"
-                  
                   dense
                 />
               </div>
@@ -1044,12 +995,10 @@
                   optCaptions="unit"
                   width="200px"
                   :optFilter="{ unittype: 1 }"
-              
                 />
                 <l-input
                   :label="this.$gl(`Fiyat Birimi`, `Price Unit`)"
                   v-model="dv.lismaterials.matpunit"
-                  
                   dense
                 />
               </div>
@@ -1062,14 +1011,12 @@
                   type="Number"
                   :label="this.$gl(`Maliyet Sonucu`, `Calculate Price`)"
                   v-model="dv.lismaterials.calcprice"
-                  
                   dense
                 />
                 <l-input
                   type="Date"
                   :label="this.$gl(`Maliyet Tarihi`, `Calculate Price Date`)"
                   v-model="dv.lismaterials.calcpricedate"
-                  
                   dense
                 />
               </l-card-section>
@@ -1084,14 +1031,12 @@
                   type="Number"
                   :label="this.$gl(`Maliyet Sonucu`, `Calculate Price`)"
                   v-model="dv.lismaterials.actualprice"
-                  
                   dense
                 />
                 <l-input
                   type="Date"
                   :label="this.$gl(`Maliyet Tarihi`, `Calculate Price Date`)"
                   v-model="dv.lismaterials.actualpricedate"
-                  
                   dense
                 />
               </l-card-section>
@@ -1105,7 +1050,6 @@
               <l-input
                 :label="this.$gl(`Not Başlığı`, `Note Title`)"
                 v-model="note.notetitle"
-                
                 dense
                 class="bg-amber-1"
               />
@@ -1113,7 +1057,6 @@
                 type="textarea"
                 :label="this.$gl(`Not`, `Notes`)"
                 v-model="note.note"
-                
                 dense
                 autogrow
               />
@@ -1163,32 +1106,35 @@ export default {
   props: ["dv", "tabInfo"],
   data() {
     return {
+      isSelectVar : false,
       tab: "Genel",
       lockKeyParams: {
         company: this.dv.lismaterials.company,
         lid: "BAST03",
         lockkey: this.dv.lismaterials.material,
       },
-      accountingOpts: [{
-          label: 'Standart',
-          value: 0
+      accountingOpts: [
+        {
+          label: "Standart",
+          value: 0,
         },
         {
-          label: 'Yürüyen Ağırlıklı Ortalama',
-          value: 1
+          label: "Yürüyen Ağırlıklı Ortalama",
+          value: 1,
         },
         {
-          label: 'Ortalama',
-          value: 2
+          label: "Ortalama",
+          value: 2,
         },
         {
-          label: 'LIFO',
-          value: 3
+          label: "LIFO",
+          value: 3,
         },
         {
-          label: 'FIFO',
-          value: 4
-        }],
+          label: "FIFO",
+          value: 4,
+        },
+      ],
       scWarehouse: [],
       scStockplace: [],
     };
@@ -1201,6 +1147,8 @@ export default {
       for (let i in newNote) {
         newNote[i] = "";
       }
+
+      newNote._id = undefined;
 
       this.dv.lismaterials.matnotes.push(newNote);
     },
@@ -1220,6 +1168,8 @@ export default {
         newUnit[i] = "";
       }
 
+      newUnit._id = undefined;
+
       this.dv.lismaterials.matunits.push(newUnit);
     },
     async removeUnit(unit) {
@@ -1236,6 +1186,8 @@ export default {
       for (let i in newStock) {
         newStock[i] == false ? false : "";
       }
+
+      newStock._id = undefined;
 
       this.dv.lismaterials.matstock.push(newStock);
     },
@@ -1327,10 +1279,8 @@ export default {
   mounted() {
     this.init(this.dv);
     this.tabInfo.blockGoToTransaction = true;
-    //this.lis.function("BAST03/02-init", this.dv);
   },
   async beforeUnmount() {
-    // this.$Axios.post("cls-system.unlock", this.lockKeyParams);
     await this.lis.function("cls-system.unlock", this.lockKeyParams);
   },
 };

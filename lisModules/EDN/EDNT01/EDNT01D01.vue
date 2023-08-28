@@ -49,7 +49,10 @@
                                 flat
                                 icon="refresh"
                                 @click="startTimer()"
-                            ><l-tooltip>Zamanlayıcı Çalıştır</l-tooltip></q-btn>
+                                ><l-tooltip
+                                    >Zamanlayıcı Çalıştır</l-tooltip
+                                ></q-btn
+                            >
                         </l-input>
                     </l-toolbar-title>
 
@@ -582,171 +585,211 @@
                             </l-input>
                         </l-card-flex>
                         <l-div0-flex class="q-gutter-xs">
+                            <l-btn
+                                color="warning"
+                                icon="search"
+                                @click="btnSearch()"
+                            />
+                            <l-btn
+                                color="info"
+                                icon="visibility"
+                                @click="isShowDetail = true"
+                            />
+                            <l-btn
+                                color="negative"
+                                icon="delete"
+                                @click="btnDelete(dv)"
+                            />
+                            <l-btn
+                                color="deep-orange"
+                                icon="print"
+                                @click="btnPrint(dv)"
+                            />
 
-                        
-                        <l-btn
-                            color="warning"
-                            icon="search"
-                            @click="btnSearch()"
-                        />
-                        <l-btn
-                            color="info"
-                            icon="visibility"
-                            @click="btnShow(dv)"
-                        />
-                        <l-btn
-                            color="negative"
-                            icon="delete"
-                            @click="btnDelete(dv)"
-                        />
-                        <l-btn
-                            color="deep-orange"
-                            icon="print"
-                            @click="btnPrint(dv)"
-                        />
+                            <l-space />
+                            <l-btn
+                                v-if="
+                                    (dv.hProcessInt
+                                        .toString()
+                                        .substring(1, 2) ==
+                                        '1') &
+                                    ((dv.hProcessInt
+                                        .toString()
+                                        .substring(2, 3) ==
+                                        '1') |
+                                        (dv.hProcessInt
+                                            .toString()
+                                            .substring(2, 3) ==
+                                            '3'))
+                                        ? true
+                                        : false
+                                "
+                                :label="this.$gl(`Gönder`, `Send`)"
+                                @click="btnSend(dv)"
+                                outline
+                            />
+                            <l-btn
+                                v-if="
+                                    (dv.hProcessInt
+                                        .toString()
+                                        .substring(1, 2) ==
+                                        '1') &
+                                    ((dv.hProcessInt
+                                        .toString()
+                                        .substring(2, 3) ==
+                                        '1') |
+                                        (dv.hProcessInt
+                                            .toString()
+                                            .substring(2, 3) ==
+                                            '3'))
+                                        ? true
+                                        : false
+                                "
+                                :label="this.$gl(`P.K.Değiştir`, `pk?`)"
+                                @click="btnSend(dv)"
+                                outline
+                            />
+                            <l-btn
+                                v-if="
+                                    (dv.hProcessInt
+                                        .toString()
+                                        .substring(0, 1) ==
+                                        '1') &
+                                    (dv.hProcessInt
+                                        .toString()
+                                        .substring(1, 2) ==
+                                        '1') &
+                                    ((dv.hProcessInt
+                                        .toString()
+                                        .substring(2, 3) ==
+                                        '2') |
+                                        (dv.hProcessInt
+                                            .toString()
+                                            .substring(2, 3) ==
+                                            '3'))
+                                        ? true
+                                        : false
+                                "
+                                :label="
+                                    this.$gl(`Statü Kontrol`, `Status Check`)
+                                "
+                                @click="btnStatusControl()"
+                                outline
+                            />
 
-                        <l-space/>
-                        <l-btn
-                            v-if="
-                                (dv.hProcessInt.toString().substring(1, 2) ==
-                                    '1') &
-                                ((dv.hProcessInt.toString().substring(2, 3) ==
-                                    '1') |
-                                    (dv.hProcessInt
+                            
+                            <!-- -->
+                            <l-btn
+                                v-if="
+                                    dv.hProcessInt.toString().substring(1, 2) ==
+                                    '0'
+                                "
+                                :label="
+                                    this.$gl(
+                                        `Gelen Faturaları Çek`,
+                                        `Receive Incoming Invoice`
+                                    )
+                                "
+                                @click="getInvoice()"
+                                outline
+                            />
+
+                            <l-btn
+                                v-if="
+                                    dv.hProcessInt.toString().substring(1, 2) ==
+                                    '0'
+                                        ? true
+                                        : false
+                                "
+                                :label="this.$gl(`İçeri Al`, `Import`)"
+                                @click="btnSend()"
+                                outline
+                            />
+
+                            <l-btn
+                                v-if="
+                                    dv.hProcessInt
                                         .toString()
                                         .substring(2, 3) ==
-                                        '3'))
-                                    ? true
-                                    : false
-                            "
-                            :label="this.$gl(`Gönder`, `Send`)"
-                            @click="btnSend(dv)"
-                            outline
-                        />
-                        <l-btn
-                            v-if="
-                                (dv.hProcessInt.toString().substring(1, 2) ==
-                                    '1') &
-                                ((dv.hProcessInt.toString().substring(2, 3) ==
-                                    '1') |
-                                    (dv.hProcessInt
-                                        .toString()
-                                        .substring(2, 3) ==
-                                        '3'))
-                                    ? true
-                                    : false
-                            "
-                            :label="this.$gl(`P.K.Değiştir`, `pk?`)"
-                            @click="btnSend(dv)"
-                            outline
-                        />
-                        <l-btn
-                            v-if="
-                                (dv.hProcessInt.toString().substring(0, 1) ==
-                                    '1') &
-                                (dv.hProcessInt.toString().substring(1, 2) ==
-                                    '1') &
-                                ((dv.hProcessInt.toString().substring(2, 3) ==
-                                    '2') |
-                                    (dv.hProcessInt
-                                        .toString()
-                                        .substring(2, 3) ==
-                                        '3'))
-                                    ? true
-                                    : false
-                            "
-                            :label="this.$gl(`Statü Kontrol`, `Status Check`)"
-                            @click="btnStatusControl()"
-                            outline
-                        />
-                        <!-- -->
-                        <l-btn
-                            v-if="
-                                dv.hProcessInt.toString().substring(1, 2) == '0'
-                            "
-                            :label="
-                                this.$gl(
-                                    `Gelen Faturaları Çek`,
-                                    `Receive Incoming Invoice`
-                                )
-                            "
-                            @click="getInvoice()"
-                            outline
-                        />
-                       
-                       
-                        <l-btn
-                            v-if="
-                                dv.hProcessInt.toString().substring(1, 2) == '0'
-                                    ? true
-                                    : false
-                            "
-                            :label="this.$gl(`İçeri Al`, `Import`)"
-                            @click="btnSend()"
-                            outline
-                        />
-                        <l-space/>
+                                        '2'
+                                        ? true
+                                        : false
+                                "
+                                label="Arşive Gönder"
+                                @click="btnSetArchived()"
+                                outline
+                            />
+                            <l-space />
                         </l-div0-flex>
 
                         <l-table
-                            v-if="dv.hProcessInt.toString().substring(1, 2) == '1'"
+                            v-if="
+                                dv.hProcessInt.toString().substring(1, 2) == '1'
+                            "
                             name="EDNT01D01"
-                            :tableData="dv.lisedndocsList"
+                            v-model="dv.lisedndocsList"
                             :columns="custColumns"
                             :readonly="true"
                         />
                         <l-table
-                            v-if="dv.hProcessInt.toString().substring(1, 2) == '0'"
+                            v-if="
+                                dv.hProcessInt.toString().substring(1, 2) == '0'
+                            "
                             name="EDNT01D01"
-                            :tableData="dv.lisedndocsList"
+                            v-model="dv.lisedndocsList"
                             :columns="vendColumns"
                             :context="contextMenu"
+                            :readonly="true"
                         />
                     </l-div>
                 </q-page>
 
-                <ednt01d02 />
+                <l-dialog v-model="isShowDetail" persistent>
+                    <EDNT01D02 :dv="dv" :tabInfo="tabInfo" @cancel="isShowDetail = false"/>
+                </l-dialog>
+                
+
+                <l-dialog v-model="isNewCustomer" persistent style="height: 80%">
+                    <BAST02D02 :dv="dv" :tabInfo="tabInfo" :lv="lv" :isChild="true" @cancel="isNewCustomer = false"/>
+                </l-dialog>
             </q-page-container>
         </q-layout>
     </l-div>
 </template>
 
 <script>
-import ednt01d02 from "./EDNT01D02.vue";
+import EDNT01D02 from "./EDNT01D02.vue";
+import BAST02D02 from "../../BAS/BAST02/BAST02D02.vue";
 export default {
     props: ["lv", "tabInfo"],
     components: {
-        ednt01d02,
+        EDNT01D02,
     },
 
     data() {
         return {
-
             contextMenu: [
                 {
                     name: "Kabul Et",
                     callback: () => {
-                        this.lis.function("EDNT01/01-acceptInv", this.dv)
-                    }
+                        this.lis.function("EDNT01/01-acceptInv", this.dv);
+                    },
                 },
                 {
                     name: "Reddet",
                     callback: () => {
-                        this.lis.function("EDNT01/01-rejectInv", this.dv)
-                    }
+                        this.lis.function("EDNT01/01-rejectInv", this.dv);
+                    },
                 },
 
-                {  
+                {
                     name: "separator",
                 },
 
                 {
                     name: "Cari Ata",
-                    callback: () => {
-                        this.lis.function("EDNT01/assignVendor", this.dv)
-                    }
+                    callback: this.assignVendor,
                 },
-                
             ],
             custColumns: [
                 {
@@ -866,7 +909,7 @@ export default {
                         },
                     ],
                 },
-                
+
                 {
                     label: this.$gl("E-Belge No", "E-Document Number"),
                     value: "einvonumber",
@@ -882,7 +925,7 @@ export default {
                     value: "name1",
                     type: "string",
                 },
-                
+
                 {
                     label: this.$gl("Vergi No", "Tax Number"),
                     value: "taxnum",
@@ -944,9 +987,9 @@ export default {
                     value: "isresponded",
                     type: "checkbox",
                 },
-                
             ],
             dv: {
+                modi: 0,
                 sc: {
                     company: "01",
                     companyStext: "",
@@ -963,25 +1006,28 @@ export default {
                     postway: 1,
                 },
                 ic: {
-                interval: undefined,
-                refreshTime: 15,
-                icon101: 0,
-                icon103: 0,
-                icon111: 0,
-                icon113: 0,
-                icon201: 0,
-                icon203: 0,
-                icon301: 0,
-                icon303: 0,
-                icon311: 0,
-                icon313: 0,
-            },
+                    interval: undefined,
+                    refreshTime: 15,
+                    icon101: 0,
+                    icon103: 0,
+                    icon111: 0,
+                    icon113: 0,
+                    icon201: 0,
+                    icon203: 0,
+                    icon301: 0,
+                    icon303: 0,
+                    icon311: 0,
+                    icon313: 0,
+                },
 
                 lisedndocsList: [],
                 hProcessInt: 111,
                 selectedRow: "",
+                liscustomers: {},
             },
-            
+
+            isShowDetail: false,
+            isNewCustomer: false,
             hProcessText: "",
             drawerLeft: true,
             isSelectCust: false,
@@ -1050,8 +1096,31 @@ export default {
         },
     },
     methods: {
+        async btnSetArchived() {
+            await this.lis.function("EDNT01/01-btnSetArchived", this.dv)
+            this.btnSearch()
+        },
+        async assignVendor() {
+            let isExists = await this.lis.function(
+                "EDNT01/assignVendor",
+                this.dv
+            );
+
+            if (isExists != true) {
+                let myReturn = await this.lis.message(
+                    "C",
+                    "Yeni Cari Kart Açılsın mı?",
+                    `${isExists.taxnum} Vergi No İle Eşleşen Bir Cari Kart Bulunamadı!`
+                );
+                if (myReturn == true) {
+                    let reportListSelected = this.dv.lisedndocsList.filter((e) => e._selected == true & e.taxnum == isExists.taxnum)
+                    this.dv.liscustomers = await this.lis.function("EDNT01/createVendor", reportListSelected[0])
+                    this.isNewCustomer = true;
+                }
+            }
+        },
         async getInvoice() {
-            this.dv = await this.lis.function("EDNT01/01-getInvoice", this.dv)
+            this.dv = await this.lis.function("EDNT01/01-getInvoice", this.dv);
         },
         async btnStatusControl() {
             await this.lis.function("EDNT01/01-btnStatusControl", this.dv);
@@ -1070,6 +1139,7 @@ export default {
         async btnSearch() {
             this.dv = await this.lis.function("EDNT01/01-btnSearch", this.dv);
         },
+
         async btnDelete() {
             await this.lis.function("EDNT01/01-btnDelete", this.dv);
             this.lis.alert("p", "Belge Kuyruktan Silindi.");
@@ -1130,9 +1200,9 @@ export default {
             if (this.dv.ic.refreshTime != 0) {
                 clearInterval(this.dv.ic.interval);
                 this.init();
-                this.dv.ic.interval = setinterval(
+                this.dv.ic.interval = setInterval(
                     this.init,
-                    this.dv.ic.refreshTime * 60
+                    this.dv.ic.refreshTime * 60000
                 );
             }
         },
@@ -1142,11 +1212,15 @@ export default {
                 return;
             }
             this.dv = await this.lis.function("EDNT01/01-init", this.dv);
+            console.log(new Date());
         },
     },
 
     async mounted() {
         this.init();
+    },
+    beforeUnmount() {
+        clearInterval(this.dv.ic.interval);
     },
 };
 </script>

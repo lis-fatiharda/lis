@@ -73,7 +73,7 @@
             <td class="text-left">{{ item.company }}</td>
             <td class="text-left">{{ item.lid }}</td>
             <td class="text-left">{{ item.lockkey }}</td>
-            <td class="text-left">{{ item.createdby }}</td>
+            <td class="text-left">{{ item._createdby }}</td>
             <td class="text-left">{{ item.createdat }}</td>
           </tr>
         </tbody>

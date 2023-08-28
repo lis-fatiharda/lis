@@ -19,6 +19,9 @@
             </l-toolbar>
             <!--Searching Criterias Layer----row-1-->
             <l-div-flex>
+
+{{ $t('Firma') }}
+{{   }}
                 <l-select
                     :label="this.$gl(`Firma`, `Company`)"
                     v-model="dv.sc.company"
@@ -196,38 +199,42 @@
             <!--------------------------------row-3-->
         </l-card0>
 
-        <l-btn-group>
-            <l-btn color="amber" icon="search" @click="btnSearch(dv)" />
-            <l-btn color="info" icon="visibility" @click="btnShow(dv)" />
-            <l-btn color="primary" icon="edit" @click="btnEdit(dv)" />
-            <l-btn color="secondary" icon="add" @click="btnInsert(dv)" />
-            <l-btn color="deep-orange" icon="print" @click="btnPrint(dv)" />
-        </l-btn-group>
-        <q-toggle
+
+            <l-btn color="amber" icon="search" @click="btnSearch()" />
+            <l-btn color="info" icon="visibility" @click="btnShow()" />
+            <l-btn color="primary" icon="edit" @click="btnEdit()" />
+            <l-btn color="secondary" icon="add" @click="btnInsert()" />
+            <l-btn color="deep-orange" icon="print" @click="btnPrint()" />
+     
+                <q-toggle
             :label="dv.toggle"
             color="pink"
-            :true-value="this.$gl(`Ağaç Görünümü`, `Tree View`)"
-            :false-value="this.$gl(`Tablo Görünümü`, `Table View`)"
+            :true-value="this.$gl(`Ağaç`, `Tree View`)"
+            :false-value="this.$gl(`Tablo`, `Table View`)"
             v-model="dv.toggle"
         />
         <l-chip
             :label="this.$gl(`İmza`, `Signature`)"
             clickable
             outline
+            icon="edit"
             color="negative"
             text-color="white"
         />
 
-        <!--Table Layer---------------------------->
+
+            
+        
+
         <!--Table Layer---------------------------->
 
         <l-table
-            name="SALT01D01"
-            :tableData="dv.salDocList"
+            v-model="dv.salDocList"
             :columns="myColumns"
             :context="contextMenu"
             :width="'100%'"
             :readonly="true"
+            @dblclick="btnEdit()"
         />
         <l-dialog
             v-model="isCallFlow.isShow"
@@ -309,6 +316,7 @@ export default {
                         };
                     },
                 },
+                
                 {
                     name: "separator",
                 },
@@ -316,50 +324,58 @@ export default {
                     name: "Kuyruğa Gönder",
                     callback: () => {
                         this.sendToQueue();
-                    }
+                    },
                 },
                 {
                     name: "Muhasebeleştir",
                     callback: () => {
                         this.sendToFinance();
-                    }
+                    },
                 },
             ],
             myColumns: [
-                {
-                    label: this.$gl(`Döküman Tipi`, `Document Type`),
-                    value: "doctype",
+
+            {
+                    label: this.$gl(`Firma`, `Company`),
+                    value: "company",
                     type: "string",
                 },
+
                 {
-                    label: this.$gl(`Döküman No`, `Document No`),
-                    value: "docnum",
-                    type: "string",
-                },
-                {
-                    //label: "İş Alanı",
                     label: this.$gl(`İş Alanı`, `Business Area`),
                     value: "busarea",
                     type: "string",
                 },
+
+                {
+                    label: this.$gl(`Belge Tipi`, `Document Type`),
+                    value: "doctype",
+                    type: "string",
+                },
+                {
+                    label: this.$gl(`Belge No`, `Document No`),
+                    value: "docnum",
+                    type: "string",
+                },
+                
                 {
                     label: this.$gl(`Belge Tarihi`, `Document Date`),
                     value: "validfrom",
                     type: "datetime",
-                    _textColor: "red",
+                    textColor: "red",
                 },
 
                 {
                     label: this.$gl(`Müşteri Kodu`, `Customer Code`),
                     value: "customer",
                     type: "string",
-                    _textColor: "blue",
+                    textColor: "blue",
                 },
                 {
                     label: this.$gl(`Müşteri Adı`, `Customer Name`),
                     value: "name1",
                     type: "string",
-                    _textColor: "blue",
+                    textColor: "blue",
                 },
                 {
                     label: this.$gl(`Proje`, `Project`),
@@ -372,34 +388,34 @@ export default {
                     value: "gross",
                     type: "number",
                     fraction: 2,
-                    _textColor: "#23978c",
+                    textColor: "#23978c",
                 },
                 {
                     label: this.$gl(`İndirim`, `Discount`),
                     value: "discamnt",
                     type: "number",
                     fraction: 2,
-                    _textColor: "#23978c",
+                    textColor: "#23978c",
                 },
                 {
                     label: "Net",
                     value: "subtotal",
                     type: "number",
                     fraction: 2,
-                    _textColor: "#23978c",
+                    textColor: "#23978c",
                 },
                 {
                     label: this.$gl(`Genel Toplam`, `Grand Total`),
                     value: "grandtotal",
                     type: "number",
                     fraction: 2,
-                    _textColor: "#23978c",
+                    textColor: "#23978c",
                 },
                 {
                     label: this.$gl(`Para Br.`, `Currency`),
                     value: "currency",
                     type: "string",
-                    _textColor: "#23978c",
+                    textColor: "#23978c",
                 },
                 {
                     label: this.$gl(`E-Belge No`, `E-Document Number`),
@@ -411,7 +427,7 @@ export default {
                     label: this.$gl(`Belge Statüsü`, `Document Status`),
                     value: "docstat",
                     type: "select",
-                    _textColor: "red",
+                    textColor: "red",
                     options: [
                         {
                             label: this.$gl(`Açık`, `Open`),
@@ -442,7 +458,7 @@ export default {
                 lisDialog: "SALT01D01",
                 modi: 2,
                 selectedRow: "",
-                toggle: "Tablo Görünümü",
+                toggle: "Tablo",
                 isShowFinDoc: false,
                 isShowFinDocDialog: false,
 
@@ -497,14 +513,13 @@ export default {
     },
 
     methods: {
-
         async sendToQueue() {
-            await this.lis.function("SALT01/01-sendToQueue", this.dv)
-            this.lis.alert("p", "Seçili Belgeler Kuyruğa Gönderildi.")
+            await this.lis.function("SALT01/01-sendToQueue", this.dv);
+            this.lis.alert("p", "Seçili Belgeler Kuyruğa Gönderildi.");
         },
         async sendToFinance() {
-            await this.lis.function("SALT01/01-sendToFinance", this.dv)
-            this.lis.alert("p", "Seçili Belgeler Muhasebeleştirildi.")
+            await this.lis.function("SALT01/01-sendToFinance", this.dv);
+            this.lis.alert("p", "Seçili Belgeler Muhasebeleştirildi.");
         },
 
         textcontext(event) {
@@ -513,20 +528,18 @@ export default {
             );
             console.log("l-tabledan dondu", selectedRow[0].docnum);
         },
-        async btnSearch(prop) {
-            this.dv = await this.lis.function("SALT01/01-btnSearch", prop);
+        async btnSearch() {
+            this.dv = await this.lis.function("SALT01/01-btnSearch", this.dv);
             this.dv.salDocList.map((e) => (e.__children = e.items));
-            //this.dv.salDocList.map(e => Object.assign(e, e.items[0]));
-            //this.dv.isSShow = !this.dv.isSShow;
         },
-        async btnEdit(prop) {
-            this.dv = await this.lis.function("SALT01/01-btnEdit", prop);
+        async btnEdit() {
+            this.dv = await this.lis.function("SALT01/01-btnEdit", this.dv);
         },
-        async btnShow(prop) {
-            this.dv = await this.lis.function("SALT01/01-btnShow", prop);
+        async btnShow() {
+            this.dv = await this.lis.function("SALT01/01-btnShow", this.dv);
         },
-        async btnInsert(prop) {
-            this.dv = await this.lis.function("SALT01/01-btnInsert", prop);
+        async btnInsert() {
+            this.dv = await this.lis.function("SALT01/01-btnInsert", this.dv);
         },
         async btnPrint() {
             this.lis.printPDF("SALT01D01PDF", "Satış Belgeleri Raporu");
@@ -540,6 +553,9 @@ export default {
 
     mounted() {
         this.init(this.dv);
+        console.log("SALT01D01 - $attrs", this.$attrs)
     },
+
+    
 };
 </script>

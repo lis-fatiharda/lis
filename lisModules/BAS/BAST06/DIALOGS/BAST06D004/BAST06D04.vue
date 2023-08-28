@@ -4,7 +4,7 @@
   <l-btn class="" round dense icon="save" color="deep-orange-6" @click = "btnSave()" />
     
   </div>
-    <l-table name="BAST06D04" :tableData="dv.reportList" :columns="myColumnsBom" :height="'80vh'" :width="'100%'" />
+    <l-table name="BAST06D04" v-model="dv.reportList" :columns="myColumnsBom" :height="'80vh'" :width="'100%'" />
   
 </template>
 

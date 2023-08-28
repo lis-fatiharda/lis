@@ -89,18 +89,14 @@
                     :label="this.$gl('Alt Tolerans', 'Lower Tolerance')"
                     v-model="item.lowertol"
                     type="number"
-                    dense
                     
-                    style="width: 100px"
                     v-if="item.istolerance"
                   />
                   <l-input
                     :label="this.$gl('Üst Tolerans', 'Upper Tolerance')"
                     v-model="item.uppertol"
                     type="number"
-                    dense
                     
-                    style="width: 100px"
                     v-if="item.istolerance"
                   />
                 </l-card-section>

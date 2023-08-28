@@ -1,3 +1,5 @@
+
+
 <template>
   <l-div v-if="dv.lisDialog == 'PRDT01D01'">
     <!--Tittle Layer-->
@@ -68,12 +70,12 @@
                 </l-input> -->
 
         <!-- <l-input v-model="dv.sc.stext" :label="this.$gl(`Açıklama`, `Description`)" dense style="width: 200px" /> -->
-        <l-datetime
+        <l-date
           :label="this.$gl(`İş Emri Tarihi`, `Work Order Date`)"
           v-model="dv.sc.validfrom"
           style="width: 160px"
         />
-        <l-datetime
+        <l-date
           :label="this.$gl(`İş Emri Tarihi`, `Work Order Date`)"
           v-model="dv.sc.validuntil"
           style="width: 160px"
@@ -96,14 +98,13 @@
 
     <l-table
       name="PRDT01D01"
-      :tableData="dv.prdList"
+      v-model="dv.prdList"
       :columns="myColumnsPrd"
-      :height="'73vh'"
-      width="100%"
       :readonly="true"
     />
   </l-div>
   <PRDT01D02 :dv="dv" :tabInfo="tabInfo" v-if="dv.lisDialog == 'PRDT01D02'" />
+
 </template>
 
 <script>

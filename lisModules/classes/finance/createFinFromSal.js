@@ -58,7 +58,7 @@ export default async function (plissaldocs) {
                         (x) => x.acctype == "C"
                     );
 
-                    if (myfin002_item.postway == false) {
+                    if (myfin002_item.postway == 0) {
                         olisfindocs.items[myRow].ddebit +=
                             mySalItem[myfin002_item.valuefield];
                     } else {
@@ -78,7 +78,7 @@ export default async function (plissaldocs) {
                     olisfindocs_item.glaccount = olisaccounts.glaccount;
                     olisfindocs_item.atext = olisaccounts.stext;
 
-                    if (myfin002_item.postway == false) {
+                    if (myfin002_item.postway == 0) {
                         olisfindocs_item.ddebit =
                             mySalItem[myfin002_item.valuefield];
                     } else {
@@ -108,7 +108,7 @@ export default async function (plissaldocs) {
                         (x) => x.account == myAccount
                     );
 
-                    if (myfin002_item.postway == false) {
+                    if (myfin002_item.postway == 0) {
                         olisfindocs.items[myRow].ddebit +=
                             mySalItem[myfin002_item.valuefield];
                     } else {
@@ -136,7 +136,7 @@ export default async function (plissaldocs) {
                     olisfindocs_item.atext = myAtext?.stext;
                     //-------------------------
 
-                    if (myfin002_item.postway == false) {
+                    if (myfin002_item.postway == 0) {
                         olisfindocs_item.ddebit =
                             mySalItem[myfin002_item.valuefield];
                     } else {

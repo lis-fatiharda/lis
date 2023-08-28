@@ -1,10 +1,8 @@
 <template>
   <l-table
     name = "PRDT01D06"
-    :tableData="dv.lisprddocs.operations"
+    v-model="dv.lisprddocs.operations"
     :columns="operationsColumns"
-    :height="'73vh'"
-    width="100%"
     :context="contextMenu"
     @zoom="fetchZoom($event)"
     @keydown="if ($event.key == 'Insert') this.pushNewOpr($event);"
@@ -50,13 +48,14 @@
       />
     </l-card0>
   </l-dialog> -->
-  <q-dialog v-model="isShowItemDetail">
-        <PRDT01D07
+  <l-dialog v-model="isShowItemDetail">
+        <PRDT01D11
         :dv="dv"
         :item="dv.lisprddocs.operations[selectedRow]"
         :tabInfo="tabInfo"
+        @cancel="isShowItemDetail = false"
     />
-    </q-dialog>
+    </l-dialog>
 </template>
 
 <script>
@@ -66,7 +65,10 @@ import PRDT01D11 from "../../PRD/PRDT01/PRDT01D11.vue";
 
 export default {
   props: ["dv", "tabInfo"],
-  components: { BOMT02D01,PRDT01D11 },
+  components: { BOMT02D01, PRDT01D11 },
+
+  inheritAttrs: false,
+  inherit: false,
   data() {
     return {
       contextMenu: [
@@ -181,7 +183,7 @@ export default {
   },
   methods: {
     fetchZoom(event) {
-      console.log(event);
+      console.log("PRDT01D06", event);
       if (event.value == "workcenter") {
         this.zoomWc = event.row;
         this.isShowWc = true;

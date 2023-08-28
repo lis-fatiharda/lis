@@ -71,8 +71,6 @@
             :label="this.$gl(`Modul Rengi`, `Module Color`)"
             v-model="dv.lisappobjects[0].moduleColor"
             :bg-color="dv.lisappobjects[0].moduleColor"
-            
-            dense
           />
         </div>
       </div>

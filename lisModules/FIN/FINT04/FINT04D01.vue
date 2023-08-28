@@ -151,7 +151,7 @@
 
         <l-table
             name="FINT04D01"
-            :tableData="dv.reportList"
+            v-model="dv.reportList"
             :columns="columns"
             :context="contextMenu"
             :width="'100%'"

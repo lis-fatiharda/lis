@@ -4,17 +4,19 @@
 // ?        1 - update the document
 
 export default async function save(plispurdocs, pModi) {
-
     const olispur001 = await lispur001.findOne({
         company: plispurdocs.company,
         doctype: plispurdocs.doctype,
     });
 
-    // Controls before Save ****************
-    for (let i in plispurdocs.items) {
-        
+    if (olispur001 == null) throw new Error("Belge Tipi Bulunamadı!");
 
-        
+    // Controls before Save ****************
+    if ((plispurdocs.currency == null) | (plispurdocs.currency == "")) {
+        throw new Error("Lütfen Para Birimini Giriniz!");
+    }
+
+    for (let i in plispurdocs.items) {
         if (olispur001.deltype > 0) {
             await Inventory.ctrlMaterialForMove(
                 plispurdocs.company,
@@ -25,6 +27,7 @@ export default async function save(plispurdocs, pModi) {
                 plispurdocs.company,
                 plispurdocs.items[i].material,
                 olispur001.movecode,
+                plispurdocs.items[i].itemtype,
                 plispurdocs.items[i].specialstock
             );
         }
@@ -44,6 +47,12 @@ export default async function save(plispurdocs, pModi) {
 
     await this.ctrlRefDocument(plispurdocs);
 
+    // Control for stock movements
+
+    if ((olispur001.deltype == 2) | (olispur001.deltype == 4)) {
+        await Inventory.ctrlInvFromPur(plispurdocs, pModi);
+    }
+
     // Update reference document
 
     await this.updRefDocument(plispurdocs);
@@ -62,9 +71,7 @@ export default async function save(plispurdocs, pModi) {
 
         // Save the Document
 
-        plispurdocs._id = undefined;
-        const olispurdocs = new lispurdocs(plispurdocs);
-        await olispurdocs.save();
+        await lispurdocs.create(plispurdocs);
     } else {
         await lispurdocs.findOneAndUpdate(
             { _id: plispurdocs._id },
@@ -79,7 +86,6 @@ export default async function save(plispurdocs, pModi) {
     if ((olispur001.deltype == 2) | (olispur001.deltype == 4)) {
         await Inventory.createInvFromPur(plispurdocs, pModi);
     }
-
 
     return plispurdocs;
 }

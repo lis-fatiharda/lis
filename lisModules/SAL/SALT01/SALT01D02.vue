@@ -68,8 +68,10 @@
                     optValue="doctype"
                     optTitle="stext"
                     optCaptions="doctype"
+                    :optFilter="{ isonlybyref: false }"
                     width="125px"
                     :readonly="dv.modi == 0 ? false : true"
+                    class="bg-blue-1"
                 />
 
                 <l-input
@@ -77,7 +79,6 @@
                     v-model="dv.lissaldocs.docnum"
                     :label="this.$gl(`Belge No`, `Document No`)"
                     readonly
-                    class="bg-blue-1"
                 />
 
                 <l-select
@@ -98,6 +99,7 @@
                     optTitle="stext"
                     optCaptions="saldept"
                     width="130px"
+                    class="bg-blue-1"
                 />
 
                 <l-datetime
@@ -108,7 +110,7 @@
 
                 <l-select
                     :label="this.$gl(`Onay`, `Confirm`)"
-                    readonly
+                    :readonly="true"
                     map-options
                     v-model="dv.lissaldocs.isapprove"
                     :options="[
@@ -123,7 +125,7 @@
 
                 <l-select
                     :label="this.$gl(`Belge Statüsü`, `Document Status`)"
-                    readonly
+                    :readonly="true"
                     map-options
                     v-model="dv.lissaldocs.docstat"
                     :options="[
@@ -174,7 +176,7 @@
                     class="bg-blue-1"
                 >
                     <l-chip
-                        class="bg-white"
+                        class="bg-blue-1"
                         icon="search"
                         dense
                         clickable
@@ -489,7 +491,7 @@ export default {
                 this.$q.notify({
                     type: "warning",
                     message: this.$gl(
-                        "Lütfen Para Birimini Doldurunuz!",
+                        "Lütfen Para Birimi Giriniz!",
                         "Please Fill Currency !"
                     ),
                     caption: this.$gl(
@@ -502,21 +504,138 @@ export default {
             }
 
             for (let i in this.dv.lissaldocs.items) {
-                let myItem = this.dv.lissaldocs.items[i].qunit;
-                if (myItem == null || myItem == "") {
-                    console.log("girdi", this.dv.lissaldocs.items);
-                    this.$q.notify({
-                        type: "warning",
-                        message: this.$gl(
-                            `Lütfen ${this.dv.lissaldocs.items[i].itemnum} No'lu kalem için Miktar Birimini Giriniz!`,
-                            "Please Fill Currency !"
-                        ),
-                        caption: this.$gl(
-                            "Belge Kaydedilemedi!",
-                            "Failed to Save Document!"
-                        ),
-                        actions: [{ label: "X", color: "white", dense: true }],
-                    });
+                if (this.dv.lissaldocs.items[i]._deleted == false) {
+                    if (
+                        this.dv.lissaldocs.items[i].qunit == null ||
+                        this.dv.lissaldocs.items[i].qunit == ""
+                    ) {
+                        console.log("girdi", this.dv.lissaldocs.items);
+                        this.$q.notify({
+                            type: "warning",
+                            message: this.$gl(
+                                `Lütfen ${this.dv.lissaldocs.items[i].itemnum} No'lu kalem için Miktar Birimini Giriniz!`,
+                                "Please Fill Currency !"
+                            ),
+                            caption: this.$gl(
+                                "Belge Kaydedilemedi!",
+                                "Failed to Save Document!"
+                            ),
+                            actions: [
+                                { label: "X", color: "white", dense: true },
+                            ],
+                        });
+                        return;
+                    };
+                    if (this.dv.lissaldocs.items[i].quantity <= 0) {
+                        this.$q.notify({
+                            type: "warning",
+                            message: this.$gl(
+                                `Lütfen ${this.dv.lissaldocs.items[i].itemnum} No'lu kalem için Miktar Giriniz!`,
+                                "Please Fill Currency !"
+                            ),
+                            caption: this.$gl(
+                                "Belge Kaydedilemedi!",
+                                "Failed to Save Document!"
+                            ),
+                            actions: [
+                                { label: "X", color: "white", dense: true },
+                            ],
+                        });
+                        return;
+                    }
+                    if (
+                        this.dv.lissaldocs.items[i].material == null ||
+                        this.dv.lissaldocs.items[i].material == ""
+                    ) {
+                        this.$q.notify({
+                            type: "warning",
+                            message: this.$gl(
+                                `Lütfen ${this.dv.lissaldocs.items[i].itemnum} No'lu kalem için Malzeme Giriniz!`,
+                                "Please Fill Currency !"
+                            ),
+                            caption: this.$gl(
+                                "Belge Kaydedilemedi!",
+                                "Failed to Save Document!"
+                            ),
+                            actions: [
+                                { label: "X", color: "white", dense: true },
+                            ],
+                        });
+                        return;
+                    }
+                    if (
+                        this.dv.lissaldocs.items[i].itemtype == null ||
+                        this.dv.lissaldocs.items[i].itemtype == ""
+                    ) {
+                        this.$q.notify({
+                            type: "warning",
+                            message: this.$gl(
+                                `Lütfen ${this.dv.lissaldocs.items[i].itemnum} No'lu kalem için Kalem Tipi Giriniz!`,
+                                "Please Fill Currency !"
+                            ),
+                            caption: this.$gl(
+                                "Belge Kaydedilemedi!",
+                                "Failed to Save Document!"
+                            ),
+                            actions: [
+                                { label: "X", color: "white", dense: true },
+                            ],
+                        });
+                        return;
+                    }
+                }
+            }
+
+            //------ Controls for E-Delivery --------------------------------
+
+            if (this.dv.lissaldocs.edoctype == 3) {
+                if (this.dv.lissaldocs.drivername == "") {
+                    this.lis.alert("w", "Lütfen Şoför Adı Giriniz!");
+                    return;
+                }
+                if (this.dv.lissaldocs.driversurname == "") {
+                    this.lis.alert("w", "Lütfen Şoför Soyadı Giriniz!");
+                    return;
+                }
+                if (this.dv.lissaldocs.driverid.length != 11) {
+                    this.lis.alert("w", "Lütfen Geçerli Bir Şoför TC Giriniz!");
+                    return;
+                }
+                if (this.dv.lissaldocs.driverplate == "") {
+                    this.lis.alert("w", "Lütfen Plaka Bilgisi Giriniz!");
+                    return;
+                }
+                //-
+                if (this.dv.lissaldocs.grccountry == "") {
+                    this.lis.alert(
+                        "w",
+                        "Lütfen Mal Alıcısı Ülke Bilgisi Giriniz!"
+                    );
+                    return;
+                }
+                if (this.dv.lissaldocs.grccity == "") {
+                    this.lis.alert(
+                        "w",
+                        "Lütfen Mal Alıcısı Şehir Bilgisi Giriniz!"
+                    );
+                    return;
+                }
+                if (this.dv.lissaldocs.grcdistrict == "") {
+                    this.lis.alert(
+                        "w",
+                        "Lütfen Mal Alıcısı Semt Bilgisi Giriniz!"
+                    );
+                    return;
+                }
+                if (this.dv.lissaldocs.grcbuilding == "") {
+                    this.lis.alert("w", "Lütfen Mal Alıcısı Kapı No Giriniz!");
+                    return;
+                }
+                if (this.dv.lissaldocs.grcpostcode == "") {
+                    this.lis.alert(
+                        "w",
+                        "Lütfen Mal Alıcısı Posta Kodu Giriniz!"
+                    );
                     return;
                 }
             }
@@ -550,7 +669,10 @@ export default {
 
                 if (myReturn == true) {
                     //------ Save The Document ----------
-                    await this.lis.function("SALT01/02-btnSave", this.dv);
+                    this.dv.lissaldocs = await this.lis.function(
+                        "SALT01/02-btnSave",
+                        this.dv
+                    );
                     this.lis.alert(
                         "p",
                         this.$gl(

@@ -5,7 +5,7 @@ export default async function (dv) {
     dv.ic.icon101 = await lisedndocs.count({
         company: dv.sc.company,
         edoctype: 1,
-        postway: false,
+        postway: 0,
         edocstat: 1,
     });
 

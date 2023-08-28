@@ -72,11 +72,12 @@
                 <l-select
                     :label="this.$gl(`Belge Tipi`, `Document Type`)"
                     v-model="dv.lispurdocs.doctype"
-                    @select="setDocChar();"
+                    @select="setDocChar()"
                     options="lispur001"
                     optValue="doctype"
                     optTitle="stext"
                     optCaptions="doctype"
+                    :optFilter="{ isonlybyref: false }"
                     width="125px"
                     class="bg-blue-1"
                     :readonly="dv.modi == 0 ? false : true"
@@ -87,7 +88,6 @@
                     v-model="dv.lispurdocs.docnum"
                     :label="this.$gl(`Belge No`, `Document No`)"
                     readonly
-                    class="bg-blue-1"
                 />
 
                 <l-select
@@ -110,6 +110,7 @@
                     optTitle="stext"
                     optCaptions="purdept"
                     width="150px"
+                    class="bg-blue-1"
                 />
 
                 <l-datetime
@@ -120,7 +121,7 @@
 
                 <l-select
                     :label="this.$gl(`Onay`, `Confirm`)"
-                    readonly
+                    :readonly="true"
                     map-options
                     v-model="dv.lispurdocs.isapprove"
                     :options="[
@@ -186,7 +187,7 @@
                     class="bg-blue-1"
                 >
                     <l-chip
-                        class="bg-white"
+                        class="bg-blue-1"
                         icon="search"
                         dense
                         clickable
@@ -221,15 +222,15 @@
                 </l-input>
 
                 <l-select
-                        :label="this.$gl(`P.Br.`, `Currency`)"
-                        v-model="dv.lispurdocs.currency"
-                        options="lisbas007"
-                        optValue="unit"
-                        optTitle="stext"
-                        optCaptions="unit"
-                        :optFilter="{ unittype: 1 }"
-                        width="135px"
-                    />
+                    :label="this.$gl(`P.Br.`, `Currency`)"
+                    v-model="dv.lispurdocs.currency"
+                    options="lisbas007"
+                    optValue="unit"
+                    optTitle="stext"
+                    optCaptions="unit"
+                    :optFilter="{ unittype: 1 }"
+                    width="135px"
+                />
                 <l-input
                     dense
                     :label="this.$gl(`Kur`, `Exchange`)"
@@ -244,9 +245,7 @@
             </l-card-section>
         </l-card0>
         <l-card>
-            <l-tabs
-                v-model="tab"
-            >
+            <l-tabs v-model="tab">
                 <l-tab name="Kalemler" :label="this.$gl(`Kalemler`, `Items`)" />
                 <l-tab
                     name="Açık Kalemler"
@@ -410,14 +409,7 @@ export default {
         },
         async btnPrint(pFromSave) {
             if (this.dv.lispurdocs.isprinted == true) {
-                this.$q.notify({
-                    message: this.$gl(
-                        "Belge Daha Önce Kuyruğa Gönderildi.",
-                        "Document Queued Previously."
-                    ),
-                    type: "positive",
-                    actions: [{ label: "X", color: "white", dense: true }],
-                });
+                this.lis.alert("p", "Belge Daha Önce Kuyruğa Gönderildi.");
                 return;
             }
             await this.lis.function("PURT01/02-btnPrint", this.dv);
@@ -435,133 +427,92 @@ export default {
                 (this.dv.lispurdocs.doctype == null) |
                 (this.dv.lispurdocs.doctype == "")
             ) {
-                this.$q.notify({
-                    type: "warning",
-                    message: this.$gl(
-                        "Lütfen Belge Tipi Seçiniz!",
-                        "Please Select Document Type!"
-                    ),
-                    caption: this.$gl(
-                        "Belge Kaydedilemedi!",
-                        "Failed to Save Document!"
-                    ),
-                    actions: [{ label: "X", color: "white", dense: true }],
-                });
+                this.lis.alert(
+                    "w",
+                    "Lütfen Belge Tipi Seçiniz!",
+                    "Belge Kaydedilemedi!"
+                );
                 return;
             }
             if (
                 (this.dv.lispurdocs.purdept == null) |
                 (this.dv.lispurdocs.purdept == "")
             ) {
-                this.$q.notify({
-                    type: "warning",
-                    message: this.$gl(
-                        "Lütfen Satınalma Bölümü Seçiniz!",
-                        "Please Select Purchasing Department!"
-                    ),
-                    caption: this.$gl(
-                        "Belge Kaydedilemedi!",
-                        "Failed to Save Document!"
-                    ),
-                    actions: [{ label: "X", color: "white", dense: true }],
-                });
+                this.lis.alert(
+                    "w",
+                    "Lütfen Satınalma Bölümü Seçiniz!",
+                    "Belge Kaydedilemedi!"
+                );
                 return;
             }
             if (
                 (this.dv.lispurdocs.reqtype == 0) &
                 (this.dv.lispurdocs.vendor == "")
             ) {
-                this.$q.notify({
-                    type: "warning",
-                    message: this.$gl(
-                        "Lütfen Tedarikçi Seçiniz!",
-                        "Please Select Supplier!"
-                    ),
-                    caption: this.$gl(
-                        "Belge Kaydedilemedi!",
-                        "Failed to Save Document!"
-                    ),
-                    actions: [{ label: "X", color: "white", dense: true }],
-                });
+                this.lis.alert(
+                    "w",
+                    "Lütfen Tedarikçi Seçiniz!",
+                    "Belge Kaydedilemedi!"
+                );
                 return;
             }
-            if ((this.dv.lispurdocs.currency == "") |
-                (this.dv.lispurdocs.currency == null) ){
-                this.$q.notify({
-                    type: "warning",
-                    message: this.$gl(
-                        "Lütfen Para Birimini Doldurunuz!",
-                        "Please Fill Currency !"
-                    ),
-                    caption: this.$gl(
-                        "Belge Kaydedilemedi!",
-                        "Failed to Save Document!"
-                    ),
-                    actions: [{ label: "X", color: "white", dense: true }],
-                });
+            if (
+                (this.dv.lispurdocs.currency == "") |
+                (this.dv.lispurdocs.currency == null)
+            ) {
+                this.lis.alert(
+                    "w",
+                    "Lütfen Para Birimi Giriniz!",
+                    "Belge Kaydedilemedi!"
+                );
                 return;
             }
 
             for (let i in this.dv.lispurdocs.items) {
-                let myItem = this.dv.lispurdocs.items[i].qunit;
-                let myItem2 = this.dv.lispurdocs.items[i].quantity;
-                let myItem3 = this.dv.lispurdocs.items[i].material;
-                let myItem4 = this.dv.lispurdocs.items[i].itemtype;
-                if (myItem == null || myItem == "") {
-                    console.log("girdi", this.dv.lispurdocs.items);
-                    this.$q.notify({
-                        type: "warning",
-                        message: this.$gl(
+                if (this.dv.lispurdocs.items[i]._deleted == false) {
+                    if (
+                        this.dv.lispurdocs.items[i].qunit == null ||
+                        this.dv.lispurdocs.items[i].qunit == ""
+                    ) {
+                        this.lis.alert(
+                            "w",
                             `Lütfen ${this.dv.lispurdocs.items[i].itemnum} No'lu kalem için Miktar Birimini Giriniz!`,
-                            "Please Fill Currency !"
-                        ),
-                        caption: this.$gl(
-                            "Belge Kaydedilemedi!",
-                            "Failed to Save Document!"
-                        ),
-                        actions: [{ label: "X", color: "white", dense: true }],
-                    });
-                    return;
-                }
-                if (myItem2 <= 0){this.$q.notify({
-                        type: "warning",
-                        message: this.$gl(
+                            "Belge Kaydedilemedi!"
+                        );
+                        return;
+                    }
+
+                    if (this.dv.lispurdocs.items[i].quantity <= 0) {
+                        this.lis.alert(
+                            "w",
                             `Lütfen ${this.dv.lispurdocs.items[i].itemnum} No'lu kalem için Miktar Giriniz!`,
-                            "Please Fill Currency !"
-                        ),
-                        caption: this.$gl(
-                            "Belge Kaydedilemedi!",
-                            "Failed to Save Document!"
-                        ),
-                        actions: [{ label: "X", color: "white", dense: true }],
-                    });
-                    return;}
-                    if (myItem3 == null || myItem3 == ""){this.$q.notify({
-                        type: "warning",
-                        message: this.$gl(
+                            "Belge Kaydedilemedi!"
+                        );
+                        return;
+                    }
+                    if (
+                        this.dv.lispurdocs.items[i].material == null ||
+                        this.dv.lispurdocs.items[i].material == ""
+                    ) {
+                        this.lis.alert(
+                            "w",
                             `Lütfen ${this.dv.lispurdocs.items[i].itemnum} No'lu kalem için Malzeme Giriniz!`,
-                            "Please Fill Currency !"
-                        ),
-                        caption: this.$gl(
-                            "Belge Kaydedilemedi!",
-                            "Failed to Save Document!"
-                        ),
-                        actions: [{ label: "X", color: "white", dense: true }],
-                    });
-                    return;}
-                    if (myItem4 == null || myItem4 == ""){this.$q.notify({
-                        type: "warning",
-                        message: this.$gl(
+                            "Belge Kaydedilemedi!"
+                        );
+                        return;
+                    }
+                    if (
+                        this.dv.lispurdocs.items[i].itemtype == null ||
+                        this.dv.lispurdocs.items[i].itemtype == ""
+                    ) {
+                        this.lis.alert(
+                            "w",
                             `Lütfen ${this.dv.lispurdocs.items[i].itemnum} No'lu kalem için Kalem Tipi Giriniz!`,
-                            "Please Fill Currency !"
-                        ),
-                        caption: this.$gl(
-                            "Belge Kaydedilemedi!",
-                            "Failed to Save Document!"
-                        ),
-                        actions: [{ label: "X", color: "white", dense: true }],
-                    });
-                    return;}
+                            "Belge Kaydedilemedi!"
+                        );
+                        return;
+                    }
+                }
             }
 
             //------ Print The E-Document ----------

@@ -65,11 +65,9 @@
   </l-div>
   <div style="padding: 0">
     <l-table
-      :tableData="dv.olisinvdocs.items"
+      v-model="dv.olisinvdocs.items"
       :context="contextMenu"
       :columns="myColumns"
-      width="100%"
-      height="65vh"
       @keyup="if ($event.key == 'Insert') this.pushNewItem();"
       @zoom="zoomMaterialRow = $event.row"
     />

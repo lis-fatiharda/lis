@@ -1,10 +1,10 @@
 export default async function (dv) {
-    dv.lisCustomerList = await liscustomers
-        .find({
-            company: lis.like(dv.sc.company),
-            _deleted: false
-        })
-        .catch((err) => console.log(err));
+    dv.lisCustomerList = await liscustomers.find({
+        company: lis.like(dv.sc.company),
+        customer: lis.like(dv.sc.customer),
+        name1: lis.like(dv.sc.name1),
+        _deleted: false,
+    });
 
     
     for (let i in dv.lisCustomerList) {

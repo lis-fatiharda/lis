@@ -8,6 +8,7 @@ const schema = new mongoose.Schema(
     customer: { type: String, label: "Müşteri Kodu", default: "" },
     name1: { type: String, label: "Müşteri Adı", default: "" },
     material: { type: String, label: "Malzeme Kodu", default: "" },
+    variant: { type: Object, label: "Varyant", default: {} },
     mtext: { type: String, label: "Malzeme Adı", default: "" },
     materialcust: {
       type: String,

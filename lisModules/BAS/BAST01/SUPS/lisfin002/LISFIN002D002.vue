@@ -203,7 +203,7 @@
         <!--Searching Criterias Layer-->
         <l-table
             name="LISFIN002D002"
-            :tableData="mv.lisfin002.items"
+            v-model="mv.lisfin002.items"
             :columns="myColumnsfin02items"
             :height="'70vh'"
             :width="'100%'"
@@ -240,7 +240,8 @@ export default {
                 {
                     label: this.$gl("Borç/Alacak", "Movement"),
                     value: "postway",
-                    type: "checkbox",
+                    type: "select",
+                    options: [{ value: 0, label: Borç}, { value: 1, label: Alacak}]
                 },
 
                 {

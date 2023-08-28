@@ -9,7 +9,6 @@
                     <l-btn
                         flat
                         round
-                        dense
                         icon="done"
                         color="teal"
                         @click="selectCustomer()"
@@ -21,7 +20,6 @@
                     <l-btn
                         flat
                         round
-                        dense
                         icon="cancel"
                         color="negative"
                         @click="cancel()"
@@ -55,7 +53,6 @@
                         label="Cari Kodu"
                         
                         v-model="dv.sc.customer"
-                        dense
                     >
                     </l-input>
                     <l-input
@@ -63,7 +60,6 @@
                         
                         v-model="dv.sc.name1"
                         style="width: 300px"
-                        dense
                     >
                     </l-input>
                     <l-select
@@ -109,7 +105,6 @@
 
                     <l-btn
                         color="warning"
-                        dense
                         icon="search"
                         @click="btnSearch(dv)"
                     >
@@ -120,7 +115,7 @@
                 <!--------------------------------->
             </l-card0>
             <!--Table Layer---------------------------->
-            <q-markup-table flat bordered dense>
+            <q-markup-table flat bordered dense class="cursor-pointer">
                 <thead>
                     <tr class="bg-blue-grey-2">
                         <th class="text-left"></th>
@@ -142,6 +137,7 @@
                                 ? 'bg-light-blue-1'
                                 : 'bg-white'
                         "
+                        @dblclick="selectCustomer()"
                     >
                         <td>
                             <l-chip dense :label="index + 1" rounded glossy />
@@ -169,30 +165,19 @@ export default {
             dv: {
                 sc: {
                     company: "01",
-                    companyOpts: [],
                     busarea: "S",
-                    busareaOpts: [],
                     sector: "",
-                    sectorOpts: [],
                     country: "",
-                    countryOpts: [],
                     city: "",
-                    cityOpts: [],
                     customer: "",
                     name1: "",
                     taxDept: "",
                     taxNum: "",
                     custOrVend: 99,
-                    currencyOpts: [],
-                    salDeptOpts: [],
-                    purDeptOpts: [],
-                    custGrpOpts: [],
-                    acctypeOpts: [],
                 },
 
                 lisCustomerList: [],
                 lisCustomer: {},
-                lisCusMat: [],
                 selectedRow: "",
             },
         };
@@ -216,10 +201,7 @@ export default {
                 this.dv.lisCustomer = this.dv.lisCustomerList[0];
                 this.$emit("ok", this.dv.lisCustomer);
             } else {
-                this.$q.notify({
-                    message: "Bir Cari Kart Seçilmedi!",
-                    type: "negative",
-                });
+                this.lis.alert("e", "Bir Cari Kart Seçilmedi!");
                 this.$emit("ok", undefined);
             }
         },
@@ -233,35 +215,6 @@ export default {
             .post("BAST02/01-init", this.dv)
             .then((res) => {
                 this.dv = res.data;
-
-                this.dv.sc.companyOpts.forEach((e) => {
-                    e.value = e.company;
-                });
-                this.dv.sc.busareaOpts.forEach((e) => {
-                    e.value = e.busArea;
-                });
-                this.dv.sc.sectorOpts.forEach((e) => {
-                    e.value = e.sector;
-                });
-                this.dv.sc.countryOpts.forEach((e) => {
-                    e.value = e.country;
-                });
-                this.dv.sc.cityOpts.forEach((e) => {
-                    e.value = e.city;
-                });
-
-                this.dv.sc.custGrpOpts.forEach((e) => {
-                    e.value = e.custgrp;
-                });
-                this.dv.sc.salDeptOpts.forEach((e) => {
-                    e.value = e.saldept;
-                });
-                this.dv.sc.purDeptOpts.forEach((e) => {
-                    e.value = e.purdept;
-                });
-                this.dv.sc.acctypeOpts.forEach((e) => {
-                    e.value = e.acctype;
-                });
             })
             .catch(function (err) {
                 console.log(err);

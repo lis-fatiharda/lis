@@ -6,7 +6,7 @@
         <l-card-section class="q-gutter-xs">
             <l-table
             name="PURT01D01"
-            :tableData="dv.lispurdocs.discount"
+            v-model="dv.lispurdocs.discount"
             :columns="myColumnsDisc"
             :width="'100%'"
             @change="calcPrice()"

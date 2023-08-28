@@ -82,7 +82,9 @@
                 v-model="dv.lispurdocs.isvatinclude"
             />
         </l-card-section>
+        
     </l-card>
+   
 </template>
 
 <script>

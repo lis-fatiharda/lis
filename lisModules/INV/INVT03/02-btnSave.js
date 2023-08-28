@@ -1,25 +1,15 @@
+
 export default async function (dv) {
-  // Save the Document*********************
-  if (dv.modi == 0) {
-    // Save the new Document*********************
-    const olisinvdocs = new lisinvdocs(dv.lisinvdocs);
-    await olisinvdocs.save().catch((err) => {
-      throw new Error(err.message);
-    });
-  } else {
-    // Update The Document**************
+    // Save the Document*********************
+    if (dv.modi == 1) {
+        // Save the new Document*********************
 
-    await lisinvdocs
-      .findOneAndUpdate({ _id: dv.lisinvdocs._id }, dv.lisinvdocs, {
-        new: true,
-        upsert: true,
-      })
-      .catch((err) => {
-        throw new Error(err.message);
-      });
-  }
+        await Inventory.saveMovement(
+            dv.lisinvdocs,
+            dv.lisinvdocs.items[0].movecode,
+            1
+        );
+    }
 
-  dv.lisinvdocs = {};
-
-  return dv;
+    return dv;
 }

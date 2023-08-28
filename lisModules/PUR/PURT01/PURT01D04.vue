@@ -98,7 +98,7 @@
             />
         </l-div-flex>
      <l-table
-        :tableData="openitems"
+        v-model="openitems"
         :columns="itemsColumns"
         :readonly="true"
     />

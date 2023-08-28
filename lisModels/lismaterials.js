@@ -21,9 +21,9 @@ const matDocsSchema = new mongoose.Schema({
 });
 
 const matUnitsSchema = new mongoose.Schema({
-  unit: { type: String, label: "Birim", default: "" },
-  perunit: { type: Number, label: "Stok birimi miktarı", default: 1 },
-  value: { type: Number, label: "Birim miktarı", default: 1 },
+    value: { type: Number, label: "Birim miktarı", default: 1 },
+    unit: { type: String, label: "Birim", default: "" },
+    perunit: { type: Number, label: "Stok birimi miktarı", default: 1 },
 });
 
 const matStockSchema = new mongoose.Schema({
@@ -43,6 +43,13 @@ const schema = new mongoose.Schema(
             required: [true, "Lütfen Malzeme kodu giriniz!"],
             default: "",
         },
+        mtext: {
+            type: String,
+            label: "Malzeme İsmi",
+            required: [true, "Lütfen Malzeme Açıklaması giriniz!"],
+            default: "",
+        },
+        varkey: { type: String, label: "Varyant Anahtarı", default: "" },
         mattype: {
             type: String,
             label: "Malzeme Tipi",
@@ -50,12 +57,6 @@ const schema = new mongoose.Schema(
             default: "",
         },
 
-        stext: {
-            type: String,
-            label: "Malzeme İsmi",
-            required: [true, "Lütfen Malzeme Açıklaması giriniz!"],
-            default: "",
-        },
         ltext: {
             type: String,
             label: "Malzeme Uzun Açıklaması",
@@ -302,22 +303,11 @@ const schema = new mongoose.Schema(
             default: "",
         },
 
-        isvariant: {
-            type: Boolean,
-            label: "Varyant kullanılsınmı?",
-            default: false,
-        },
-        variantkey: {
-            type: String,
-            label: "Varyant anahtarı",
-            default: "",
-        },
-
         //*** */
 
         acctype: {
             type: Number,
-          label: "Muhasebeleşme tipi",
+            label: "Muhasebeleşme tipi",
             default: 0,
         },
 
@@ -423,7 +413,7 @@ const schema = new mongoose.Schema(
             default: false,
             // 0:silinmedi | 1:silindi
         },
-        createdby: {
+        _createdby: {
             type: String,
             label: "Oluşturan",
             default: global.sys_user,

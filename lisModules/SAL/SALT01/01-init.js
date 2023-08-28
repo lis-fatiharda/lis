@@ -83,5 +83,6 @@ export default async function (dv) {
 
   dv.noVatReasons = await lisbas013.find();
 
+
   return dv;
 }

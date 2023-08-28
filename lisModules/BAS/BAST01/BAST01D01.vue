@@ -247,6 +247,11 @@
             :tabInfo="tabInfo"
             v-if="dv.lisDialog == 'LISBAS017'"
         />
+        <LISBAS018
+            :dv="dv"
+            :tabInfo="tabInfo"
+            v-if="dv.lisDialog == 'LISBAS018'"
+        />
     </div>
 </template>
 
@@ -255,6 +260,7 @@ import BAST01D02 from "./BAST01D02.vue";
 import LISFIN002 from "./SUPS/lisfin002/LISFIN002.vue";
 import LISFIN003 from "./SUPS/lisfin003/LISFIN003.vue";
 import LISBAS017 from "./SUPS/lisbas017/LISBAS017.vue";
+import LISBAS018 from "./SUPS/lisbas018/LISBAS018.vue";
 
 export default {
     props: ["tabInfo", "currentTab"],
@@ -263,6 +269,7 @@ export default {
         LISFIN002,
         LISFIN003,
         LISBAS017,
+        LISBAS018,
     },
 
     data() {

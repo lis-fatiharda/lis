@@ -1,9 +1,7 @@
 export default async function (dv) {
-  //*** Inventory supDocuments */
+    //*** Inventory supDocuments */
 
-  dv.olisinvdocs = new lisinvdocs(lisinvdocs.prototype.schema.tree);
+    dv.lisinvdocs = new lisinvdocs(lisinvdocs.prototype.schema.tree);
 
-  dv.olisinvdocs.company = "01";
-
-  return dv;
+    return dv;
 }

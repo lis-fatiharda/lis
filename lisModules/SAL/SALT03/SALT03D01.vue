@@ -33,7 +33,7 @@
         />
     </l-div-flex>
 
-    <l-table name="SALT03D01" :tableData="dv.reportList" :columns="myColumns" />
+    <l-table name="SALT03D01" v-model="dv.reportList" :columns="myColumns" />
 </template>
 
 <script>

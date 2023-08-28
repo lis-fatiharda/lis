@@ -40,12 +40,11 @@
                 </div>
                 <div>
                     <l-table
-                        name="PURT01D12"
-                        :tableData="olispur004"
+                        v-model="olispur004"
                         :columns="columns"
-                        width="100%"
                         :readonly="true"
                         :summary="false"
+                        @dblclick="copyDoc()"
                     />
                 </div>
 

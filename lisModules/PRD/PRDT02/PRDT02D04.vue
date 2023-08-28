@@ -1,9 +1,7 @@
 <template>
   <l-table
-    :tableData="dv.lisprddocs.prods"
+    v-model="dv.lisprddocs.prods"
     :columns="prodsColumns"
-    :height="'73vh'"
-    width="100%"
     :context="contextMenu"
     @zoom="zoomMaterialRow = $event.row"
     @keydown="if ($event.key == 'Insert') this.pushNewPrd($event);"
@@ -108,7 +106,7 @@ export default {
   methods: {
     async pushNewPrd(event) {
       console.log("pushNewPrd", event);
-      let myReturn = await this.lis.function("PRDT01/pushNewPrd", this.dv);
+      let myReturn = await this.lis.function("PRDT02/pushNewPrd", this.dv);
       myReturn.operation =
         this.dv.lisprddocs.prods[this.dv.lisprddocs.prods.length - 1]
           .operation + 10;

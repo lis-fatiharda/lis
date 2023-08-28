@@ -95,7 +95,7 @@
       </l-div>
      
       <l-table
-        :tableData="dv.lisinvdocsItems"
+        v-model="dv.lisinvdocsItems"
         :columns="myColumnsInvt02"
         :height="'75vh'"
         :width="'100%'"

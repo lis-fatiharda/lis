@@ -51,6 +51,7 @@ const salItemsSchema = new mongoose.Schema({
     itemtype: { type: String, label: "Kalem tipi", default: "" },
     itemnum: { type: Number, label: "Kalem no", default: 10 },
     material: { type: String, label: "Malzeme Kodu", default: "" },
+    variant: { type: Object, label: "Varyant", default: {} },
     mtext: { type: String, label: "Malzeme Adı", default: "" },
     mattype: { type: String, label: "Malzeme Tipi", default: "" },
     //** Inventory */
@@ -225,10 +226,10 @@ const schema = new mongoose.Schema(
         name1: { type: String, label: "Müşteri adı", default: "" },
         contactname1: { type: String, label: "İlgili Kişi", default: "" },
         country: { type: String, label: "Ülke", default: "" },
-        city: { type: String, label: "Müşteri grubu", default: "" },
-        address: { type: String, label: "Müşteri grubu", default: "" },
-        telnum: { type: String, label: "Müşteri grubu", default: "" },
-        email: { type: String, label: "Müşteri grubu", default: "" },
+        city: { type: String, label: "Şehir", default: "" },
+        address: { type: String, label: "Adres", default: "" },
+        telnum: { type: String, label: "Telefon", default: "" },
+        email: { type: String, label: "Email", default: "" },
         //*********CURRENCY********** */
         currency: { type: String, label: "Para birimi", default: "" },
         curdate: { type: Date, label: "Kur Tarihi", default: new Date() },
@@ -270,6 +271,8 @@ const schema = new mongoose.Schema(
         grcname1: { type: String, label: "İsim", default: "" },
         grcaddress: { type: String, label: "Adres", default: "" },
         grccity: { type: String, label: "Şehir", default: "" },
+        grcdistrict: { type: String, label: "Semt", default: "" },
+        grcbuilding: { type: String, label: "Şehir", default: "" },
         grcpostcode: { type: String, label: "Posta kodu", default: "" },
         grccountry: { type: String, label: "ülke", default: "" },
         grclangu: { type: String, label: "dil", default: "" },
@@ -296,6 +299,8 @@ const schema = new mongoose.Schema(
         ircname1: { type: String, label: "İsim", default: "" },
         ircaddress: { type: String, label: "Adres", default: "" },
         irccity: { type: String, label: "Şehir", default: "" },
+        ircdistrict: { type: String, label: "Semt", default: "" },
+        ircbuilding: { type: String, label: "Bina No", default: "" },
         ircpostcode: { type: String, label: "Posta kodu", default: "" },
         irccountry: { type: String, label: "ülke", default: "" },
         irclangu: { type: String, label: "dil", default: "" },
@@ -331,12 +336,7 @@ const schema = new mongoose.Schema(
         },
         einvonumber: { type: String, label: "E-Belge No", default: "" },
         einvouuid: { type: String, label: "UUID", defaut: "" },
-        postway: {
-            type: Boolean,
-            enum: [0, 1],
-            label: "Hareket Yönü",
-            default: false,
-        }, //belge yönü
+        
         //*********SUBTOTAL-GRANDTOTAL********** */
         gross: { type: Number, label: "Brüt", default: 0 },
         discount: [discountSchema],
@@ -353,7 +353,7 @@ const schema = new mongoose.Schema(
         //******************* */
         isvatinclude: { type: Boolean, label: "KDV dahil mi?", default: false },
         _deleted: { type: Boolean, label: "Silindi mi?", default: false },
-        createdby: {
+        _createdby: {
             type: String,
             label: "Oluşturan",
             default: global.sys_user,

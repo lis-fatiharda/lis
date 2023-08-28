@@ -76,7 +76,7 @@
         <!--Searching Criterias Layer-->
         <l-table
             name="LISBAS017D002"
-            :tableData="mv.lisbas017.items"
+            v-model="mv.lisbas017.items"
             :columns="myColumnsbas17items"
             :height="'70vh'"
             :width="'100%'"
