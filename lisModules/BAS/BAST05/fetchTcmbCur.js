@@ -10,7 +10,7 @@ export default async function (dv) {
                 Parser.parseString(res.data, async function (err, result) {
                     for (let i in result.Tarih_Date.Currency) {
                         const myCurrency = result.Tarih_Date.Currency[i];
-
+ 
                         if (
                             (myCurrency.$.CurrencyCode == "USD") |
                             (myCurrency.$.CurrencyCode == "EUR") |

@@ -218,6 +218,7 @@
                     optCaptions="unit"
                     :optFilter="{ unittype: 1 }"
                     width="135px"
+                    @select="fetchCurRate()"
                 />
 
                 <l-input
@@ -353,6 +354,23 @@ export default {
     },
 
     methods: {
+        async fetchCurRate() {
+            console.log("fetchCurRate");
+            let oldCurRate = this.dv.lissaldocs.currate;
+            this.dv.lissaldocs.currate = await this.lis.function(
+                "SALT01/02-fetchCurRate",
+                this.dv.lissaldocs
+            );
+
+            for (let i in this.dv.lissaldocs.items) {
+                this.dv.lissaldocs.items[i].price =
+                    (this.dv.lissaldocs.items[i].price *
+                        this.dv.lissaldocs.currate) /
+                    oldCurRate;
+            }
+
+           // this.calcPrice();
+        },
         async setDocChar() {
             if (
                 (this.dv.lissaldocs.customer == "") |
@@ -402,7 +420,7 @@ export default {
             });
         },
 
-        async btnPrint(pFromSave) {
+        async btnPrint() {
             if (this.dv.lissaldocs.isprinted == true) {
                 this.lis.alert(
                     "i",
@@ -419,7 +437,7 @@ export default {
             this.lis.alert("p", "Kuyruğa Gönderildi.");
         },
 
-        async btnSave(fromPrint) {
+        async btnSave() {
             //----- Controls Before Save ---------
 
             if (
@@ -525,7 +543,7 @@ export default {
                             ],
                         });
                         return;
-                    };
+                    }
                     if (this.dv.lissaldocs.items[i].quantity <= 0) {
                         this.$q.notify({
                             type: "warning",
@@ -583,6 +601,28 @@ export default {
                         });
                         return;
                     }
+                }
+            }
+
+            //------ Controls for E-Invoice --------------------------------
+
+            if (
+                (this.dv.lissaldocs.edoctype == 1) |
+                (this.dv.lissaldocs.edoctype == 2)
+            ) {
+                if (this.dv.lissaldocs.irctaxdept == "") {
+                    this.lis.alert(
+                        "w",
+                        "Lütfen Fatura Alıcı Vergi Dairesi Giriniz!"
+                    );
+                    return;
+                }
+                if (this.dv.lissaldocs.irctaxnum == "") {
+                    this.lis.alert(
+                        "w",
+                        "Lütfen Fatura Alıcı Vergi No Giriniz!"
+                    );
+                    return;
                 }
             }
 
@@ -645,8 +685,7 @@ export default {
             if (
                 (this.dv.lissaldocs.isprinted == false) &
                 (this.dv.lissaldocs.edoctype > 0) &
-                (this.dv.lissaldocs._deleted == false) &
-                (fromPrint != true)
+                (this.dv.lissaldocs._deleted == false)
             ) {
                 let myReturn = await this.lis.message(
                     "c",
@@ -758,7 +797,10 @@ export default {
         },
     },
     async mounted() {
-        await this.lis.function("SALT01/02-init", this.dv);
+        this.dv.liscustomers = await this.lis.function(
+            "SALT01/02-init",
+            this.dv
+        );
 
         if ((this.dv.modi <= 0) & (this.dv.lissaldocs.customer != ""))
             this.setDocChar();

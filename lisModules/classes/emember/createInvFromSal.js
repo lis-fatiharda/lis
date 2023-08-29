@@ -20,6 +20,8 @@ import getHeadDiscSchema from "./8-getHeadDiscSchema.js";
 import getTaxItemSchema from "./9-getTaxItemSchema.js";
 import getExchangeRateSchema from "./7-getExchangeRateSchema.js";
 
+import getPaymentMeansSchema from "./10-getPaymentMeansSchema.js";
+import lisbas015 from "../../../lisModels/lisbas015.js";
 
 export default async function (plissaldocs, plisedndocs) {
     const olisbas001 = await lisbas001.findOne({
@@ -366,7 +368,6 @@ export default async function (plissaldocs, plisedndocs) {
         //----------------------------------------------------------------
 
         if (myItem.discount.length > 0) {
-            
             var DISCBLOCK = "";
             for (let i in myItem.discount) {
                 const myDisc = myItem.discount[i];
@@ -393,7 +394,7 @@ export default async function (plissaldocs, plisedndocs) {
             }
             ITEMSBLOCK = ITEMSBLOCK.replace("#DISCOUNTSCHEMA#", DISCBLOCK);
         } else {
-            ITEMSBLOCK = ITEMSBLOCK.replace("#DISCOUNTSCHEMA#", '');
+            ITEMSBLOCK = ITEMSBLOCK.replace("#DISCOUNTSCHEMA#", "");
         }
         //----------------------------------------------------------------
 
@@ -435,6 +436,31 @@ export default async function (plissaldocs, plisedndocs) {
 
         EINVOSTR += ITEMSBLOCK;
     }
+
+    //**********getItemSchema************************************* */
+
+    const olisbas015 = await lisbas015.find({ writeonedoc: true });
+
+    for (let i in olisbas015) {
+
+        var PAYMENTMEANSBLOCK = await getPaymentMeansSchema();
+
+        PAYMENTMEANSBLOCK = PAYMENTMEANSBLOCK.replace("#BANK#", olisbas015[i].stext);
+        PAYMENTMEANSBLOCK = PAYMENTMEANSBLOCK.replace("#BRANCH#", olisbas015[i].name);
+        PAYMENTMEANSBLOCK = PAYMENTMEANSBLOCK.replace(
+            "#IBAN#",
+            olisbas015[i].iban
+        );
+        PAYMENTMEANSBLOCK = PAYMENTMEANSBLOCK.replace("#CURRENCY#", olisbas015[i].currency);
+
+        EINVOSTR += PAYMENTMEANSBLOCK;
+
+        
+        
+    }
+        
+    console.log("99999999999999999999999999999999999999999999");
+    //************************************************************ */
 
     EINVOSTR += "</Invoice>";
 

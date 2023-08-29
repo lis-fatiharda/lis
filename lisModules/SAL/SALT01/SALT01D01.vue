@@ -20,8 +20,7 @@
             <!--Searching Criterias Layer----row-1-->
             <l-div-flex>
 
-{{ $t('Firma') }}
-{{   }}
+
                 <l-select
                     :label="this.$gl(`Firma`, `Company`)"
                     v-model="dv.sc.company"

@@ -67,19 +67,6 @@ export default async function save(plissaldocs, pModi) {
     await this.updRefDocument(plissaldocs);
     plissaldocs = await this.removeDeletedItems(plissaldocs);
 
-    // CTRL for lisfindocs*********************
-
-    if (plissaldocs.isfinance == true) {
-        let isHaveFinDoc = await lisfindocs.find({
-            company: plissaldocs.company,
-            saldoctype: plissaldocs.doctype,
-            saldocnum: plissaldocs.docnum,
-            _deleted: false,
-        });
-
-        if (isHaveFinDoc.length <= 0) plissaldocs.isfinance = false;
-    }
-
     // Save the Document*********************
 
     if (pModi <= 0) {

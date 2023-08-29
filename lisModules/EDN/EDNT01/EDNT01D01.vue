@@ -646,7 +646,7 @@
                                         : false
                                 "
                                 :label="this.$gl(`P.K.Değiştir`, `pk?`)"
-                                @click="btnSend(dv)"
+                                @click="btnChangePk()"
                                 outline
                             />
                             <l-btn
@@ -677,7 +677,6 @@
                                 outline
                             />
 
-                            
                             <!-- -->
                             <l-btn
                                 v-if="
@@ -708,10 +707,8 @@
 
                             <l-btn
                                 v-if="
-                                    dv.hProcessInt
-                                        .toString()
-                                        .substring(2, 3) ==
-                                        '2'
+                                    dv.hProcessInt.toString().substring(2, 3) ==
+                                    '2'
                                         ? true
                                         : false
                                 "
@@ -745,16 +742,60 @@
                 </q-page>
 
                 <l-dialog v-model="isShowDetail" persistent>
-                    <EDNT01D02 :dv="dv" :tabInfo="tabInfo" @cancel="isShowDetail = false"/>
+                    <EDNT01D02
+                        :dv="dv"
+                        :tabInfo="tabInfo"
+                        @cancel="isShowDetail = false"
+                    />
                 </l-dialog>
-                
 
-                <l-dialog v-model="isNewCustomer" persistent style="height: 80%">
-                    <BAST02D02 :dv="dv" :tabInfo="tabInfo" :lv="lv" :isChild="true" @cancel="isNewCustomer = false"/>
+                <l-dialog
+                    v-model="isNewCustomer"
+                    persistent
+                    style="height: 80%"
+                >
+                    <BAST02D02
+                        :dv="dv"
+                        :tabInfo="tabInfo"
+                        :lv="lv"
+                        :isChild="true"
+                        @cancel="isNewCustomer = false"
+                    />
                 </l-dialog>
             </q-page-container>
         </q-layout>
     </l-div>
+
+    <l-dialog-small v-model="isShowPkSelect" persistent>
+        <l-card>
+            <q-markup-table
+                flat
+                bordered
+                dense
+                class="cursor-pointer"
+                separator="cell"
+            >
+                <thead>
+                    <tr class="bg-blue-grey-2">
+                        <th class="text-left">P.K.</th><l-btn
+                        icon="cancel"
+                        flat
+                        round
+                        dense
+                        color="negative"
+                        @click="isShowPkSelect = false"
+                    />
+                    </tr>
+                    
+                </thead>
+                <tbody>
+                    <tr v-for="pk in pkList" :key="pk" @click="selectPk(pk)">
+                        <td class="text-left">{{ pk }}</td>
+                    </tr>
+                </tbody>
+            </q-markup-table>
+        </l-card>
+    </l-dialog-small>
 </template>
 
 <script>
@@ -1031,6 +1072,8 @@ export default {
             hProcessText: "",
             drawerLeft: true,
             isSelectCust: false,
+            isShowPkSelect: false,
+            pkList: [],
         };
     },
     computed: {
@@ -1096,9 +1139,35 @@ export default {
         },
     },
     methods: {
+        async btnChangePk() {
+            let selectedRow = this.dv.lisedndocsList.findIndex(
+                (e) => e._selected == true
+            );
+            if (selectedRow < 0) {
+                this.lis.alert("w", "Lütfen Bir Satır Seçiniz!");
+                return;
+            }
+            console.log("selectedRow", selectedRow)
+            this.pkList = await this.lis.function(
+                "EDNT01/btnChangePk",
+                this.dv
+            );
+            this.isShowPkSelect = true;
+        },
+        async selectPk(pk) {
+            let selectedRow = this.dv.lisedndocsList.findIndex(
+                (e) => e._selected == true
+            );
+            await this.lis.function("EDNT01/setPk", {
+                _id: this.dv.lisedndocsList[selectedRow]._id,
+                pk,
+            });
+            this.dv.lisedndocsList[selectedRow].alias = pk;
+            this.isShowPkSelect = false;
+        },
         async btnSetArchived() {
-            await this.lis.function("EDNT01/01-btnSetArchived", this.dv)
-            this.btnSearch()
+            await this.lis.function("EDNT01/01-btnSetArchived", this.dv);
+            this.btnSearch();
         },
         async assignVendor() {
             let isExists = await this.lis.function(
@@ -1113,8 +1182,15 @@ export default {
                     `${isExists.taxnum} Vergi No İle Eşleşen Bir Cari Kart Bulunamadı!`
                 );
                 if (myReturn == true) {
-                    let reportListSelected = this.dv.lisedndocsList.filter((e) => e._selected == true & e.taxnum == isExists.taxnum)
-                    this.dv.liscustomers = await this.lis.function("EDNT01/createVendor", reportListSelected[0])
+                    let reportListSelected = this.dv.lisedndocsList.filter(
+                        (e) =>
+                            (e._selected == true) &
+                            (e.taxnum == isExists.taxnum)
+                    );
+                    this.dv.liscustomers = await this.lis.function(
+                        "EDNT01/createVendor",
+                        reportListSelected[0]
+                    );
                     this.isNewCustomer = true;
                 }
             }

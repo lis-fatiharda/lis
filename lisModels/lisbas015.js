@@ -20,7 +20,7 @@ const schema = new mongoose.Schema(
 
         acctype: { type: String, label: "İlişkili Hesap Tipi", default: "" },
         account: { type: String, label: "İlişkili Hesap No", default: "" },
-
+        writeonedoc: { type: Boolean, label: "E-Faturada Yaz?", default: false },
 
         _deleted: { type: Boolean, label: "Silindi mi?", default: false },
     },

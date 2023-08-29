@@ -112,6 +112,29 @@
                 />
             </div>
         </l-card-section>
+
+        <l-card-section class="row q-gutter-xs">
+            <l-select
+                    :label="'Kur Metodu'"
+                    map-options
+                    v-model="dv.lissaldocs.exchmethod"
+                    :options="[
+                        { label: 'Alış', value: 0 },
+                        { label: 'Satış', value: 1 },
+                        {
+                            label: 'Efektif Alış',
+                            value: 2,
+                        },
+                        { label: 'Efektif Satış', value: 3 }
+                    ]"
+                    optValue="value"
+                    optTitle="label"
+                    style="width: 180px"
+                />
+        </l-card-section>
+
+        
+
     </l-card>
     <l-card style="width: 49%; min-width: 320px">
         <div class="text-overline q-pa-xs">

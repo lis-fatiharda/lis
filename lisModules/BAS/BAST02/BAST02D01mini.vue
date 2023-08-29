@@ -32,10 +32,9 @@
                         :label="this.$gl(`Firma`, `Company`)"
                         v-model="dv.sc.company"
                         options="lisbas001"
-                       
                         optValue="company"
-            optTitle="stext"
-            optCaptions="company"
+                        optTitle="stext"
+                        optCaptions="company"
                         width="120px"
                     />
 
@@ -49,65 +48,62 @@
                         width="120px"
                     />
 
-                    <l-input
-                        label="Cari Kodu"
-                        
-                        v-model="dv.sc.customer"
-                    >
+                    <l-input label="Cari Kodu" v-model="dv.sc.customer">
                     </l-input>
                     <l-input
                         label="Cari Adı"
-                        
                         v-model="dv.sc.name1"
                         style="width: 300px"
                     >
                     </l-input>
                     <l-select
-            v-model="dv.sc.custOrVend"
-            :options="[
-              {label: this.$gl('Aday', `Applicant`), value: 0},
-              {label: this.$gl('Müşteri', `Customer`), value: 1},
-              {label: this.$gl('Tedarikçi', `Vendor`), value: 2},
-              {label: this.$gl('Tümü', `All`), value: 99},
-            ]"
-            optValue="value"
-            map-options
-            :label="this.$gl(`Cari Tipi`, `Current Type`)"
-            style="width: 150px"
-          ></l-select>
-          <l-select
-            :label="this.$gl(`Sektör`, `Sector`)"
-            v-model="dv.sc.sector"
-            options="lisbas004"
-            optValue="sector"
-            optTitle="stext"
-            optCaptions="sector"
-            width="120px"
-          />
-          <l-select
-            :label="this.$gl(`Ülke`, `Country`)"
-            v-model="dv.sc.country"
-            options="lisbas005"
-            optValue="country"
-            optTitle="stext"
-            optCaptions="country"
-            width="130px"
-          />
-          <l-select
-            :label="this.$gl(`Şehir`, `City`)"
-            v-model="dv.sc.city"
-            options="lisbas006"
-            optValue="city"
-            optTitle="stext"
-            optCaptions="city"
-            width="130px"
-          />
+                        v-model="dv.sc.custOrVend"
+                        :options="[
+                            { label: this.$gl('Aday', `Applicant`), value: 0 },
+                            {
+                                label: this.$gl('Müşteri', `Customer`),
+                                value: 1,
+                            },
+                            {
+                                label: this.$gl('Tedarikçi', `Vendor`),
+                                value: 2,
+                            },
+                            { label: this.$gl('Tümü', `All`), value: 99 },
+                        ]"
+                        optValue="value"
+                        map-options
+                        :label="this.$gl(`Cari Tipi`, `Current Type`)"
+                        style="width: 150px"
+                    ></l-select>
+                    <l-select
+                        :label="this.$gl(`Sektör`, `Sector`)"
+                        v-model="dv.sc.sector"
+                        options="lisbas004"
+                        optValue="sector"
+                        optTitle="stext"
+                        optCaptions="sector"
+                        width="120px"
+                    />
+                    <l-select
+                        :label="this.$gl(`Ülke`, `Country`)"
+                        v-model="dv.sc.country"
+                        options="lisbas005"
+                        optValue="country"
+                        optTitle="stext"
+                        optCaptions="country"
+                        width="130px"
+                    />
+                    <l-select
+                        :label="this.$gl(`Şehir`, `City`)"
+                        v-model="dv.sc.city"
+                        options="lisbas006"
+                        optValue="city"
+                        optTitle="stext"
+                        optCaptions="city"
+                        width="130px"
+                    />
 
-                    <l-btn
-                        color="warning"
-                        icon="search"
-                        @click="btnSearch(dv)"
-                    >
+                    <l-btn color="warning" icon="search" @click="btnSearch(dv)">
                         <l-tooltip> Ara </l-tooltip></l-btn
                     >
                 </l-div-flex>
@@ -115,7 +111,13 @@
                 <!--------------------------------->
             </l-card0>
             <!--Table Layer---------------------------->
-            <q-markup-table flat bordered dense class="cursor-pointer">
+            <q-markup-table
+                flat
+                bordered
+                dense
+                class="cursor-pointer"
+                separator="cell"
+            >
                 <thead>
                     <tr class="bg-blue-grey-2">
                         <th class="text-left"></th>

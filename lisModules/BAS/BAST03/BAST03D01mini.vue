@@ -80,7 +80,7 @@
                 <!--------------------------------->
             </l-card0>
             <!--Table Layer---------------------------->
-            <q-markup-table flat bordered dense class="cursor-pointer">
+            <q-markup-table flat bordered dense class="cursor-pointer" separator="cell">
                 <thead>
                     <tr class="bg-blue-grey-2">
                         <th class="text-left"></th>

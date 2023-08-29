@@ -147,7 +147,9 @@ export default async function (plissaldocs) {
                     olisfindocs_item.curdate = plissaldocs.curdate;
                     olisfindocs_item.currate = plissaldocs.currate;
 
-                    olisfindocs.items.push(olisfindocs_item);
+                    if (mySalItem[myfin002_item.valuefield] > 0) {
+                        olisfindocs.items.push(olisfindocs_item);
+                    }
                 }
             }
         }

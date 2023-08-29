@@ -5,5 +5,5 @@ export default async function (dv) {
     customer: dv.lissaldocs.customer,
   });
 
-  return dv;
+  return dv.liscustomers;
 }

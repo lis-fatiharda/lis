@@ -1,4 +1,3 @@
-
 // ? modi: -1 = create new document by reference
 // ?        0 = create new document
 // ?        1 - update the document
