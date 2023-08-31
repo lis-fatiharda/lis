@@ -33,6 +33,12 @@
                     v-model="dv.olisusers[0].password"
                 ></l-input>
 
+                <l-input
+                    dense
+                    label="E-mail"
+                    v-model="dv.olisusers[0].email"
+                ></l-input>
+
                 <l-checkbox
                     v-model="dv.olisusers[0].issuperuser"
                     :label="this.$gl(`Anahtar Kullanıcı?`, `Key User?`)"

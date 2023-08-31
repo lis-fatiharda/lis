@@ -7,7 +7,6 @@ const schema = new mongoose.Schema(
     company: { type: String, label: "Firma", default: "" },
     acctype: { type: String, label: "Hesap Tipi", default: "" },
     stext: { type: String, label: "Açıklama", default: "" },
-    _deleted: { type: Boolean, label: "Silindi mi?", default: false }, // 0:silinmedi | 1:silindi
   },
   {
     timestamps: true,

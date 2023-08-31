@@ -254,8 +254,8 @@ const schema = new mongoose.Schema(
         email: { type: String, label: "Müşteri grubu", default: "" },
         //*********CURRENCY********** */
         currency: { type: String, label: "Para birimi", default: "" },
-        currdate: { type: Date, label: "Kur Tarihi", default: new Date() },
-        currrate: { type: Number, label: "Kur", default: 1 },
+        curdate: { type: Date, label: "Kur Tarihi", default: new Date() },
+        currate: { type: Number, label: "Kur", default: 1 },
         manexchrate: {
             type: Number,
             enum: [0, 1, 2, 3], //"Sip.Tarihi", "İrs.Tarihi", "Fat.Tarihi", "Sabit kur"

@@ -30,6 +30,8 @@ export default async function save(plispurdocs, pModi) {
                 plispurdocs.items[i].specialstock
             );
         }
+
+
         if (plispurdocs.items[i].quantity <= 0)
             throw new Error(
                 `Lütfen ${plispurdocs.items[i].itemnum} No'lu kalem için Miktar Giriniz!`
@@ -40,6 +42,14 @@ export default async function save(plispurdocs, pModi) {
         });
 
         if (olisbas009 == null) throw new Error("Malzeme Tipi Bulunamadı!");
+
+        const olispur002 = await lispur002.findOne({
+            company: plispurdocs.company,
+            doctype: plispurdocs.doctype,
+            itemtype: plispurdocs.items[i].itemtype,
+        });
+
+        if (olispur002 == null) throw new Error("Kalem Tipi Bulunamadı!");
     }
     // Control reference document
     await this.ctrlChildDocForDel(plispurdocs);

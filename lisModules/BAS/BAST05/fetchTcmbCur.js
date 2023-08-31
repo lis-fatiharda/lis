@@ -1,12 +1,13 @@
 import Axios from "axios";
 import xml2js from "xml2js";
 const Parser = xml2js.Parser();
-
-export default async function (dv) {
-
-    try {
+ 
+export default async function (dv) { 
+    console.log("1111")
+    try {  
         Axios.get("https://www.tcmb.gov.tr/kurlar/today.xml")
             .then((res) => {
+                console.log("222");
                 Parser.parseString(res.data, async function (err, result) {
                     for (let i in result.Tarih_Date.Currency) {
                         const myCurrency = result.Tarih_Date.Currency[i];
@@ -32,6 +33,11 @@ export default async function (dv) {
                                 isenable: false,
                             };
 
+                            console.log(
+                                "lisCurrencyFetched",
+                                lisCurrencyFetched
+                            );
+
                             //console.log("lisCurrencyFetched", lisCurrencyFetched);
 
                             // delete the currency if exists
@@ -53,10 +59,8 @@ export default async function (dv) {
                                 });
 
                             // save the new currency
-                            const oliscurrencies = new liscurrencies(
-                                lisCurrencyFetched
-                            );
-                            await oliscurrencies.save();
+                    
+                            await liscurrencies.create(lisCurrencyFetched);
                         }
                     }
                 });

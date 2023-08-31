@@ -218,7 +218,6 @@
                     optCaptions="unit"
                     :optFilter="{ unittype: 1 }"
                     width="135px"
-                    @select="fetchCurRate()"
                 />
 
                 <l-input
@@ -226,7 +225,7 @@
                     type="number"
                     v-model="dv.lissaldocs.currate"
                 />
-                <l-datetime
+                <l-date
                     v-model="dv.lissaldocs.curdate"
                     :label="'Kur Tarihi'"
                     style="max-width: 220px"
@@ -330,6 +329,7 @@ import SALT01D11 from "./SALT01D11.vue";
 import FINT02D02mini from "../../FIN/FINT02/FINT02D02mini.vue";
 
 import SALT02D01 from "../SALT02/SALT02D01.vue";
+import calcPrice from "./calcPrice.js";
 
 export default {
     props: ["dv", "tabInfo", "isDialog"],
@@ -353,23 +353,40 @@ export default {
         };
     },
 
-    methods: {
-        async fetchCurRate() {
-            console.log("fetchCurRate");
-            let oldCurRate = this.dv.lissaldocs.currate;
-            this.dv.lissaldocs.currate = await this.lis.function(
-                "SALT01/02-fetchCurRate",
-                this.dv.lissaldocs
+    watch: {
+        async "dv.lissaldocs.currency"(newValue, oldValue) {
+            let isConvert = await this.lis.message(
+                "c",
+                "Mevcut Fiyatlar Üzerinden Yeni Kur İçin Çevrim Yapılsın Mı?"
             );
 
-            for (let i in this.dv.lissaldocs.items) {
-                this.dv.lissaldocs.items[i].price =
-                    (this.dv.lissaldocs.items[i].price *
-                        this.dv.lissaldocs.currate) /
-                    oldCurRate;
-            }
+            this.dv.lissaldocs = await this.lis.function(
+                "SALT01/02-fetchCurRate",
+                {
+                    pLissaldocs: this.dv.lissaldocs,
+                    oldCurrency: oldValue,
+                    isConvert,
+                }
+            );
 
-           // this.calcPrice();
+            this.calcPrice();
+        },
+        async "dv.lissaldocs.curdate"(newValue) {
+            this.dv.lissaldocs = await this.lis.function(
+                "SALT01/02-fetchCurRate",
+                {
+                    pLissaldocs: this.dv.lissaldocs,
+                    oldCurrency: this.dv.lissaldocs.currency,
+                }
+            );
+
+            this.calcPrice();
+        },
+    },
+
+    methods: {
+        calcPrice(event) {
+            this.dv.lissaldocs = calcPrice(this.dv.lissaldocs);
         },
         async setDocChar() {
             if (

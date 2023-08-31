@@ -15,6 +15,12 @@ const schema = new mongoose.Schema(
             required: [true, "Lütfen password giriniz!"],
             default: "",
         },
+        email: {
+            type: String,
+            unique: true,
+            label: "E-Mail",
+            default: "",
+        },
         contactbook: Object,
         issuperuser: {
             type: Boolean,

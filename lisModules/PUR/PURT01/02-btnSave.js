@@ -15,5 +15,5 @@ export default async function (dv) {
   // Save The Document ****************
   dv.lispurdocs = await Purchase.save(dv.lispurdocs, dv.modi);
 
-  return dv;
+  return dv.lispurdocs;
 }

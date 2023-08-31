@@ -204,6 +204,7 @@
                             @ok="
                                 dv.lisVendor = $event;
                                 lis.objectMove($event, dv.lispurdocs);
+                                setDocChar();
                                 dv.lispurdocs.vendor = $event.customer;
                                 dv.lispurdocs.isSelectCust = false;
                             "
@@ -235,10 +236,10 @@
                     dense
                     :label="this.$gl(`Kur`, `Exchange`)"
                     type="number"
-                    v-model="dv.lispurdocs.currrate"
+                    v-model="dv.lispurdocs.currate"
                 />
-                <l-datetime
-                    v-model="dv.lispurdocs.currdate"
+                <l-date
+                    v-model="dv.lispurdocs.curdate"
                     :label="'Kur Tarihi'"
                     style="max-width: 220px"
                 />
@@ -323,6 +324,14 @@
                 </l-tab-panel>
             </l-tab-panels>
         </l-card>
+
+        <l-dialog v-model="dv.isShowFinDocDialog" full-width>
+            <FINT02D02mini
+                :dv="dv"
+                :tabInfo="tabInfo"
+                cancelToDialog="PURT01D01"
+            />
+        </l-dialog>
     </l-div>
 </template>
 
@@ -336,6 +345,9 @@ import PURT01D08 from "./PURT01D08.vue";
 import PURT01D09 from "./PURT01D09.vue";
 import PURT01D10 from "./PURT01D10.vue";
 import PURT01D11 from "./PURT01D11.vue";
+import FINT02D02mini from "../../FIN/FINT02/FINT02D02mini.vue";
+
+import calcPrice from "./calcPrice.js";
 
 export default {
     props: ["dv", "tabInfo"],
@@ -349,6 +361,7 @@ export default {
         PURT01D09,
         PURT01D10,
         PURT01D11,
+        FINT02D02mini,
     },
     data() {
         return {
@@ -363,18 +376,64 @@ export default {
         };
     },
 
+    watch: {
+        async "dv.lispurdocs.currency"(newValue, oldValue) {
+            console.log("watch : dv.lispurdocs.currency");
+            let isConvert = await this.lis.message(
+                "c",
+                "Mevcut Fiyatlar Üzerinden Yeni Kur İçin Çevrim Yapılsın Mı?"
+            );
+
+            console.log("Gidiyor", oldValue);
+
+            this.dv.lispurdocs = await this.lis.function(
+                "PURT01/02-fetchCurRate",
+                {
+                    pLispurdocs: this.dv.lispurdocs,
+                    oldCurrency: oldValue,
+                    isConvert,
+                }
+            );
+
+            console.log("döndü******");
+
+            this.calcPrice();
+        },
+        async "dv.lispurdocs.curdate"(newValue) {
+            console.log("watch : dv.lispurdocs.curdate");
+
+            this.dv.lispurdocs = await this.lis.function(
+                "PURT01/02-fetchCurRate",
+                {
+                    pLispurdocs: this.dv.lispurdocs,
+                    oldCurrency: this.dv.lispurdocs.currency,
+                }
+            );
+
+            this.calcPrice();
+        },
+    },
+
     methods: {
+        calcPrice(event) {
+            this.dv.lispurdocs = calcPrice(this.dv.lispurdocs);
+        },
         async setDocChar() {
+            if (
+                (this.dv.lispurdocs.vendor == "") |
+                (this.dv.lispurdocs.doctype == "")
+            )
+                return;
             let myReturn = await this.lis.function("PURT01/setDocChar", {
                 company: this.dv.lispurdocs.company,
-                customer: this.dv.lispurdocs.customer,
+                vendor: this.dv.lispurdocs.vendor,
                 doctype: this.dv.lispurdocs.doctype,
             });
-            this.dv.lispurdocs.reqtype = myReturn.reqtype;
-            this.dv.lispurdocs.offtype = myReturn.offtype;
-            this.dv.lispurdocs.ordtype = myReturn.ordtype;
-            this.dv.lispurdocs.deltype = myReturn.deltype;
-            this.dv.lispurdocs.invtype = myReturn.invtype;
+            this.dv.lispurdocs.reqtype = myReturn.olispur001.reqtype;
+            this.dv.lispurdocs.offtype = myReturn.olispur001.offtype;
+            this.dv.lispurdocs.ordtype = myReturn.olispur001.ordtype;
+            this.dv.lispurdocs.deltype = myReturn.olispur001.deltype;
+            this.dv.lispurdocs.invtype = myReturn.olispur001.invtype;
 
             this.dv.lispurdocs.edoctype = myReturn.edoctype;
         },
@@ -525,12 +584,12 @@ export default {
                 let myReturn = await this.lis.message(
                     "c",
                     "LISERP",
-                    this.dv.lissaldocs.edoctype == 1
+                    this.dv.lispurdocs.edoctype == 1
                         ? this.$gl(
                               "E-Fatura Kuyruğa Gönderilsin mi?",
                               "Send E-Invoice to Queue?"
                           )
-                        : this.dv.lissaldocs.edoctype == 2
+                        : this.dv.lispurdocs.edoctype == 2
                         ? this.$gl(
                               "E-Arşiv Kuyruğa Gönderilsin mi?",
                               "Send E-Archive to Queue?"
@@ -571,10 +630,12 @@ export default {
                 }
             } else {
                 //------ Save The Document ----------
+                console.log("elseelse")
                 this.dv.lispurdocs = await this.lis.function(
                     "PURT01/02-btnSave",
                     this.dv
                 );
+                console.log("elseelse", this.dv.lispurdocs)
                 this.lis.alert(
                     "p",
                     this.$gl(
@@ -586,32 +647,56 @@ export default {
 
             // create finance Document for invoice
 
+            console.log("###########################")
+            console.log(this.dv.lispurdocs)
+            console.log(this.dv.lispurdocs.isfinance)
+            console.log(this.dv.lispurdocs.invtype)
+
+
             if (
                 (this.dv.lispurdocs.isfinance == true) &
                 (this.dv.lispurdocs.invtype > 0)
             ) {
-                await this.createFinFromSal();
+                console.log("####1")
+                // create finance Document for invoice
+                await this.createFinFromPur();
+                if (this.dv.isShowFinDoc == true) {
+                    this.dv.isShowFinDocDialog = true;
+                    console.log("####2")
+                } else {
+                    console.log("####3")
+                    await this.saveFinDoc();
+                    this.cancel();
+                }
             } else {
                 this.cancel();
             }
         },
 
-        async createFinFromSal() {
+        async createFinFromPur() {
             //------ Create The Finance Document ----------
             this.dv.lisfindocs = await this.lis.function(
-                "cls-finance.createFinFromSal",
+                "cls-finance.createFinFromPur",
                 this.dv.lispurdocs
             );
         },
-        async save() {
+
+        async saveFinDoc() {
             //------ Save The Finance Document ----------
+
+            await this.lis.function("cls-finance.save", {
+                plisfindocs: this.dv.lisfindocs,
+                modi: 0,
+            });
             this.lis.alert(
                 "p",
                 this.$gl(
                     "Muhasebe Belgesi Kaydedildi.",
-                    "Sales Document Saved."
+                    "Purchase Document Saved."
                 )
             );
+            this.cancel();
+            this.dv.isShowFinDocDialog = false;
         },
 
         cancel() {

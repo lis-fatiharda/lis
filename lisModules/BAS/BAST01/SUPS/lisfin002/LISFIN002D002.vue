@@ -231,6 +231,9 @@ export default {
             ],
 
             myColumnsfin02items: [
+
+            
+
                 {
                     label: this.$gl("Kalem", "Item"),
                     value: "itemnum",
@@ -238,10 +241,19 @@ export default {
                 },
 
                 {
+                    type: "selectmenu",
+                    label: this.$gl("Yön", "Movement"),
+                    value: "postway",
+                    options: [{ value: 0, label: 'Borç'}, { value: 1, label: 'Alacak'}],
+                    optValue: "value",
+                    optTitles: { label: "Yön" },
+                },
+
+                {
                     label: this.$gl("Borç/Alacak", "Movement"),
                     value: "postway",
                     type: "select",
-                    options: [{ value: 0, label: Borç}, { value: 1, label: Alacak}]
+                    options: [{ value: 0, label: 'Borç'}, { value: 1, label: 'Alacak'}]
                 },
 
                 {
@@ -252,6 +264,9 @@ export default {
                     optValue: "acctype",
                     optTitles: { acctype: "Tip", stext: "Açıklama" },
                 },
+
+
+                
                 {
                     label: this.$gl("Hesap", "Account"),
                     value: "account",
@@ -284,7 +299,7 @@ export default {
                     optValue: "unit",
                     optTitles: { unit: "Birim", stext: "Açıklama" },
                     optFilter: { unittype: 1 },
-                },
+                }
             ],
         };
     },

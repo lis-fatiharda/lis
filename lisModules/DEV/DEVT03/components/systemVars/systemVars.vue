@@ -53,6 +53,12 @@
                         <th>Key</th>
                         <th>Value</th>
                     </tr>
+
+                    
+                    <tr>
+                        <td>sys_productLicense</td>
+                        <td>Product license</td>
+                    </tr>
                     <tr>
                         <td>sys_lisRunnerVersion</td>
                         <td>lisRunner version information</td>

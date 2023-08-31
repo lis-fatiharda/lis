@@ -4,7 +4,7 @@
     v-model="dv.lispurdocs.items"
     :columns="itemsColumns"
     :context="contextMenu"
-    @change="calcPrice($event)"
+    @afterChange="calcPrice()"
     @zoom="zoomMaterialRow = $event.row"
     @keyup="if ($event.key == 'Insert') this.pushNewItem($event);"
   />

@@ -1,13 +1,13 @@
 
-export default async function (params) {
+export default async function (Args) {
     let oliscustomers = {};
     let eDoctype = 0;
-    const olissal001 = await lissal001.findOne({ doctype: params.doctype });
+    const olissal001 = await lissal001.findOne({ doctype: Args.doctype });
 
     if (olissal001.deltype > 0) {
         oliscustomers = await liscustomers.findOne({
-            company: params.company,
-            customer: params.customer,
+            company: Args.company,
+            customer: Args.customer,
             _deleted: false,
         });
 
@@ -15,8 +15,8 @@ export default async function (params) {
     }
     if (olissal001.invtype > 0) {
         oliscustomers = await liscustomers.findOne({
-            company: params.company,
-            customer: params.customer,
+            company: Args.company,
+            customer: Args.customer,
             _deleted: false,
         });
 

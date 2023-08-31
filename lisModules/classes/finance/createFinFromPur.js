@@ -3,13 +3,13 @@ import lisaccounts from "../../../lisModels/lisaccounts.js";
 import lisfindocs from "../../../lisModels/lisfindocs.js";
 
 import lisfin002 from "../../../lisModels/lisfin002.js";
-import lissal001 from "../../../lisModels/lissal001.js";
-import lissal002 from "../../../lisModels/lissal002.js";
+import lispur001 from "../../../lisModels/lispur001.js";
+import lispur002 from "../../../lisModels/lispur002.js";
 
-export default async function (plissaldocs) {
+export default async function (plispurdocs) {
     const oliscustomers = await liscustomers.findOne({
-        company: plissaldocs.company,
-        customer: plissaldocs.customer,
+        company: plispurdocs.company,
+        customer: plispurdocs.vendor,
         _deleted: false,
     });
     const olisaccounts = await lisaccounts.findOne({
@@ -22,33 +22,32 @@ export default async function (plissaldocs) {
     let olisfindocs = new lisfindocs(
         lisfindocs.prototype.schema.tree
     ).toObject();
-    const olissal001 = await lissal001.findOne({
-        company: plissaldocs.company,
-        doctype: plissaldocs.doctype,
+    const olispur001 = await lispur001.findOne({
+        company: plispurdocs.company,
+        doctype: plispurdocs.doctype,
     });
 
-    if (olissal001.findoctype.length <= 0)
+    if (olispur001.findoctype.length <= 0)
         throw new Error("Muhasebe Belgesi Tanımlı Değil!");
-
-    lis.objectMove(plissaldocs, olisfindocs);
-    olisfindocs.doctype = olissal001.findoctype;
+    lis.objectMove(plispurdocs, olisfindocs);
+    olisfindocs.doctype = olispur001.findoctype;
     olisfindocs.docnum = "";
-    olisfindocs.saldoctype = plissaldocs.doctype;
-    olisfindocs.saldocnum = plissaldocs.docnum;
+    olisfindocs.purdoctype = plispurdocs.doctype;
+    olisfindocs.purdocnum = plispurdocs.docnum;
 
     olisfindocs.items = [];
 
-    for (let i in plissaldocs.items) {
-        let mySalItem = plissaldocs.items[i];
+    for (let i in plispurdocs.items) {
+        let mypurItem = plispurdocs.items[i];
 
-        const olissal002 = await lissal002.findOne({
-            company: plissaldocs.company,
-            doctype: plissaldocs.doctype,
-            itemtype: mySalItem.itemtype,
+        const olispur002 = await lispur002.findOne({
+            company: plispurdocs.company,
+            doctype: plispurdocs.doctype,
+            itemtype: mypurItem.itemtype,
         });
         const olisfin002 = await lisfin002.findOne({
-            company: olissal002.company,
-            postkey: olissal002.postkey,
+            company: olispur002.company,
+            postkey: olispur002.postkey,
         });
 
         if (olisfin002 == null) throw new Error("Muhasebe Belgesi Bulunamadı!");
@@ -63,10 +62,10 @@ export default async function (plissaldocs) {
 
                     if (myfin002_item.postway == 0) {
                         olisfindocs.items[myRow].ddebit +=
-                            mySalItem[myfin002_item.valuefield];
+                            mypurItem[myfin002_item.valuefield];
                     } else {
                         olisfindocs.items[myRow].dcredit +=
-                            mySalItem[myfin002_item.valuefield];
+                            mypurItem[myfin002_item.valuefield];
                     }
                 } else {
                     // create new lisfindocs_item
@@ -83,24 +82,24 @@ export default async function (plissaldocs) {
 
                     if (myfin002_item.postway == 0) {
                         olisfindocs_item.ddebit =
-                            mySalItem[myfin002_item.valuefield];
+                            mypurItem[myfin002_item.valuefield];
                     } else {
                         olisfindocs_item.dcredit =
-                            mySalItem[myfin002_item.valuefield];
+                            mypurItem[myfin002_item.valuefield];
                     }
 
-                    olisfindocs_item.currency = plissaldocs.currency;
-                    olisfindocs_item.curdate = plissaldocs.curdate;
-                    olisfindocs_item.currate = plissaldocs.currate;
+                    olisfindocs_item.currency = plispurdocs.currency;
+                    olisfindocs_item.curdate = plispurdocs.curdate;
+                    olisfindocs_item.currate = plispurdocs.currate;
 
                     olisfindocs.items.push(olisfindocs_item);
                 }
             }
             if (myfin002_item.acctype == "G") {
                 let myAccount = await this.fetchAccount(
-                    mySalItem,
+                    mypurItem,
                     myfin002_item,
-                    plissaldocs
+                    plispurdocs
                 );
 
                 if (
@@ -113,10 +112,10 @@ export default async function (plissaldocs) {
 
                     if (myfin002_item.postway == 0) {
                         olisfindocs.items[myRow].ddebit +=
-                            mySalItem[myfin002_item.valuefield];
+                            mypurItem[myfin002_item.valuefield];
                     } else {
                         olisfindocs.items[myRow].dcredit +=
-                            mySalItem[myfin002_item.valuefield];
+                            mypurItem[myfin002_item.valuefield];
                     }
                 } else {
                     // create new lisfindocs_item
@@ -132,7 +131,7 @@ export default async function (plissaldocs) {
 
                     // fetch stext for account
                     let myAtext = await lisaccounts.findOne({
-                        company: plissaldocs.company,
+                        company: plispurdocs.company,
                         acctype: olisfindocs_item.acctype,
                         account: olisfindocs_item.account,
                     });
@@ -141,16 +140,16 @@ export default async function (plissaldocs) {
 
                     if (myfin002_item.postway == 0) {
                         olisfindocs_item.ddebit =
-                            mySalItem[myfin002_item.valuefield];
+                            mypurItem[myfin002_item.valuefield];
                     } else {
                         olisfindocs_item.dcredit =
-                            mySalItem[myfin002_item.valuefield];
+                            mypurItem[myfin002_item.valuefield];
                     }
-                    olisfindocs_item.currency = plissaldocs.currency;
-                    olisfindocs_item.curdate = plissaldocs.curdate;
-                    olisfindocs_item.currate = plissaldocs.currate;
+                    olisfindocs_item.currency = plispurdocs.currency;
+                    olisfindocs_item.curdate = plispurdocs.curdate;
+                    olisfindocs_item.currate = plispurdocs.currate;
 
-                    if (mySalItem[myfin002_item.valuefield] > 0) {
+                    if (mypurItem[myfin002_item.valuefield] > 0) {
                         olisfindocs.items.push(olisfindocs_item);
                     }
                 }

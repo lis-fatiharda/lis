@@ -1,4 +1,5 @@
 // System class includes functions about finance
+import createFinFromPur from "./createFinFromPur.js";
 import createFinFromSal from "./createFinFromSal.js";
 import fetchAccount from "./fetchAccount.js";
 import save from "./save.js";
@@ -10,6 +11,7 @@ import createFinFromPostkey from "./createFinFromPostkey.js";
 
 
 const finance = class {
+    createFinFromPur = createFinFromPur;
     createFinFromSal = createFinFromSal;
     fetchAccount = fetchAccount;
     save = save;
