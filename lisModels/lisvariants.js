@@ -20,32 +20,40 @@ const itemsSchema = new mongoose.Schema({
   //value: { type: String, label: "Değer", default: "" },
 });
 const schema = new mongoose.Schema(
-  {
-    company: { type: String, label: "Firma Kodu", default: "01" },
-    varkey: {
-      type: String,
-      unique: true,
-      label: "Variant Anahtarı",
-      required: [true, "Lütfen Varyant Kodu giriniz!"],
-      default: "",
-    },
-    stext: {
-      type: String,
-      label: "Variant Anahtarı Açıklaması",
-      default: "",
-    },
-    items: [itemsSchema],
+    {
+        company: { type: String, label: "Firma Kodu", default: "01" },
+        varkey: {
+            type: String,
+            unique: true,
+            label: "Variant Anahtarı",
+            required: [true, "Lütfen Varyant Kodu giriniz!"],
+            default: "",
+        },
+        stext: {
+            type: String,
+            label: "Variant Anahtarı Açıklaması",
+            default: "",
+        },
+        items: [itemsSchema],
 
-    _createdby: {
-      type: String,
-      label: "Oluşturan",
-      default: global.sys_user,
+        //******************* */
+
+        _deleted: { type: Boolean, label: "Silindi mi?", default: false },
+        _createdby: {
+            type: String,
+            label: "Oluşturan",
+            default: global.sys_user,
+        },
+        _updatedby: {
+            type: String,
+            label: "Güncelleyen",
+            default: global.sys_user,
+        },
     },
-  },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
+    {
+        timestamps: true,
+        versionKey: false,
+    }
 );
 
 const lisvariants = mongoose.model("lisvariants", schema);

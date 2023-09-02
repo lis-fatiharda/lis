@@ -45,6 +45,14 @@
                     v-model="dv.olismodels[0].type"
                     :label="this.$gl(`Destek Tablosu`, `Support Table`)"
                 />
+
+                <l-checkbox
+                    v-model="dv.olismodels[0].isprojectmodel"
+                    label="Projeye Özel"
+                />
+
+
+                
                 <l-input
                     v-model="dv.olismodels[0].supComponent"
                     :label="

@@ -430,12 +430,8 @@ export default {
                 ovariant :{},
                 sc: {
                     company: "01",
-
                     busarea: "S",
-
                     doctype: "",
-
-                    docitemtypeOpts: [],
                     docnum: "",
                     vendor: "",
                     name1: "",
@@ -444,18 +440,10 @@ export default {
                     paymcond: "",
                     docStat: 99,
                     docChar: 99,
-
-                    currencyOpts: [],
-
                     project: "",
-
                     purdept: "",
-
                     docdate1: this.lis.firstDayOfMonth(),
                     docdate2: this.lis.lastDayOfMonth(),
-
-                    warehouseOpts: [],
-                    stockplaceOpts: [],
                     _deleted: false,
                 },
 
@@ -528,8 +516,8 @@ export default {
         },
     },
 
-    mounted() {
-        this.init(this.dv);
-    },
+    // mounted() {
+    //     this.init(this.dv);
+    // },
 };
 </script>

@@ -2,7 +2,7 @@
 export default async function (dv) {
     dv.lispurdocsPrototype = new lispurdocs(lispurdocs.prototype.schema.tree);
 
-    //--
+    //-- 
     dv.sc.companyOpts = await lisbas001.find({
         _deleted: false,
     });

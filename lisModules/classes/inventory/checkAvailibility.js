@@ -19,7 +19,7 @@ export default async function checkAvailibility(
         warehouse: pWarehouse,
         stockplace: pStockplace,
         specialstock: pSpecialstock,
-       // batchnum: pBatchnum,
+        batchnum: pBatchnum,
     });
 
     if (olisinvstocks == null) {

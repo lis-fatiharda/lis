@@ -375,10 +375,17 @@ const schema = new mongoose.Schema(
 
         //******************* */
         isvatinclude: { type: Boolean, label: "KDV dahil mi?", default: false },
+        //******************* */
+
         _deleted: { type: Boolean, label: "Silindi mi?", default: false },
         _createdby: {
             type: String,
             label: "Oluşturan",
+            default: global.sys_user,
+        },
+        _updatedby: {
+            type: String,
+            label: "Güncelleyen",
             default: global.sys_user,
         },
     },

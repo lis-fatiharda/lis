@@ -35,46 +35,54 @@ const transactionsSchema = new mongoose.Schema({
 });
 
 const schema = new mongoose.Schema(
-  {
-    selected: {
-      type: Boolean,
-      default: false,
+    {
+        selected: {
+            type: Boolean,
+            default: false,
+        },
+        group: {
+            type: Number,
+            default: 1,
+        }, // 0:temel uygulamalar, 1:süreç modulleri
+        module: {
+            type: String,
+            unique: true,
+            required: [true, "Lütfen modul kodu giriniz!"],
+            default: "lis",
+        },
+        stext: {
+            type: String,
+            required: true,
+            default: "Modul Açıklama(Tr)",
+        },
+        stexte: {
+            type: String,
+            required: true,
+            default: "Modul Açıklama(En)",
+        },
+        moduleColor: {
+            type: String,
+            default: "primary",
+        },
+        transactions: [transactionsSchema],
+        //******************* */
+
+        _deleted: { type: Boolean, label: "Silindi mi?", default: false },
+        _createdby: {
+            type: String,
+            label: "Oluşturan",
+            default: global.sys_user,
+        },
+        _updatedby: {
+            type: String,
+            label: "Güncelleyen",
+            default: global.sys_user,
+        },
     },
-    group: {
-      type: Number,
-      default: 1,
-    }, // 0:temel uygulamalar, 1:süreç modulleri
-    module: {
-      type: String,
-      unique: true,
-      required: [true, "Lütfen modul kodu giriniz!"],
-      default: "lis",
-    },
-    stext: {
-      type: String,
-      required: true,
-      default: "Modul Açıklama(Tr)",
-    },
-    stexte: {
-      type: String,
-      required: true,
-      default: "Modul Açıklama(En)",
-    },
-    moduleColor: {
-      type: String,
-      default: "primary",
-    },
-    transactions: [transactionsSchema],
-    createdby: {
-      type: String,
-      label: "Oluşturan",
-      default: global.sys_user,
-    },
-  },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
+    {
+        timestamps: true,
+        versionKey: false,
+    }
 );
 
 const lisappobjects = mongoose.model("lisappobjects", schema);

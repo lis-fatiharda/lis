@@ -70,7 +70,7 @@
                         optValue="value"
                         map-options
                         :label="this.$gl(`Cari Tipi`, `Current Type`)"
-                        style="width: 150px"
+                        style="width: 170px"
                     ></l-select>
                     <l-select
                         :label="this.$gl(`Sektör`, `Sector`)"

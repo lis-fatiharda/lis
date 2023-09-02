@@ -80,8 +80,6 @@ const schema = new mongoose.Schema(
 
         itemcount: { type: Number, label: "Kalem Sayısı", default: 0 },
         finperiod: { type: Number, label: "Periyot", default: 0 },
-        
-
 
         //*************************** */
         items: [itemsSchema],
@@ -89,20 +87,68 @@ const schema = new mongoose.Schema(
         docs: [docsSchema],
 
         //******************* */
-            purdoctype: { type: String, label: "Referans Alış Döküman Tipi", default: "" },
-            purdocnum: { type: String, label: "Referans Alış Döküman no", default: "" },
-            prddoctype: { type: String, label: "Referans Üretim Döküman Tipi", default: "" },
-            prddocnum: { type: String, label: "Referans Üretim Döküman no", default: "" },
-            invdoctype: { type: String, label: "Referans Envanter Döküman Tipi", default: "" },
-            invdocnum: { type: String, label: "Referans Envanter Döküman no", default: "" },
-            saldoctype: { type: String, label: "Referans Satış Döküman Tipi", default: "" },
-            saldocnum: { type: String, label: "Referans Satış Döküman no", default: "" },
-            hcmdoctype: { type: String, label: "Referans IK Döküman Tipi", default: "" },
-            hcmdocnum: { type: String, label: "Referans IK Döküman no", default: "" },
-            astdoctype: { type: String, label: "Referans Demirbaş Döküman Tipi", default: "" },
-            astdocnum: { type: String, label: "Referans Demirbaş Döküman no", default: "" },
+        purdoctype: {
+            type: String,
+            label: "Referans Alış Döküman Tipi",
+            default: "",
+        },
+        purdocnum: {
+            type: String,
+            label: "Referans Alış Döküman no",
+            default: "",
+        },
+        prddoctype: {
+            type: String,
+            label: "Referans Üretim Döküman Tipi",
+            default: "",
+        },
+        prddocnum: {
+            type: String,
+            label: "Referans Üretim Döküman no",
+            default: "",
+        },
+        invdoctype: {
+            type: String,
+            label: "Referans Envanter Döküman Tipi",
+            default: "",
+        },
+        invdocnum: {
+            type: String,
+            label: "Referans Envanter Döküman no",
+            default: "",
+        },
+        saldoctype: {
+            type: String,
+            label: "Referans Satış Döküman Tipi",
+            default: "",
+        },
+        saldocnum: {
+            type: String,
+            label: "Referans Satış Döküman no",
+            default: "",
+        },
+        hcmdoctype: {
+            type: String,
+            label: "Referans IK Döküman Tipi",
+            default: "",
+        },
+        hcmdocnum: {
+            type: String,
+            label: "Referans IK Döküman no",
+            default: "",
+        },
+        astdoctype: {
+            type: String,
+            label: "Referans Demirbaş Döküman Tipi",
+            default: "",
+        },
+        astdocnum: {
+            type: String,
+            label: "Referans Demirbaş Döküman no",
+            default: "",
+        },
         //******************* */
-            
+
         hdebit: { type: Number, label: "Borç (Firma P.Br.)", default: 0 },
         hcredit: { type: Number, label: "Alacak (Firma P.Br.)", default: 0 },
         ddebit: { type: Number, label: "Borç (Belge P.Br.)", default: 0 },
@@ -112,9 +158,14 @@ const schema = new mongoose.Schema(
         //******************* */
 
         _deleted: { type: Boolean, label: "Silindi mi?", default: false },
-        createdby: {
+        _createdby: {
             type: String,
             label: "Oluşturan",
+            default: global.sys_user,
+        },
+        _updatedby: {
+            type: String,
+            label: "Güncelleyen",
             default: global.sys_user,
         },
     },

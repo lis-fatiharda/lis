@@ -11,6 +11,7 @@
         "preview": "vite preview",
         "lisVite": "vite --host --port 1000",
         "lisApi": "nodemon --inspect=1033 ./lisRunner/server/lisApi/lisApi.js",
+        "lisApiOut": "nodemon ./lisRunner/server/lisApiOut/lisApi.js",
         "lisJobs": "node ./lisRunner/jobs/A-lisJobs.js",
         "clearCache": "sync; echo 3 > /proc/sys/vm/drop_caches"
     },

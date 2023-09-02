@@ -7,7 +7,7 @@ export default async function (dv) {
         "../../../lisModels",
         dv.olismodels[0].model + ".js"
     ));
-
+ 
     let ctrlTable = await supcomponent.default.find({
         company: dv.source
     });

@@ -1,7 +1,9 @@
 {
     "lisdb": {
         "uri": "mongodb://lis:Lis2023@192.168.16.2:27017/lisdb?authMechanism=DEFAULT",
-        "port": 1011,
+        "lisApi_PORT": 1011,
+        "lisApiOut_PORT": 1012,
+        "lisSocket_PORT": 1013,
         "maxUser": 5
     }
    

@@ -336,7 +336,7 @@ const schema = new mongoose.Schema(
         },
         einvonumber: { type: String, label: "E-Belge No", default: "" },
         einvouuid: { type: String, label: "UUID", defaut: "" },
-        
+
         //*********SUBTOTAL-GRANDTOTAL********** */
         gross: { type: Number, label: "Brüt", default: 0 },
         discount: [discountSchema],
@@ -350,12 +350,19 @@ const schema = new mongoose.Schema(
         vatamnt: { type: Number, label: "KDV Tutarı", default: 0 },
         grandtotal: { type: Number, label: "Genel toplam", default: 0 },
 
-        //******************* */
         isvatinclude: { type: Boolean, label: "KDV dahil mi?", default: false },
+
+        //******************* */
+
         _deleted: { type: Boolean, label: "Silindi mi?", default: false },
         _createdby: {
             type: String,
             label: "Oluşturan",
+            default: global.sys_user,
+        },
+        _updatedby: {
+            type: String,
+            label: "Güncelleyen",
             default: global.sys_user,
         },
     },

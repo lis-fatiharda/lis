@@ -14,7 +14,7 @@
                 "<node_internals>/**",
          //       "<node_internals>/**/*.js",
          //       "${workspaceFolder}/node_modules/**/*.js",
-         //       "${workspaceFolder}/lisRunner/**/*.js",
+                "${workspaceFolder}/lisRunner/**/*.js",
         //        "${workspaceFolder}/src/layouts/*.js",
         //        "${workspaceFolder}/src/components/**/*.js",
         //        "${workspaceFolder}/src/configs/**/*.js",

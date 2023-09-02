@@ -85,6 +85,18 @@ const schema = new mongoose.Schema(
             label: "Numaratör",
             default: "",
         },
+        //
+        issignature: [
+            { value: 0, stext: "İmza Gerektirmez" },
+            { value: 1, stext: "A veya B İmzalar" },
+            { value: 1, stext: "B ve A Sırayla İmzalar" },
+            { value: 2, stext: "Yalnız A İmzalar" },
+        ],
+        blimit: {
+            type: Number,
+            label: "B Grubu İçin Limit",
+            default: 0,
+        },
         //----
         _deleted: { type: Boolean, label: "Silindi mi?", default: false }, // 0:silinmedi | 1:silindi
     },

@@ -460,15 +460,11 @@ export default {
                 toggle: "Tablo",
                 isShowFinDoc: false,
                 isShowFinDocDialog: false,
-
                 //isSShow: true,
                 sc: {
                     company: "01",
-
                     busarea: "S",
-
                     doctype: "",
-
                     docnum: "",
                     customer: "",
                     name1: "",
@@ -477,18 +473,10 @@ export default {
                     paymcond: "",
                     docStat: 99,
                     docChar: 99,
-                    customerOpts: [],
-                    fCustomerOpts: [],
-                    currencyOpts: [],
                     project: "",
                     saldept: "",
-                    salDeptOpts: [],
-
                     docdate1: this.lis.firstDayOfMonth(),
                     docdate2: this.lis.lastDayOfMonth(),
-
-                    warehouseOpts: [],
-                    stockplaceOpts: [],
                 },
                 salDocList: [],
                 lissaldocs: {},
@@ -550,10 +538,10 @@ export default {
         },
     },
 
-    mounted() {
-        this.init(this.dv);
-        console.log("SALT01D01 - $attrs", this.$attrs)
-    },
+    // mounted() {
+    //     this.init(this.dv);
+    //     console.log("SALT01D01 - $attrs", this.$attrs)
+    // },
 
     
 };

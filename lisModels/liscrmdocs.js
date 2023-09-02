@@ -157,95 +157,101 @@ import mongoose from "mongoose";
   });
 
   const schema = new mongoose.Schema(
-    {
-      company: { type: String, label: "Firma", default: "" },
-      acttype: { type: String, label: "Aktivite Tipi", default: "" },
-      actnum: { type: String, label: "Aktivite No", default: "" },
-      stext: { type: String, label: "Açıklama", default: "" },
-      ltext: { type: String, label: "Uzun Açıklama", default: "" },
-      project: { type: String, label: "Proje Kodu", default: "" },
+      {
+          company: { type: String, label: "Firma", default: "" },
+          acttype: { type: String, label: "Aktivite Tipi", default: "" },
+          actnum: { type: String, label: "Aktivite No", default: "" },
+          stext: { type: String, label: "Açıklama", default: "" },
+          ltext: { type: String, label: "Uzun Açıklama", default: "" },
+          project: { type: String, label: "Proje Kodu", default: "" },
 
-      saldept: { type: String, label: "Aktivite Sorumlusu", default: "" },
-      //*** Customer Informations */
-      busarea: { type: String, label: "İş Alanı", default: "S" },
-      customer: { type: String, label: "Müşteri Kodu", default: "" },
-      name1: { type: String, label: "Müşteri Adı", default: "" },
+          saldept: { type: String, label: "Aktivite Sorumlusu", default: "" },
+          //*** Customer Informations */
+          busarea: { type: String, label: "İş Alanı", default: "S" },
+          customer: { type: String, label: "Müşteri Kodu", default: "" },
+          name1: { type: String, label: "Müşteri Adı", default: "" },
 
-      taxdept: { type: String, label: "Vergi Dairesi", default: "" },
-      taxnum: { type: String, label: "Vergi no", default: "" },
-      sector: { type: String, label: "Sektör", default: "" },
-      country: { type: String, label: "Ülke", default: "" },
-      city: { type: String, label: "Şehir", default: "" },
-      address: { type: String, label: "Adres", default: "" },
-      telnum: { type: String, label: "Telefon No", default: "" },
-      email: { type: String, label: "E-Mail", default: "" },
+          taxdept: { type: String, label: "Vergi Dairesi", default: "" },
+          taxnum: { type: String, label: "Vergi no", default: "" },
+          sector: { type: String, label: "Sektör", default: "" },
+          country: { type: String, label: "Ülke", default: "" },
+          city: { type: String, label: "Şehir", default: "" },
+          address: { type: String, label: "Adres", default: "" },
+          telnum: { type: String, label: "Telefon No", default: "" },
+          email: { type: String, label: "E-Mail", default: "" },
 
-      //*** Customer Personel Informations */
-      cpgender: {
-        type: String,
-        label: "Müşteri İlgili Hitap",
-        default: "",
-      },
-      cpname: { type: String, label: "Müşteri İlgili isim", default: "" },
-      cpsecondname: {
-        type: String,
-        label: "Müşteri İlgili ikinci isim",
-        default: "",
-      },
-      cpsurname: {
-        type: String,
-        label: "Müşteri İlgili soyisim",
-        default: "",
-      },
-      cpdepartment: {
-        type: String,
-        label: "Müşteri İlgili departman",
-        default: "",
-      },
-      cpposition: {
-        type: String,
-        label: "Müşteri İlgili pozisyon",
-        default: "",
-      },
-      cpphone: {
-        type: String,
-        label: "Müşteri İlgili Telefon",
-        default: "",
-      },
-      cpemail: {
-        type: String,
-        label: "Müşteri İlgili e-mail",
-        default: "",
-      },
+          //*** Customer Personel Informations */
+          cpgender: {
+              type: String,
+              label: "Müşteri İlgili Hitap",
+              default: "",
+          },
+          cpname: { type: String, label: "Müşteri İlgili isim", default: "" },
+          cpsecondname: {
+              type: String,
+              label: "Müşteri İlgili ikinci isim",
+              default: "",
+          },
+          cpsurname: {
+              type: String,
+              label: "Müşteri İlgili soyisim",
+              default: "",
+          },
+          cpdepartment: {
+              type: String,
+              label: "Müşteri İlgili departman",
+              default: "",
+          },
+          cpposition: {
+              type: String,
+              label: "Müşteri İlgili pozisyon",
+              default: "",
+          },
+          cpphone: {
+              type: String,
+              label: "Müşteri İlgili Telefon",
+              default: "",
+          },
+          cpemail: {
+              type: String,
+              label: "Müşteri İlgili e-mail",
+              default: "",
+          },
 
-      actions: [actionsSchema],
-      offers: [],
-      materials: [materialsSchema],
-      crmnotes: [crmNotesSchema],
-      crmdocs: [crmDocsSchema],
+          actions: [actionsSchema],
+          offers: [],
+          materials: [materialsSchema],
+          crmnotes: [crmNotesSchema],
+          crmdocs: [crmDocsSchema],
 
-      actstat: {
-        type: String,
-        label: "Aktivite statüsü",
-        default: "Açık",
+          actstat: {
+              type: String,
+              label: "Aktivite statüsü",
+              default: "Açık",
+          },
+          actdate: {
+              type: Date,
+              label: "Aktivite Tarihi",
+              default: new Date(),
+          },
+          //******************* */
+
+          _deleted: { type: Boolean, label: "Silindi mi?", default: false },
+          _createdby: {
+              type: String,
+              label: "Oluşturan",
+              default: global.sys_user,
+          },
+          _updatedby: {
+              type: String,
+              label: "Güncelleyen",
+              default: global.sys_user,
+          },
       },
-      actdate: {
-        type: Date,
-        label: "Aktivite Tarihi",
-        default: new Date(),
-      },
-      //******************* */
-      _deleted: { type: Boolean, label: "Silindi mi?", default: false }, // 0:silinmedi | 1:silindi
-      createdby: {
-        type: String,
-        label: "Oluşturan",
-        default: global.sys_user,
-      },
-    },
-    {
-      timestamps: true,
-      versionKey: false,
-    }
+      {
+          timestamps: true,
+          versionKey: false,
+      }
   );
 
 

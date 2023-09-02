@@ -40,9 +40,17 @@ const schema = new mongoose.Schema(
         },
         numparts: [numPartsSchema],
         valcurrent: { type: String, default: "0" },
+        //******************* */
+
+        _deleted: { type: Boolean, label: "Silindi mi?", default: false },
         _createdby: {
             type: String,
             label: "Oluşturan",
+            default: global.sys_user,
+        },
+        _updatedby: {
+            type: String,
+            label: "Güncelleyen",
             default: global.sys_user,
         },
     },
