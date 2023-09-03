@@ -1,11 +1,17 @@
-
 import mongoose from "mongoose";
+
+const wsmethodsSchema = new mongoose.Schema({
+    wsmethod: { type: String, label: "Web servis methodu", default: "" },
+});
 
 const schema = new mongoose.Schema(
     {
         apikey: { type: String, label: "Api Key", default: "" },
         username: { type: String, label: "Kullanıcı Adı", default: "" },
         stext: { type: String, label: "Açıklama", default: "" },
+
+        wsmethods: [wsmethodsSchema],
+
         validfrom: {
             type: String,
             label: "Geçerlilik Başlangıcı",

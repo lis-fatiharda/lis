@@ -34,10 +34,7 @@
                     class="bg-blue-1"
                 />
 
-                <l-input
-                    label="Api Key"
-                    v-model="dv.lisapikeys.apikey"
-                />
+                <l-input label="Api Key" v-model="dv.lisapikeys.apikey" />
 
                 <l-date
                     label="Gereçlilik Tarih Başlangıcı"
@@ -48,20 +45,19 @@
                     v-model="dv.lisapikeys.validuntil"
                 />
 
-                <l-checkbox
-                    label="Blokeli"
-                    v-model="dv.lisapikeys.isblocked"
-                />
-                <l-checkbox
-                    label="Silindi"
-                    v-model="dv.lisapikeys._deleted"
-                />
+                <l-checkbox label="Blokeli" v-model="dv.lisapikeys.isblocked" />
+                <l-checkbox label="Silindi" v-model="dv.lisapikeys._deleted" />
             </l-div-flex>
-          
+
+            <l-table
+                v-model="dv.lisapikeys.wsmethods"
+                :columns="myColumns"
+                :summary="false"
+                @keydown="if ($event.key == 'Insert') this.pushNewItem($event);"
+            />
         </l-card0>
 
         <!-- ****************************** -->
-
     </l-div>
 </template>
 
@@ -70,8 +66,14 @@ export default {
     props: ["dv", "tabInfo", "isChild"],
     data() {
         return {
-        
-            
+            myColumns: [
+                {
+                    type: "string",
+                    label: "Yetkili Olunan WS Metodları",
+                    value: "wsmethod",
+                },
+            ],
+
             lockKeyParams: {
                 company: this.dv.lisapikeys.code,
                 lid: "WSRT02",
@@ -81,6 +83,9 @@ export default {
     },
 
     methods: {
+        async pushNewItem() {
+            this.dv.lisapikeys.wsmethods.push({wsmethod: ""});
+        },
         async btnSave() {
             await this.lis.function("WSRT02/02-btnSave", this.dv);
 
