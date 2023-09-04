@@ -46,6 +46,8 @@ export default async function (plissaldocs) {
             doctype: plissaldocs.doctype,
             itemtype: mySalItem.itemtype,
         });
+
+        if (olissal002 == null) throw new Error(`Kalem Tipi Bulunamadı!`);
         const olisfin002 = await lisfin002.findOne({
             company: olissal002.company,
             postkey: olissal002.postkey,

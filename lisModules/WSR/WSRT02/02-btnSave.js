@@ -6,13 +6,13 @@ export default async function (dv) {
     if (dv.modi == 0) {
         // Save the new Document*********************
 
-        await lisapikeys.create(dv.lisapikeys);
+        await lisapiKeys.create(dv.lisapiKeys);
     } else {
         // Update The Document**************
 
-        await lisapikeys.findOneAndUpdate(
-            { _id: dv.lisapikeys._id },
-            dv.lisapikeys,
+        await lisapiKeys.findOneAndUpdate(
+            { _id: dv.lisapiKeys._id },
+            dv.lisapiKeys,
             {
                 new: true,
                 upsert: true,
@@ -20,7 +20,7 @@ export default async function (dv) {
         );
     }
 
-    dv.lisapikeys = {};
+    dv.lisapiKeys = {};
 
     return dv;
 }

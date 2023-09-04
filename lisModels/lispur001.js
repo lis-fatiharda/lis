@@ -90,7 +90,7 @@ const schema = new mongoose.Schema(
             type: Number,
             label: "İmzalama protokolü",
             options: [
-                { value: 0, stext: "İmza Gerektirmez" },
+                { value: 0, stext: 'İmza Gerektirmez' }, 
                 { value: 1, stext: "A veya B İmzalar" },
                 { value: 1, stext: "B ve A Sırayla İmzalar" },
                 { value: 2, stext: "Yalnız A İmzalar" },

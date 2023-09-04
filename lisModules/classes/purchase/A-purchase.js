@@ -5,6 +5,7 @@ import updRefDocumentRec from "./updRefDocument.js";
 import setStatusRec from "./setStatus.js";
 import ctrlChildDocForDelRec from "./ctrlChildDocForDel.js";
 import removeDeletedItemsRec from "./removeDeletedItems.js";
+import ctrlAuthorizationRec from "./ctrlAuthorization.js";
 const purchase = class {
     save = saveRec;
     ctrlRefDocument = ctrlRefDocumentRec;
@@ -12,6 +13,7 @@ const purchase = class {
     setStatus = setStatusRec;
     ctrlChildDocForDel = ctrlChildDocForDelRec;
     removeDeletedItems = removeDeletedItemsRec;
+    ctrlAuthorization = ctrlAuthorizationRec;
 };
 
 export default purchase;

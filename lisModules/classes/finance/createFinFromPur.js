@@ -45,6 +45,7 @@ export default async function (plispurdocs) {
             doctype: plispurdocs.doctype,
             itemtype: mypurItem.itemtype,
         });
+        if (olispur002 == null) throw new Error(`Kalem Tipi Bulunamadı!`);
         const olisfin002 = await lisfin002.findOne({
             company: olispur002.company,
             postkey: olispur002.postkey,

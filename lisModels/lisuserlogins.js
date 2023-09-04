@@ -1,4 +1,3 @@
-// lismodels - The basic identifier collection for LisERP module Construction.
 
 import { Schema, model } from "mongoose";
 

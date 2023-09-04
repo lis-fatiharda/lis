@@ -7,7 +7,7 @@
         }}</l-toolbar-title>
         <l-btn
           v-if="dv.modi != 2"
-          v-close-popup
+          :v-close-popup="pop"
           dense
           color="primary"
           icon="save"
@@ -30,25 +30,29 @@
             v-if="vrnt.type == 0"
             :label="vrnt.attribute"
             v-model="vrnt.value"
-            style="width: 130px" />
+            style="width: 130px"
+          />
           <l-input
             v-if="vrnt.type == 0"
             label="Min"
             v-model="vrnt.minvalue"
             style="width: 130px"
-            :readonly="true" />
+            :readonly="true"
+          />
           <l-input
             v-if="vrnt.type == 0"
             label="Max"
             v-model="vrnt.maxvalue"
             style="width: 130px"
-            :readonly="true" />
+            :readonly="true"
+          />
           <l-input
             v-if="vrnt.type == 0"
             label="Birim"
             v-model="vrnt.qunit"
             style="width: 130px"
-            :readonly="true" />
+            :readonly="true"
+          />
           <l-select
             v-if="vrnt.type == 1"
             :label="vrnt.attribute"
@@ -56,8 +60,9 @@
             :options="vrnt.options"
             optTitle="value"
             optValue="value"
-            style="width: 200px" />
-          </l-div-flex>
+            style="width: 200px"
+          />
+        </l-div-flex>
       </l-div>
     </q-page-container>
   </q-layout>
@@ -70,6 +75,7 @@ export default {
     return {
       variantOpts: [],
       myVariant: {},
+      pop: 1,
     };
   },
   methods: {
@@ -94,7 +100,7 @@ export default {
 
     btnSave() {
       console.log("forönce", this.variantOpts.items);
-      var mymy = {};
+      var myvrnt = {};
       var key = "";
       for (let s in this.variantOpts.items) {
         if (this.variantOpts.items[s].type == 0) {
@@ -104,9 +110,15 @@ export default {
             this.variantOpts.items[s].maxvalue
           );
           if (
-            this.variantOpts.items[s].value > this.variantOpts.items[s].maxvalue
+            (this.variantOpts.items[s].value >
+              this.variantOpts.items[s].maxvalue) |
+            (this.variantOpts.items[s].minvalue >
+              this.variantOpts.items[s].value)
           ) {
-            throw new Error("engelleme başarılı");
+            this.pop = 0;
+            this.lis.alert("e", `${this.variantOpts.items[s].attribute}  ${this.variantOpts.items[s].maxvalue} - ${this.variantOpts.items[s].minvalue}  Arasında Olmalıdır`);
+          } else {
+            this.pop = 1;
           }
         }
       }
@@ -120,27 +132,19 @@ export default {
 
         key = this.variantOpts.items[i].attribute;
         console.log("key", key);
-        mymy[key] = this.variantOpts.items[i].value;
+        myvrnt[key] = this.variantOpts.items[i].value;
       }
-      console.log("mymySOOOON", mymy);
-      this.myVariant = mymy;
+      console.log("myvrntSOOOON", myvrnt);
+      this.myVariant = myvrnt;
       console.log("this.myVariant", this.myVariant);
       this.item.variant = this.myVariant;
       console.log("this.item.variant", this.item.variant);
-      mymy = {};
+      myvrnt = {};
     },
   },
 
   mounted() {
     this.init(this.item);
-    // console.log("this.init(this.item)",this.init(this.item));
-    // this.variantOpts.items = this.init(this.item);
-    // console.log("this.variantOpts.itemsMMMMM",this.variantOpts.items);
-    // for (let x in this.variantOpts.items) {
-    //   this.variantOpts.items[x].value =
-    //     this.item.variant[this.variantOpts.items[x].attribute];
-    //     console.log("this.variantOpts.items[x].value",this.variantOpts.items[x].value);
-    // }
   },
 };
 </script>

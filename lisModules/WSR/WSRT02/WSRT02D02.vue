@@ -30,27 +30,27 @@
 
                 <l-input
                     label="Kullanıcı Adı"
-                    v-model="dv.lisapikeys.username"
+                    v-model="dv.lisapiKeys.username"
                     class="bg-blue-1"
                 />
 
-                <l-input label="Api Key" v-model="dv.lisapikeys.apikey" />
+                <l-input label="Api Key" v-model="dv.lisapiKeys.apiKey" />
 
                 <l-date
                     label="Gereçlilik Tarih Başlangıcı"
-                    v-model="dv.lisapikeys.validfrom"
+                    v-model="dv.lisapiKeys.validfrom"
                 />
                 <l-date
                     label="Gereçlilik Tarih Bitişi"
-                    v-model="dv.lisapikeys.validuntil"
+                    v-model="dv.lisapiKeys.validuntil"
                 />
 
-                <l-checkbox label="Blokeli" v-model="dv.lisapikeys.isblocked" />
-                <l-checkbox label="Silindi" v-model="dv.lisapikeys._deleted" />
+                <l-checkbox label="Blokeli" v-model="dv.lisapiKeys.isblocked" />
+                <l-checkbox label="Silindi" v-model="dv.lisapiKeys._deleted" />
             </l-div-flex>
 
             <l-table
-                v-model="dv.lisapikeys.wsmethods"
+                v-model="dv.lisapiKeys.wsmethods"
                 :columns="myColumns"
                 :summary="false"
                 @keydown="if ($event.key == 'Insert') this.pushNewItem($event);"
@@ -75,16 +75,16 @@ export default {
             ],
 
             lockKeyParams: {
-                company: this.dv.lisapikeys.code,
+                company: this.dv.lisapiKeys.code,
                 lid: "WSRT02",
-                lockkey: this.dv.lisapikeys.name,
+                lockkey: this.dv.lisapiKeys.name,
             },
         };
     },
 
     methods: {
         async pushNewItem() {
-            this.dv.lisapikeys.wsmethods.push({wsmethod: ""});
+            this.dv.lisapiKeys.wsmethods.push({wsmethod: ""});
         },
         async btnSave() {
             await this.lis.function("WSRT02/02-btnSave", this.dv);
@@ -96,10 +96,10 @@ export default {
             console.log("Cancel");
             this.tabInfo.blockGoToTransaction = false;
             this.dv.lisDialog = "WSRT02D01";
-            this.dv.lisapikeys = [];
+            this.dv.lisapiKeys = [];
         },
         async pushNewBank() {
-            let newBank = { ...this.dv.lisapikeys.custbanks[0] };
+            let newBank = { ...this.dv.lisapiKeys.custbanks[0] };
             console.log(newBank);
             for (let i in newBank) {
                 newBank[i] = "";
@@ -108,51 +108,51 @@ export default {
             this.dv.sc.isCustomer.custbanks.push(newBank);
         },
         async pushNewAddress() {
-            let newAddress = { ...this.dv.lisapikeys.custaddress[0] };
+            let newAddress = { ...this.dv.lisapiKeys.custaddress[0] };
 
             for (let i in newAddress) {
                 newAddress[i] = "";
             }
             newAddress._id = undefined;
             newAddress.adrnum =
-                this.dv.lisapikeys.custaddress[
-                    this.dv.lisapikeys.custaddress.length - 1
+                this.dv.lisapiKeys.custaddress[
+                    this.dv.lisapiKeys.custaddress.length - 1
                 ].adrnum + 1;
 
-            this.dv.lisapikeys.custaddress.push(newAddress);
+            this.dv.lisapiKeys.custaddress.push(newAddress);
         },
 
         async pushNewNote() {
-            let newNote = { ...this.dv.lisapikeys.custnotes[0] };
+            let newNote = { ...this.dv.lisapiKeys.custnotes[0] };
 
             for (let i in newNote) {
                 newNote[i] = "";
             }
 
             newNote._id = undefined;
-            this.dv.lisapikeys.custnotes.push(newNote);
+            this.dv.lisapiKeys.custnotes.push(newNote);
         },
 
         async pushNewPer() {
-            let newPer = { ...this.dv.lisapikeys.custper[0] };
+            let newPer = { ...this.dv.lisapiKeys.custper[0] };
 
             for (let i in newPer) {
                 newPer[i] = "";
             }
 
-            this.dv.lisapikeys.custper.push(newPer);
+            this.dv.lisapiKeys.custper.push(newPer);
         },
 
         async removeBank(bank) {
-            this.dv.lisapikeys.custbanks = [
-                ...this.dv.lisapikeys.custbanks.filter(
+            this.dv.lisapiKeys.custbanks = [
+                ...this.dv.lisapiKeys.custbanks.filter(
                     (e) => !((e._id == bank._id) & (e.banknum == bank.banknum))
                 ),
             ];
         },
         async removeAddress(adr) {
-            this.dv.lisapikeys.custaddress = [
-                ...this.dv.lisapikeys.custaddress.filter(
+            this.dv.lisapiKeys.custaddress = [
+                ...this.dv.lisapiKeys.custaddress.filter(
                     (e) =>
                         !(
                             (e._id == adr._id) &
@@ -162,16 +162,16 @@ export default {
             ];
         },
         async removeNote(note) {
-            this.dv.lisapikeys.custnotes = [
-                ...this.dv.lisapikeys.custnotes.filter(
+            this.dv.lisapiKeys.custnotes = [
+                ...this.dv.lisapiKeys.custnotes.filter(
                     (e) =>
                         !((e._id == note._id) & (e.notetitle == note.notetitle))
                 ),
             ];
         },
         async removePer(per) {
-            this.dv.lisapikeys.custper = [
-                ...this.dv.lisapikeys.custper.filter(
+            this.dv.lisapiKeys.custper = [
+                ...this.dv.lisapiKeys.custper.filter(
                     (e) =>
                         !(
                             (e._id == per._id) &

@@ -1,27 +1,27 @@
 
 export default async function (dv) {
-    if (dv.lisapikeysList.filter((e) => e._selected == true).length > 0) {
-        let selectedRow = dv.lisapikeysList.filter(
+    if (dv.lisapiKeysList.filter((e) => e._selected == true).length > 0) {
+        let selectedRow = dv.lisapiKeysList.filter(
             (e) => e._selected == true
         )[0];
 
-        dv.lisapikeys = await lisapikeys.findById(selectedRow);
+        dv.lisapiKeys = await lisapiKeys.findById(selectedRow);
     } else {
         throw new Error("Lütfen Bir Satır Seçiniz");
     }
 
     // Lock the document
     let isLocked = await System.lock(
-        dv.lisapikeys.code,
+        dv.lisapiKeys.code,
         "WSRT02",
-        dv.lisapikeys.name,
+        dv.lisapiKeys.name,
         global.sys_user
     );
     if (isLocked == true) {
         dv.lisDialog = "WSRT02D02";
         dv.modi = 1;
     } else {
-        dv.lisapikeys = [];
+        dv.lisapiKeys = [];
         throw new Error("Kilitli Belge!");
     }
 

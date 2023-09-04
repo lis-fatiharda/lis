@@ -21,9 +21,9 @@ const schema = new mongoose.Schema(
             default: 2,
         },
         //
-        notinsert: { type: String, label: "Oluşturamaz", default: "" },
-        notupdate: { type: String, label: "Değiştiremez", default: "" },
-        notdelete: { type: String, label: "Silemez", default: "" },
+        notinsert: { type: Boolean, label: "Oluşturamaz", default: false },
+        notupdate: { type: Boolean, label: "Değiştiremez", default: false },
+        notdelete: { type: Boolean, label: "Silemez", default: false },
 
         _deleted: { type: Boolean, label: "Silindi mi?", default: false }, // 0:silinmedi | 1:silindi
     },

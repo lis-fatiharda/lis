@@ -34,7 +34,7 @@
         <l-btn color="secondary" icon="add" @click="btnInsert(dv)" />
 
         <l-table
-            v-model="dv.lisapikeysList"
+            v-model="dv.lisapiKeysList"
             :columns="myColumns"
             :readonly="true"
         />
@@ -81,8 +81,8 @@ export default {
                     lisfunction: "",
                     isblocked: false,
                 },
-                lisapikeysList: [],
-                lisapikeys: {},
+                lisapiKeysList: [],
+                lisapiKeys: {},
                 selectedRow: "",
             },
         };

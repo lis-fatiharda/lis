@@ -6,7 +6,7 @@ const wsmethodsSchema = new mongoose.Schema({
 
 const schema = new mongoose.Schema(
     {
-        apikey: { type: String, label: "Api Key", default: "" },
+        apiKey: { type: String, label: "Api Key", default: "" },
         username: { type: String, label: "Kullanıcı Adı", default: "" },
         stext: { type: String, label: "Açıklama", default: "" },
 
@@ -47,6 +47,6 @@ const schema = new mongoose.Schema(
     }
 );
 
-const lisapikeys = mongoose.model("lisapikeys", schema);
+const lisapiKeys = mongoose.model("lisapiKeys", schema);
 
-export default lisapikeys;
+export default lisapiKeys;

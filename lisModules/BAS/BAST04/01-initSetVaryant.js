@@ -8,7 +8,7 @@ export default async function (item) {
   const olisvariants = await lisvariants.findOne({
     company: "01",
     varkey: ovariant.varkey,
-    _deleted: false,
+    
   });
   if (olisvariants == null) {
     throw new Error(

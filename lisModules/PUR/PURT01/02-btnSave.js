@@ -13,6 +13,7 @@ export default async function (dv) {
   //   }
   // }
   // Save The Document ****************
+  dv.lispurdocs = await Purchase.ctrlAuthorization(dv.lispurdocs, dv.modi);
   dv.lispurdocs = await Purchase.save(dv.lispurdocs, dv.modi);
 
   return dv.lispurdocs;
