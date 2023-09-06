@@ -136,14 +136,14 @@
 
         <!--Butons Layer Layer---------------------->
 
-        <l-div0-flex>
-            <l-btn-group>
+        <l-div0-flex class="q-gutter-xs">
+           
                 <l-btn color="warning" icon="search" @click="btnSearch(dv)" />
                 <l-btn color="info" icon="visibility" @click="btnShow(dv)" />
                 <l-btn color="primary" icon="edit" @click="btnEdit(dv)" />
                 <l-btn color="secondary" icon="add" @click="btnInsert(dv)" />
                 <l-btn color="deep-orange" icon="print" @click="btnDelete(dv)" />
-            </l-btn-group>
+           
 
             <l-space />
             <l-btn

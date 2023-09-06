@@ -175,7 +175,6 @@
 
             <!--Butons Layer Layer---------------------->
 
-                <l-btn-group>
                     <l-btn
                         color="warning"
                         icon="search"
@@ -192,7 +191,6 @@
                         icon="delete"
                         @click="btnDelete(mv)"
                     />
-                </l-btn-group>
 
             <l-table
                 name="LISFIN003"
@@ -261,8 +259,19 @@ export default {
                     type: "string",
                 },
                 {
+                    label: `Muh. Standardı`,
+                    value: "accstd",
+                    type: "string"
+                },
+
+                {
                     label: this.$gl(`Belge Tipi`, `Document Type`),
                     value: "doctype",
+                    type: "string",
+                },
+                {
+                    label: this.$gl(`Belge Açıklaması`, `Document Text`),
+                    value: "stext",
                     type: "string",
                 },
                 {

@@ -1,16 +1,15 @@
 export default async function (dv) {
-  //import lisusers from "../../../lisModels/lisusers.js";
+
   //****************Insert********************* */
   if (dv.modi == 0) {
-    const olisusers = new lisusers(dv.olisusers[0]);
 
-    olisusers.save().catch((e) => {throw new Error(e)}); 
-  } 
+    await lisusers.create(dv.olisusers);
+  }
   //****************Update********************* */
-  if (dv.modi == 1) { 
-    const olisusers = await lisusers.findOneAndUpdate(
-      { username: dv.olisusers[0].username },
-      dv.olisusers[0]  
+  if (dv.modi == 1) {
+    await lisusers.findOneAndUpdate(
+      { _id: dv.olisusers._id },
+      dv.olisusers
     );
   }
 

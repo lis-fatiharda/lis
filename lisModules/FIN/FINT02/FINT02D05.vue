@@ -5,11 +5,8 @@
                 <l-select
                     :label="this.$gl(`Kayıt Anahtarı`, `Post Key`)"
                     v-model="cv.postkey"
-                    @selectedRow="
-                        cv.stext = $event?.stext;
-                        olisfin002 = $event;
-                    "
-                    options="lisfin002"
+                    @select="this.setPostKey()"
+                    :options="this.dv.postKeyList"
                     optValue="postkey"
                     optTitle="stext"
                     optCaptions="postkey"
@@ -100,7 +97,6 @@
                     width="250px"
                     v-if="olisfin002?.isbankDebit == true"
                 />
-                
 
                 <l-input
                     type="money"
@@ -170,6 +166,16 @@ export default {
     },
 
     methods: {
+        async setPostKey() {
+            console.log("setPostKey");
+            this.olisfin002 = await this.lis.function("FINT02/05-setPostKey", {
+                company: this.dv.lisfindocs.company,
+                postkey: this.cv.postkey,
+            });
+            console.log(this.dv.olisfin002);
+
+            this.cv.stext = this.olisfin002?.stext;
+        },
         async createFinFromPostkey() {
             this.dv.lisfindocs = await this.lis.function(
                 "cls-finance.createFinFromPostkey",
@@ -179,9 +185,9 @@ export default {
         async clearFinItem() {
             this.dv.lisfindocs.items = await this.lis.function(
                 "FINT02/clearFinItem",
-                { }
+                {}
             );
-        }
+        },
     },
 };
 </script>

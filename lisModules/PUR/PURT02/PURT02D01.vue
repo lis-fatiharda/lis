@@ -299,7 +299,7 @@ export default {
             return;
         }
 
-        this.init(this.dv);
+        //this.init(this.dv);
     },
 };
 </script>

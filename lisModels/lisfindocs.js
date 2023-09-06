@@ -38,9 +38,29 @@ const itemsSchema = new mongoose.Schema({
     dbalance: { type: Number, label: "Bakiye (Belge P.Br.)", default: 0 },
     //-
 
+    futpapernum: { type: String, label: "Çek No", default: "" },
+    futpapertype: {
+        type: Number, label: "Vadeli Kağıt Tipi", default: 0,
+        options: [{ value: 0, stext: "None" },
+        { value: 1, stext: "Çek" },
+        { value: 2, stext: "Senet" },
+        { value: 3, stext: "Akreditif Mektup" }]
+    },
+    futpaperstat: {
+        type: Number, label: "Çek Statüsü", default: 0,
+        options: [{ value: 0, stext: "None" },
+            { value: 1, stext: "Portföyde" },
+        { value: 2, stext: "Ciro Edildi" },
+        { value: 3, stext: "Bankada" },
+        { value: 4, stext: "Ödendi" },
+        { value: 5, stext: "Müşt. İade Edildi" },
+        { value: 6, stext: "Portfoyde (Karşılıksız)" },
+        { value: 7, stext: "Müşt. İade (Karşılıksız)" },
+        { value: 8, stext: "Portföyde (Ciro Karşılıksız)" },
+        { value: 9, stext: "Bankada (Kırdırılacak)" },
+        { value: 10, stext: "Bankada (Kırdırıldı)" }]
+    },
 
-    ischeck: { type:Boolean, label: "Çek mi?", default: false },
-    checknumber: { type:String, label: "Çek No", default: ""},
 
     //******************* */
     createdby: {
@@ -70,6 +90,7 @@ const schema = new mongoose.Schema(
         busarea: { type: String, label: "İş Alanı", default: "S" },
         doctype: { type: String, label: "Döküman tipi", default: "" },
         docnum: { type: String, label: "Döküman no", default: "" },
+        extdocnum: { type: String, label: "Harici Döküman no", default: "" },
         accstd: { type: Number, label: "Muhasebe Standardı", default: 1 },
         stext: { type: String, label: "Belge Açıklaması", default: "" },
 

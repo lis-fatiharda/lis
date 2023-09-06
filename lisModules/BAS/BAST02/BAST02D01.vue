@@ -311,9 +311,9 @@ export default {
         },
     },
 
-    mounted() {
-        console.log("mounted bast01d01");
-        this.init(this.dv);
-    },
+    // mounted() {
+    //     console.log("mounted bast01d01");
+    //     this.init(this.dv);
+    // },
 };
 </script>

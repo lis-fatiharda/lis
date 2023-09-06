@@ -25,6 +25,7 @@
                     dense
                     :label="this.$gl(`Kullanıcı Adı`, `User name`)"
                     v-model="dv.olisusers[0].username"
+                    :readonly="dv.modi == 2  ? true : false"
                 ></l-input>
 
                 <l-input
@@ -37,6 +38,11 @@
                     dense
                     label="E-mail"
                     v-model="dv.olisusers[0].email"
+                    :readonly="
+                        (product_LICENSE == 'Express') & (dv.modi < 1)
+                            ? false
+                            : true
+                    "
                 ></l-input>
 
                 <l-checkbox
@@ -46,6 +52,11 @@
                 <l-checkbox
                     v-model="dv.olisusers[0].isblocked"
                     :label="this.$gl(`Blokeli?`, `Blocked?`)"
+                />
+
+                <l-checkbox
+                    v-model="dv.olisusers[0]._deleted"
+                    :label="this.$gl(`Sil`, `Deleted`)"
                     color="negative"
                 />
 
@@ -67,9 +78,7 @@
             </l-div-flex>
             <hr />
 
-            <l-tabs
-                v-model="tab"
-            >
+            <l-tabs v-model="tab">
                 <l-tab name="Sistem" :label="this.$gl(`Sistem`, `System`)">
                 </l-tab>
                 <l-tab
@@ -188,14 +197,32 @@ export default {
         return {
             dense: true,
             tab: "Sistem",
+            product_LICENSE: localStorage.product_LICENSE,
         };
     },
 
     methods: {
         async btnSave() {
-            console.log("btnSave çalıştı", this.dv.olisusers[0].password, this.dv.olisusers[0].password.length);
+            if (this.dv.olisusers[0].username == "") {
+                this.lis.alert("w", "Lütfen Kullancı Adı Giriniz!");
+                return;
+            }
 
+            if (
+                (localStorage.product_LICENSE == "Express") &
+                (this.dv.olisusers[0].email == "")
+            ) {
+                this.lis.alert("w", "Lütfen Mail Giriniz!");
+                return;
+            }
 
+            if (
+                (localStorage.product_LICENSE == "Express")
+            ) {
+                await this.ctrlEmailDuplicate(this.dv);
+                return;
+            }
+            
 
             if (this.dv.olisusers[0].password.length != 64) {
                 this.dv.olisusers[0].password = Crypto.textToScha256(
@@ -203,17 +230,24 @@ export default {
                 ).toString();
             }
 
-            await this.lis.function("SYST03/02-btnSave", this.dv);
-            this.$q.notify({
-                message: this.$gl(
-                    "Kullanıcı Ayarları Kaydedildi.",
-                    "User Settings Saved."
-                ),
-                type: "positive",
-                actions: [{ label: "X", color: "white", dense: true }],
-            });
-            this.cancel();
+            if (localStorage.product_LICENSE == "Express") {
+                await this.lis.function(
+                    "https://lyz.liserp.com/lisApi/cmp-system.updateUser",
+                    this.dv
+                );
+            }
 
+            await this.lis.function("SYST03/02-btnSave", this.dv);
+
+            this.lis.alert("p", "Kullanıcı Ayarları Kaydedildi.");
+            this.cancel();
+        },
+
+        async ctrlEmailDuplicate() {
+            await this.lis.callWebService(
+                "https://lyz.liserp.com/lisApi/cmp-system.ctrlEmailDuplicate",
+                this.dv
+            );
         },
         cancel() {
             this.dv.lisDialog = "SYST03D01";

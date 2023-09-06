@@ -19,8 +19,6 @@
             </l-toolbar>
             <!--Searching Criterias Layer----row-1-->
             <l-div-flex>
-
-
                 <l-select
                     :label="this.$gl(`Firma`, `Company`)"
                     v-model="dv.sc.company"
@@ -198,14 +196,13 @@
             <!--------------------------------row-3-->
         </l-card0>
 
+        <l-btn color="amber" icon="search" @click="btnSearch()" />
+        <l-btn color="info" icon="visibility" @click="btnShow()" />
+        <l-btn color="primary" icon="edit" @click="btnEdit()" />
+        <l-btn color="secondary" icon="add" @click="btnInsert()" />
+        <l-btn color="deep-orange" icon="print" @click="btnPrint()" />
 
-            <l-btn color="amber" icon="search" @click="btnSearch()" />
-            <l-btn color="info" icon="visibility" @click="btnShow()" />
-            <l-btn color="primary" icon="edit" @click="btnEdit()" />
-            <l-btn color="secondary" icon="add" @click="btnInsert()" />
-            <l-btn color="deep-orange" icon="print" @click="btnPrint()" />
-     
-                <q-toggle
+        <q-toggle
             :label="dv.toggle"
             color="pink"
             :true-value="this.$gl(`Ağaç`, `Tree View`)"
@@ -220,10 +217,6 @@
             color="negative"
             text-color="white"
         />
-
-
-            
-        
 
         <!--Table Layer---------------------------->
 
@@ -315,7 +308,7 @@ export default {
                         };
                     },
                 },
-                
+
                 {
                     name: "separator",
                 },
@@ -333,8 +326,7 @@ export default {
                 },
             ],
             myColumns: [
-
-            {
+                {
                     label: this.$gl(`Firma`, `Company`),
                     value: "company",
                     type: "string",
@@ -356,7 +348,7 @@ export default {
                     value: "docnum",
                     type: "string",
                 },
-                
+
                 {
                     label: this.$gl(`Belge Tarihi`, `Document Date`),
                     value: "validfrom",
@@ -542,7 +534,5 @@ export default {
     //     this.init(this.dv);
     //     console.log("SALT01D01 - $attrs", this.$attrs)
     // },
-
-    
 };
 </script>

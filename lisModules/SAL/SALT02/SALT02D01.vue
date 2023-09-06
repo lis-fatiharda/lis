@@ -271,8 +271,8 @@ export default {
             return;
         }
 
-        this.init(this.dv);
-        console.log("mounted worked");
+        //this.init(this.dv);
+        //console.log("mounted worked");
     },
 };
 </script>

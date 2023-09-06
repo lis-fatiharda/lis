@@ -134,7 +134,7 @@ const schema = new mongoose.Schema(
         doctype: { type: String, label: "Döküman tipi", default: "" },
         docnum: { type: String, label: "Dökümam no", default: "" },
         extdoctype: { type: String, label: "Harici Döküman tipi", default: "" },
-        extdocnum: { type: String, label: "Harici Dökümam no", default: "" },
+        extdocnum: { type: String, label: "Harici Döküman no", default: "" },
 
         saldept: { type: String, label: "Satış bölümü", default: "" },
         project: { type: String, label: "Proje", default: "" },

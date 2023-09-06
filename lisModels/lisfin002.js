@@ -11,6 +11,27 @@ const itemsSchema = new mongoose.Schema({
     valuefield: { type: String, label: "Değer Alanı", default: "" },
     stext: { type: String, label: "Açıklama", default: "" },
     currency: { type: String, label: "Para birimi", default: "" },
+    futpapertype: {
+        type: Number, label: "Vadeli Kağıt Tipi", default: 0,
+        options: [{ value: 0, stext: "None" },
+        { value: 1, stext: "Çek" },
+        { value: 2, stext: "Senet" },
+        { value: 3, stext: "Akreditif Mektup" }]
+    },
+    futpaperstat: {
+        type: Number, label: "Çek Statüsü", default: 0,
+        options: [{ value: 0, stext: "None" },
+        { value: 1, stext: "Portföyde" },
+        { value: 2, stext: "Ciro Edildi" },
+        { value: 3, stext: "Bankada" },
+        { value: 4, stext: "Ödendi" },
+        { value: 5, stext: "Müşt. İade Edildi" },
+        { value: 6, stext: "Portfoyde (Karşılıksız)" },
+        { value: 7, stext: "Müşt. İade (Karşılıksız)" },
+        { value: 8, stext: "Portföyde (Ciro Karşılıksız)" },
+        { value: 9, stext: "Bankada (Kırdırılacak)" },
+        { value: 10, stext: "Bankada (Kırdırıldı)" }]
+    },
     runcode: { type: String, label: "Runcode", default: "" },
 });
 
