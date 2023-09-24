@@ -9,7 +9,7 @@ export default async function (dv) {
         matstat: lis.like(dv.sc.matstat),
         sector: lis.like(dv.sc.sector),
         material: lis.like(dv.sc.material),
-        stext: lis.like(dv.sc.stext),
+        mtext: lis.like(dv.sc.mtext),
     })
         .catch((err) => console.log(err));
     for (let i in dv.materialList) {

@@ -7,7 +7,11 @@ const schema = new mongoose.Schema(
     company: { type: String, label: "Firma Kodu", default: "" },
     lid: { type: String, label: "Kilit ID", default: "" },
     lockkey: { type: String, label: "Kilit Anahtarı", default: "" },
-    createdby: { type: String, label: "Kilitleyen", default: "" },
+    _createdby: {
+      type: String,
+      label: "Oluşturan",
+      default: global.sys_user,
+    },
   },
   {
     timestamps: true,

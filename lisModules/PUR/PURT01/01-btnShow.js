@@ -6,7 +6,7 @@ export default async function (dv) {
   } else {
     throw new Error("Lütfen Bir Satır Seçiniz");
   }
-  dv.lispurdocs = await Purchase.ctrlAuthorization(dv.lispurdocs, 2);
+  await Purchase.ctrlAuthorization(dv.lispurdocs, 2);
   dv.lisVendor = await liscustomers.findOne({
     company: dv.lispurdocs.company,
     customer: dv.lispurdocs.vendor,

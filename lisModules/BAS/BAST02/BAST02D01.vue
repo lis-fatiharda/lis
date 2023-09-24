@@ -147,9 +147,12 @@
             />
         </l-div>
         <BAST02D02
-            :dv="dv"
-            :tabInfo="tabInfo"
             v-if="dv.lisDialog == 'BAST02D02'"
+            :pCompany="dv.pCompany"
+            :pCustomer="dv.pCustomer"
+            :modi="dv.modi"
+            @cancel="dv.lisDialog = 'BAST02D01'"
+            :tabInfo="tabInfo"
         />
         <div v-show="false">
         <BAST02D01PDF :dv="dv" />
@@ -248,6 +251,8 @@ export default {
             dv: {
                 lisDialog: "BAST02D01",
                 modi: 2,
+                pCompany: "",
+                pCustomer: "",
                 sc: {
                     company: "01",
                     busarea: "S",
@@ -261,9 +266,6 @@ export default {
                     custOrVend: 99,
                 },
                 lisCustomerList: [],
-                liscustomers: {},
-                liscusmats: [],
-                selectedRow: "",
             },
         };
     },

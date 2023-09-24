@@ -11,9 +11,14 @@ export default async function save(plispurdocs, pModi) {
     if (olispur001 == null) throw new Error("Belge Tipi Bulunamadı!");
 
     // Controls before Save ****************
+
+    await this.ctrlAuthorization(plispurdocs, pModi);
+
     if ((plispurdocs.currency == null) | (plispurdocs.currency == "")) {
         throw new Error("Lütfen Para Birimini Giriniz!");
     }
+
+    plispurdocs = await this.removeInvalidItems(plispurdocs);
 
     for (let i in plispurdocs.items) {
         if (olispur001.deltype > 0) {

@@ -8,5 +8,8 @@ export default async function (dv) {
   } else {
     throw new Error("Lütfen Bir Satır Seçiniz");
   }
+
+  await Finance.ctrlAuthorization(dv.lisfindocs, 2);
+
   return dv;
 }

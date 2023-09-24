@@ -65,7 +65,6 @@
                     <l-input
                         :label="this.$gl(`Hesap No`, `Account No`)"
                         v-model="dv.sc.account"
-                       
                     >
                         <l-chip
                             class="bg-white"
@@ -86,7 +85,7 @@
                         </l-chip>
                     </l-input>
                     <l-input
-                    :label="this.$gl(`T.D Hesap`, `Uniform Account`)"
+                        :label="this.$gl(`T.D Hesap`, `Uniform Account`)"
                         v-model="dv.sc.glaccount"
                     >
                         <l-chip
@@ -143,11 +142,15 @@
         <!--------------------------------->
 
         <!--Butons Layer Layer---------------------->
-
-        <l-btn-group>
+        <l-div0-flex class="q-gutter-xs">
             <l-btn color="primary" icon="search" @click="btnSearch(dv)" />
-            <l-btn color="orange" icon="print"/>
-        </l-btn-group>
+            <l-btn color="orange" icon="print" />
+
+            <l-space />
+            <l-btn label="Hesap Hareketleri" outline />
+            <l-btn label="Hesap" outline />
+            <l-space />
+        </l-div0-flex>
 
         <l-table
             name="FINT04D01"
@@ -178,13 +181,14 @@
 </template>
 
 <script>
-
 export default {
     props: ["lv", "goToTransaction", "currentTab", "tabInfo"],
     components: {},
 
     data() {
-        return {isSelectAcc : false, isSelectGla : false,
+        return {
+            isSelectAcc: false,
+            isSelectGla: false,
             tab: "Sorgula",
             dv: {
                 sc: {
@@ -306,7 +310,7 @@ export default {
         //     this.dv = await this.lis.function("FINT04/01-btnSearch", prop);
         // },
         async btnSearch() {
-            this.dv = await this.lis.function("FINT04/01-btnSearch", this.dv );
+            this.dv = await this.lis.function("FINT04/01-btnSearch", this.dv);
         },
     },
 

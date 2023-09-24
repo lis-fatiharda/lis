@@ -117,6 +117,7 @@ export default {
             this.olissal004 = await this.lis.function("SALT01/01-getCopyDocs", {
                 company: this.selectedRow[0]?.company,
                 doctype: this.selectedRow[0]?.doctype,
+                docnum: this.selectedRow[0]?.docnum,
             });
         },
     },

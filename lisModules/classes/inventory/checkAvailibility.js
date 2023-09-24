@@ -14,7 +14,7 @@ export default async function checkAvailibility(
     const olisinvstocks = await lisinvstocks.findOne({
         company: pCompany,
         material: pMaterial,
-       // variant: pVariant,
+        variant: pVariant,
         plant: pPlant,
         warehouse: pWarehouse,
         stockplace: pStockplace,

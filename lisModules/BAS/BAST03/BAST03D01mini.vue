@@ -46,7 +46,7 @@
                         label="Malzeme Kodu"
                         v-model="dv.sc.material"
                     />
-                    <l-input dense label="Malzeme Adı" v-model="dv.sc.stext" />
+                    <l-input dense label="Malzeme Adı" v-model="dv.sc.mtext" />
 
                     <l-select
                         :label="this.$gl(`Malzeme Tip`, `Material Type`)"
@@ -124,7 +124,7 @@ export default {
             dv: {
                 sc: {
                     company: "01",
-                    stext: "",
+                    mtext: "",
                     material: "",
 
                     matstat: "",

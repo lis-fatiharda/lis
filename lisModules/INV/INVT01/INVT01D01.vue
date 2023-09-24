@@ -22,11 +22,12 @@
             <!--Searching Criterias Layer------>
             <l-card style="padding: 0">
                 <l-tabs v-model="tab">
-                    <l-tab name="enterance" :label="this.$gl(`Giriş`, `Entry`)" />
                     <l-tab
                         name="transfer"
                         :label="this.$gl(`Transfer`, `Transfer`)"
                     />
+                    <l-tab name="enterance" :label="this.$gl(`Giriş`, `Entry`)" />
+                    
                     <l-tab name="exit" :label="this.$gl(`Çıkış`, `Exit`)" />
                 </l-tabs>
 
@@ -65,7 +66,7 @@ export default {
 
     data() {
         return {
-            tab: "enterance",
+            tab: "transfer",
         };
     },
 };

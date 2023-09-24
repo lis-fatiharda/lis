@@ -114,8 +114,11 @@ export default {
             this.olispur004 = await this.lis.function("PURT01/01-getCopyDocs", {
                 company: this.selectedRow[0]?.company,
                 doctype: this.selectedRow[0]?.doctype,
+                docnum: this.selectedRow[0]?.docnum,
             });
             console.log("olispur004", this.olispur004);
+            if(this.olispur004 == undefined){this.dv.isShowCopyDocs = false}
+            
         },
     },
     mounted() {
@@ -124,5 +127,7 @@ export default {
         console.log("selectedRow", this.selectedRow);
         this.btnSearch();
     },
+
+
 };
 </script>

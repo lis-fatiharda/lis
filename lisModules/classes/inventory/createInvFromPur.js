@@ -12,18 +12,14 @@ export default async function createInvFromPur(pLispurdocs, pMod) {
     
 
     if (pMod <= 0) {
-        olisinvdocs = new lisinvdocs(
-            lisinvdocs.prototype.schema.tree
-        ).toObject();
-        //olisinvdocs = olisinvdocs._doc;
+        olisinvdocs = await lis.objectNew('lisinvdocs');
 
         lis.objectMove(pLispurdocs, olisinvdocs);
         olisinvdocs.items = [];
 
         for (let i in pLispurdocs.items) {
-            let olisinvdocsitems = new lisinvdocs(
-                lisinvdocs.prototype.schema.tree
-            )._doc.items[0].toObject();
+            let olisinvdocsitems = await lis.objectNew('lisinvdocs');
+            olisinvdocsitems = olisinvdocsitems.items[0];
 
             const olisinv006 = await Inventory.ctrlMoveCode(
                 pLispurdocs.company,
@@ -67,12 +63,13 @@ export default async function createInvFromPur(pLispurdocs, pMod) {
             purdocnum: pLispurdocs.docnum,
         });
 
+        olisinvdocs.docdate = pLispurdocs.docdate;
+        olisinvdocs._deleted = pLispurdocs._deleted;
         olisinvdocs.items = [];
 
         for (let i in pLispurdocs.items) {
-            let olisinvdocsitems = new lisinvdocs(
-                lisinvdocs.prototype.schema.tree
-            )._doc.items[0].toObject();
+            let olisinvdocsitems = await lis.objectNew('lisinvdocs');
+            olisinvdocsitems = olisinvdocsitems.items[0];
 
             const olisinv006 = await Inventory.ctrlMoveCode(
                 pLispurdocs.company,
@@ -82,13 +79,21 @@ export default async function createInvFromPur(pLispurdocs, pMod) {
                 pLispurdocs.items[i].specialstock
             );
 
+            lis.objectMove(olisinv006, olisinvdocsitems);
             lis.objectMove(pLispurdocs.items[i], olisinvdocsitems);
             olisinvdocsitems.purdoctype = pLispurdocs.doctype;
             olisinvdocsitems.purdocnum = pLispurdocs.docnum;
             olisinvdocsitems.puritemnum = pLispurdocs.items[i].itemnum;
             olisinvdocsitems.vendor = pLispurdocs.vendor;
             olisinvdocsitems.customer = pLispurdocs.customer;
-            lis.objectMove(olisinv006, olisinvdocsitems);
+
+            if (pLispurdocs.invtype == 2) {
+                olisinvdocsitems.postway = 0
+            }
+            if (pLispurdocs.invtype == 4) {
+                olisinvdocsitems.postway = 1
+            }
+            
             //
             const olismaterials = await lismaterials.findOne({
                 company: pLispurdocs.company,

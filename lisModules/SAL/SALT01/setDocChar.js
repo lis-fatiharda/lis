@@ -11,7 +11,7 @@ export default async function (Args) {
             _deleted: false,
         });
 
-        if (oliscustomers.edelmember.length > 0) eDoctype = 3;
+        if (oliscustomers.edelmember?.length > 0) eDoctype = 3;
     }
     if (olissal001.invtype > 0) {
         oliscustomers = await liscustomers.findOne({
@@ -20,7 +20,7 @@ export default async function (Args) {
             _deleted: false,
         });
 
-        if (oliscustomers.einvmember.length > 0) {
+        if (oliscustomers.einvmember?.length > 0) {
             eDoctype = 1;
         } else {
             eDoctype = 2;

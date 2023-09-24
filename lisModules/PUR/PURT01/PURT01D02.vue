@@ -121,7 +121,7 @@
           :label="this.$gl(`Onay`, `Confirm`)"
           :readonly="true"
           map-options
-          v-model="dv.lispurdocs.isapprove"
+          v-model="dv.lispurdocs.issignature"
           :options="[
             { value: 0, label: this.$gl(`Yok`, `No`) },
             { value: 1, label: this.$gl(`Eksik`, `Missing`) },
@@ -235,6 +235,11 @@
           :label="'Kur Tarihi'"
           style="max-width: 220px"
         />
+        <l-checkbox
+          :label="this.$gl(`Durduruldu mu?`, `Is Stop?`)"
+          v-model="dv.lispurdocs.isstop"
+          color="negative"
+        />
       </l-card-section>
     </l-card0>
     <l-card>
@@ -318,7 +323,7 @@ import PURT01D08 from "./PURT01D08.vue";
 import PURT01D09 from "./PURT01D09.vue";
 import PURT01D10 from "./PURT01D10.vue";
 import PURT01D11 from "./PURT01D11.vue";
-import lispur008 from "./../../../lisModels/lispur008";
+//import lispur008 from "./../../../lisModels/lispur008";
 import FINT02D02mini from "../../FIN/FINT02/FINT02D02mini.vue";
 
 import calcPrice from "./calcPrice.js";
@@ -387,7 +392,6 @@ export default {
       this.dv.lispurdocs = calcPrice(this.dv.lispurdocs);
     },
     async setDocChar() {
-      
       if (
         (this.dv.lispurdocs.vendor == "") |
         (this.dv.lispurdocs.doctype == "")
@@ -405,6 +409,14 @@ export default {
       this.dv.lispurdocs.invtype = myReturn.olispur001.invtype;
 
       this.dv.lispurdocs.edoctype = myReturn.edoctype;
+
+      if (this.dv.modi == 0) {
+        if (myReturn.olispur001.signprotocol == 0) {
+          this.dv.lispurdocs.issignature = 0;
+        } else {
+          this.dv.lispurdocs.issignature = 1;
+        }
+      }
     },
 
     //**** Fetch Customer Infos */

@@ -111,14 +111,10 @@
                         optCaptions="matgrp"
                         width="150px"
                     />
-                    <l-checkbox
-                        :label="this.$gl(`İptal?`, `Is Canceled?`)"
-                        v-model="dv.sc._deleted"
-                        color="red"
-                    />
+                    
                     <l-select
                         dense
-                        v-model="dv.postway"
+                        v-model="dv.sc.postway"
                         :label="this.$gl(`Hrk. Yönü`, `Movement`)"
                         :options="[
                             { label: this.$gl(`Giriş`, `Entry`), value: 0 },
@@ -155,11 +151,21 @@
                     </l-input>
                     <l-input
                         dense
-                        v-model="dv.sc.stext"
+                        v-model="dv.sc.mtext"
                         :label="
                             this.$gl(
                                 `Malzeme Açıklaması`,
                                 `Material Description`
+                            )
+                        "
+                    />
+
+                    <l-input
+                        v-model="dv.sc.variant"
+                        :label="
+                            this.$gl(
+                                `Varyant`,
+                                `Variant`
                             )
                         "
                     />
@@ -188,6 +194,11 @@
                             />
                         </l-chip>
                     </l-input>
+                    <l-checkbox
+                        :label="this.$gl(`İptal?`, `Is Canceled?`)"
+                        v-model="dv.sc._deleted"
+                        color="red"
+                    />
                     <l-datetime
                         :label="
                             this.$gl(
@@ -262,8 +273,8 @@ export default {
                 {
                     label: this.$gl("Belge Tarihi", "Date"),
                     value: "docdate",
-                    type: "date",
-                    _textColor: "red"
+                    type: "datetime",
+                    textColor: "red"
                 },
                 {
                     label: this.$gl("Malzeme", "Material"),
@@ -279,31 +290,31 @@ export default {
                     label: this.$gl("Tesis", "Plant"),
                     value: "items.plant",
                     type: "string",
-                    _bgColor: "#f9e4aac4"
+                    bgColor: "#f9e4aac4"
                 },
                 {
                     label: this.$gl("Depo", "Warehouse"),
                     value: "items.warehouse",
                     type: "string",
-                    _bgColor: "#f9e4aac4"
+                    bgColor: "#f9e4aac4"
                 },
                 {
                     label: this.$gl("Stok Yeri", "Stock Place"),
                     value: "items.stockplace",
                     type: "string",
-                    _bgColor: "#f9e4aac4"
+                    bgColor: "#f9e4aac4"
                 },
                 {
                     label: this.$gl("Ö.St.Tipi", "Spc.St.Typ"),
                     value: "items.specialstock",
                     type: "string",
-                    _bgColor: "#f9e4aa69"
+                    bgColor: "#f9e4aa69"
                 },
                 {
                     label: this.$gl("Parti", "Batchnum"),
                     value: "items.batchnum",
                     type: "string",
-                    _bgColor: "#f9e4aa69"
+                    bgColor: "#f9e4aa69"
                 },
                 {
                     label: this.$gl("Har.Yönü", "Direction of Movement"),
@@ -325,7 +336,7 @@ export default {
                     label: this.$gl("Stk. Tipi", "Stk. Type"),
                     value: "items.stocktype",
                     type: "select",
-                    _textColor: "blue",
+                    textColor: "blue",
                     options: [
                         {
                             value: 0,
@@ -360,55 +371,55 @@ export default {
                     label: this.$gl("S.A.Belge Tipi", "Src.Doc.type"),
                     value: "items.purdoctype",
                     type: "string",
-                    _textColor: "green"
+                    textColor: "green"
                 },
                 {
                     label: this.$gl("S.A.Belge No", "Src.Doc.No"),
                     value: "items.purdocnum",
                     type: "string",
-                    _textColor: "green"
+                    textColor: "green"
                 },
                 {
                     label: this.$gl("S.A.Kalem", "Src.Doc.Itm.No"),
                     value: "items.puritemnum",
                     type: "string",
-                    _textColor: "green"
+                    textColor: "green"
                 },
                 {
                     label: this.$gl("Satış Belge Tipi", "Src.Doc.type"),
                     value: "items.saldoctype",
                     type: "string",
-                    _textColor: "green"
+                    textColor: "green"
                 },
                 {
                     label: this.$gl("Satış Belge No", "Src.Doc.No"),
                     value: "items.saldocnum",
                     type: "string",
-                    _textColor: "green"
+                    textColor: "green"
                 },
                 {
                     label: this.$gl("Satış Kalem", "Src.Doc.Itm.No"),
                     value: "items.salitemnum",
                     type: "string",
-                    _textColor: "green"
+                    textColor: "green"
                 },
                 {
                     label: this.$gl("Urt.Belge Tipi", "Src.Doc.type"),
                     value: "items.prddoctype",
                     type: "string",
-                    _textColor: "green"
+                    textColor: "green"
                 },
                 {
                     label: this.$gl("Urt.Belge No", "Src.Doc.No"),
                     value: "items.prddocnum",
                     type: "string",
-                    _textColor: "green"
+                    textColor: "green"
                 },
                 {
                     label: this.$gl("Urt.Kalem", "Src.Doc.Itm.No"),
                     value: "items.prditemnum",
                     type: "string",
-                    _textColor: "green"
+                    textColor: "green"
                 },
                 {
                     label: this.$gl("Tedarikçi", "Cust./Vend."),
@@ -455,7 +466,8 @@ export default {
 
                     batchnum: "",
                     material: "",
-                    stext: "",
+                    mtext: "",
+                    variant: "",
                     doctype: "",
                     docnum: "",
                     postway: 2,
@@ -481,7 +493,7 @@ export default {
             isSelectCust: false,
             isSelectMat: false,
         };
-    },
+    }, 
 
     methods: {
         async btnSearch(prop) {
@@ -502,7 +514,7 @@ export default {
     },
 
     async mounted() {
-        this.init(this.dv);
+        //this.init(this.dv);
     },
 };
 </script>

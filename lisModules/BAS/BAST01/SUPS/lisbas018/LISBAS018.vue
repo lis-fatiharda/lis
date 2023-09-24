@@ -214,14 +214,11 @@ export default {
     },
 
     okC() {
-      let slct = this.mv.lisbas018List.filter(
+      let select = this.mv.lisbas018List.filter(
         (e) => e._id == this.mv.selectedRow
       );
-      console.log("slct", slct);
-      if (slct.length == 1) {
-        console.log("içerdeyim");
-        this.$emit("ok", slct[0]);
-        console.log("slct[0]", slct[0]);
+      if (select.length == 1) {
+        this.$emit("ok", select[0]);
         //this.isChild = false;
       } else {
         this.lis.alert("e", "Bir Varyant Seçilmedi!");

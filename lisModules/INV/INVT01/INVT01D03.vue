@@ -48,12 +48,19 @@
   </l-div-flex>
 
   <l-div-flex>
-    <l-btn color="blue-5" class="align-end" icon="refresh" @click="init()" />
+    <l-btn color="blue-5" class="align-end" icon="refresh" @click="init()" >
+    
+  </l-btn>
     <l-btn color="teal" class="align-end" icon="save" @click="btnSave()" />
+    <l-btn
+      color="negative"
+      icon="remove"
+      @click="btnRowDelete()"
+    ><l-tooltip>Satır Sil</l-tooltip></l-btn>
 
     <l-space />
 
-    <l-btn label="Stok Raporundan Getir" outline />
+    <l-btn label="Stok Raporundan Getir" outline @click="isShowInvt04 = true" />
   </l-div-flex>
 
   <l-div-flex>
@@ -84,8 +91,18 @@
       :dv="dv"
       :item="dv.transferTable[selectedRowVar]"
       :tabInfo="tabInfo"
+      @ok="isShowItemVar = false"
     />
   </q-dialog>
+  <l-dialog v-model="isShowInvt04">
+    <INVT04D01
+      :dv="dv"
+      :tabInfo="tabInfo"
+      :isChild="true"
+      @cancel="isShowInvt04 = false"
+      @ok="fetchINVT04($event)"
+    />
+  </l-dialog>
 
   <BAST03D01mini
     :pComp="dv.company"
@@ -103,10 +120,12 @@
 
 <script>
 import setVariant from "./../../BAS/BAST04/setVariant.vue";
+import INVT04D01 from "./../../INV/INVT04/INVT04D01.vue";
 export default {
-  props: [ "tabInfo"],
+  props: ["tabInfo"],
   components: {
     setVariant,
+    INVT04D01,
   },
   computed: {
     columns1() {
@@ -339,6 +358,7 @@ export default {
       ],
       zoomMaterialRow: null,
       isShowItemVar: false,
+      isShowInvt04: false,
       selectedRowVar: 0,
       dv: {
         company: "01",
@@ -354,10 +374,40 @@ export default {
     async btnSave() {
       let myReturn = await this.lis.function("INVT01/31-btnSave", this.dv);
       this.lis.alert(
-        "P",
-        `${myReturn.data.doctype} - ${myReturn.data.docnum} No'lu Envanter Hareketi Kaydedildi.`
+        "p",
+        `${myReturn.doctype} - ${myReturn.docnum} No'lu Envanter Hareketi Kaydedildi.`
       );
       this.init();
+    },
+
+    btnRowDelete() {
+      this.dv.transferTable = this.dv.transferTable.filter((e) => e._selected == false);
+    },
+
+    fetchINVT04(event) {
+      if (
+        this.dv.transferTable.length == 1 &&
+        this.dv.transferTable[0].material == ""
+      ) {
+        this.dv.transferTable = [];
+      }
+
+      for (let i in event)
+        this.dv.transferTable.push({
+          material: event[i].material,
+          mtext: event[i].mtext,
+          quantity: event[i].quantity,
+          qunit: event[i].qunit,
+          plant1: event[i].plant,
+          warehouse1: event[i].warehouse,
+          stockplace1: event[i].stockplace,
+          specialstock1: event[i].specialstock,
+          batchnum1: event[i].batchnum,
+          specialstock2: event[i].specialstock,
+          batchnum2: event[i].batchnum,
+          varkey: event[i].variant,
+        });
+      this.isShowInvt04 = false;
     },
     async init() {
       this.dv.transferTable = [];

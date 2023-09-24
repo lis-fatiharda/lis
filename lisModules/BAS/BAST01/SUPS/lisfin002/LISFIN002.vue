@@ -207,8 +207,8 @@
                 v-model="mv.lisfin002List"
                 :columns="myColumnsFin002"
                 :context="contextMenu"
-                :height="'70vh'"
-                :width="'100%'"
+                height="65vh"
+                width="100%"
                 :readonly="true"
             />
         </l-div>

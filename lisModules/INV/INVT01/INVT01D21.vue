@@ -41,6 +41,7 @@
       :dv="dv"
       :item="dv.lisinvdocs.items[selectedRowVar]"
       :tabInfo="tabInfo"
+      @ok="isShowItemVar = false"
     />
   </q-dialog>
   <l-table

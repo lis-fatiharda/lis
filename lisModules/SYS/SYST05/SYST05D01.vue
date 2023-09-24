@@ -74,7 +74,7 @@
             <td class="text-left">{{ item.lid }}</td>
             <td class="text-left">{{ item.lockkey }}</td>
             <td class="text-left">{{ item._createdby }}</td>
-            <td class="text-left">{{ item.createdat }}</td>
+            <td class="text-left">{{ lis.format(item.createdAt, 'dd.MM.yyyy HH:mm') }}</td>
           </tr>
         </tbody>
       </q-markup-table>

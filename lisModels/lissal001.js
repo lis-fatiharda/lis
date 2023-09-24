@@ -57,6 +57,22 @@ const schema = new mongoose.Schema(
             ],
             default: 0,
         },
+        signprotocol: {
+            type: Number,
+            label: "İmzalama protokolü",
+            options: [
+                { value: 0, stext: 'İmza Gerektirmez' }, 
+                { value: 1, stext: "A veya B İmzalar" },
+                { value: 2, stext: "B ve A Sırayla İmzalar" },
+                { value: 3, stext: "Yalnız A İmzalar" },
+            ],
+            default: 0,
+        },
+        blimit: {
+            type: Number,
+            label: "B Grubu İçin Limit",
+            default: 0,
+        },
 
         iscurrdiffinv: {
             type: Boolean,

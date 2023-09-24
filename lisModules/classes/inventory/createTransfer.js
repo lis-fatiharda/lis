@@ -8,9 +8,7 @@ export default async function createTransfer(
     pStext
 ) {
     let pItemnum = 0;
-    const olisinvdocs = new lisinvdocs(
-        lisinvdocs.prototype.schema.tree
-    ).toObject();
+    const olisinvdocs = lis.objectNew('lisinvdocs');
     olisinvdocs.items = [];
 
     const olisinv006 = await lisinv006.findOne({
@@ -21,6 +19,7 @@ export default async function createTransfer(
 
     if (olisinv006 == null)
         throw new Error(`${pMovecode} Hareket Kodu Bulunamadı!`);
+
     olisinvdocs.company = pCompany;
     olisinvdocs.doctype = olisinv006.doctype;
 
@@ -64,9 +63,7 @@ export default async function createTransfer(
 
         //------ Exit ---------
 
-        let newItem = new lisinvdocs(
-            lisinvdocs.prototype.schema.tree
-        ).toObject();
+        let newItem = lis.objectNew('lisinvdocs');
         newItem = newItem.items[0];
 
         pItemnum += 10;
@@ -103,8 +100,7 @@ export default async function createTransfer(
 
         //------ Enterance ---------
 
-        newItem = new lisinvdocs(lisinvdocs.prototype.schema.tree).toObject();
-        newItem = newItem.items[0];
+        newItem = lis.objectNew('lisinvdocs.items');
 
         pItemnum += 10;
 

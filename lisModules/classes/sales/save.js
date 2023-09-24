@@ -13,9 +13,13 @@ export default async function save(plissaldocs, pModi) {
 
     // Controls before Save ****************
 
+    await this.ctrlAuthorization(plissaldocs, pModi);
+
     if ((plissaldocs.currency == null) | (plissaldocs.currency == "")) {
         throw new Error("Lütfen Para Birimi Giriniz!");
     }
+
+    plissaldocs = await this.removeInvalidItems(plissaldocs);
 
     for (let i in plissaldocs.items) {
         if (olissal001.deltype > 0) {
@@ -59,7 +63,7 @@ export default async function save(plissaldocs, pModi) {
 
     // Control for stock movements
 
-    if ((olissal001.deltype == 2) | (olissal001.deltype == 4)) {
+    if ((olissal001.deltype == 2 & plissaldocs._deleted == false) | (olissal001.deltype == 4 & plissaldocs._deleted == true)) {
         await Inventory.ctrlInvFromSal(plissaldocs, pModi);
     }
 

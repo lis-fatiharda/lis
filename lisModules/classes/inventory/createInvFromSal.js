@@ -9,17 +9,14 @@ export default async function createInvFromSal(pLissaldocs, pMod) {
     if (olissal001.movecode == "") throw new Error("Belge Tipi Bulunamadı!");
 
     if (pMod <= 0) {
-        olisinvdocs = new lisinvdocs(
-            lisinvdocs.prototype.schema.tree
-        ).toObject();
+        olisinvdocs = await lis.objectNew('lisinvdocs');
 
         lis.objectMove(pLissaldocs, olisinvdocs);
         olisinvdocs.items = [];
 
         for (let i in pLissaldocs.items) {
-            let olisinvdocsitems = new lisinvdocs(
-                lisinvdocs.prototype.schema.tree
-            )._doc.items[0].toObject();
+            let olisinvdocsitems = await lis.objectNew('lisinvdocs');
+            olisinvdocsitems = olisinvdocsitems.items[0];
 
             const olisinv006 = await Inventory.ctrlMoveCode(
                 pLissaldocs.company,
@@ -36,6 +33,14 @@ export default async function createInvFromSal(pLissaldocs, pMod) {
             olisinvdocsitems.vendor = pLissaldocs.vendor;
             olisinvdocsitems.customer = pLissaldocs.customer;
             lis.objectMove(olisinv006, olisinvdocsitems);
+
+            if (pLissaldocs.invtype == 2) {
+                olisinvdocsitems.postway = 1
+            }
+            if (pLissaldocs.invtype == 4) {
+                olisinvdocsitems.postway = 0
+            }
+
             //
             const olismaterials = await lismaterials.findOne({
                 company: pLissaldocs.company,
@@ -58,12 +63,14 @@ export default async function createInvFromSal(pLissaldocs, pMod) {
             saldocnum: pLissaldocs.docnum,
         });
 
+        olisinvdocs.docdate = pLissaldocs.validfrom;
+        olisinvdocs._deleted = pLissaldocs._deleted;
+
         olisinvdocs.items = [];
 
         for (let i in pLissaldocs.items) {
-            let olisinvdocsitems = new lisinvdocs(
-                lisinvdocs.prototype.schema.tree
-            )._doc.items[0].toObject();
+            let olisinvdocsitems = await lis.objectNew('lisinvdocs');
+            olisinvdocsitems = olisinvdocsitems.items[0];
 
             const olisinv006 = await Inventory.ctrlMoveCode(
                 pLissaldocs.company,
@@ -73,13 +80,14 @@ export default async function createInvFromSal(pLissaldocs, pMod) {
                 pLissaldocs.items[i].specialstock
             );
 
+            lis.objectMove(olisinv006, olisinvdocsitems);
             lis.objectMove(pLissaldocs.items[i], olisinvdocsitems);
             olisinvdocsitems.saldoctype = pLissaldocs.doctype;
             olisinvdocsitems.saldocnum = pLissaldocs.docnum;
             olisinvdocsitems.salitemnum = pLissaldocs.items[i].itemnum;
             olisinvdocsitems.vendor = pLissaldocs.vendor;
             olisinvdocsitems.customer = pLissaldocs.customer;
-            lis.objectMove(olisinv006, olisinvdocsitems);
+
             //
             const olismaterials = await lismaterials.findOne({
                 company: pLissaldocs.company,

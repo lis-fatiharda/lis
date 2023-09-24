@@ -1,11 +1,10 @@
 import lissaldocs from "../../../lisModels/lissaldocs.js";
 
 export default async function updRefDocument(plissaldocs) {
-    console.log("updRefDocument");
 
     for (let i in plissaldocs.items) {
         let pLisSalItem = plissaldocs.items[i];
-        console.log("pLisSalItem", pLisSalItem);
+        
         if (
             (pLisSalItem.refdoctype != "") &
             (pLisSalItem.refdocnum != "") &
@@ -28,8 +27,7 @@ export default async function updRefDocument(plissaldocs) {
                     },
                 },
             ]);
-
-            console.log("refSalItem", refSalItem);
+            
 
             // find items created by the referans item
             const salItemsForRef = await lissaldocs.aggregate([

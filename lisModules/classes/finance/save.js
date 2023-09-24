@@ -5,6 +5,8 @@
 export default async function ({ plisfindocs, modi }) {
     // control for save of lisfindocs
 
+    await this.ctrlAuthorization(plisfindocs, modi);
+
     const olisfin003 = await lisfin003.findOne({
         company: plisfindocs.company,
         doctype: plisfindocs.doctype,

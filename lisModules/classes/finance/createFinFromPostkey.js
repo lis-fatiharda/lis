@@ -28,13 +28,14 @@ export default async function ({plisfindocs, cv}) {
                 } else { 
 
                     // create new lisfindocs_item
-                    let plisfindocs_item = (new lisfindocs(lisfindocs.prototype.schema.tree)).toObject();
-                    plisfindocs_item = plisfindocs_item.items[0];
+                    let plisfindocs_item = await lis.objectNew('lisfindocs.items');
                     //
                     lis.objectMove(myfin002_item, plisfindocs_item);
 
-                    let oliscustomers = await liscustomers.findOne({ company: plisfindocs.company, customer: cv.customer })
+                    let oliscustomers = await liscustomers.findOne({ company: plisfindocs.company, customer: cv.customer });
+                    if (oliscustomers == null) throw new Error('Cari Kartı Bulunamadı!');
                     let olisaccounts = await lisaccounts.findOne({ company: oliscustomers.company, acctype: oliscustomers.acctype, account: oliscustomers.account, _deleted: false })
+                    if (olisaccounts == null) throw new Error('Cari Hesap Bilgisi Bulunamadı!');
                     plisfindocs_item.acctype = olisaccounts.acctype;
                     plisfindocs_item.account = olisaccounts.account;
                     plisfindocs_item.glaccount = olisaccounts.glaccount;
@@ -78,8 +79,7 @@ export default async function ({plisfindocs, cv}) {
                 } else {
 
                     // create new lisfindocs_item
-                    let plisfindocs_item = new lisfindocs(lisfindocs.prototype.schema.tree).toObject();
-                    plisfindocs_item = plisfindocs_item.items[0];
+                    let plisfindocs_item = lis.objectNew('lisfindocs.items');
                 //
                     lis.objectMove(myfin002_item, plisfindocs_item);
                     plisfindocs_item.acctype = 'G';

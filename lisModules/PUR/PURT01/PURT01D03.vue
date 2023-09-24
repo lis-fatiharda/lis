@@ -31,7 +31,6 @@
   <q-dialog v-model="isShowItemDetail">
     <PURT01D31
       :dv="dv"
-      :cpdItemTypes="cpdItemTypes"
       :item="dv.lispurdocs.items[selectedRow]"
       :tabInfo="tabInfo"
     />
@@ -42,6 +41,7 @@
       :dv="dv"
       :item="dv.lispurdocs.items[selectedRowVar]"
       :tabInfo="tabInfo"
+      @ok="isShowItemVar = false"
     />
   </q-dialog>
 
@@ -346,12 +346,6 @@ export default {
           label: this.$gl("Sil", "Delete"),
           value: "_deleted",
           type: "checkbox",
-        },
-        {
-          type: "string",
-          label: this.$gl("Malzeme Varyantı", "Material Variant"),
-          value: "varkey",
-          readonly: true,
         },
       ];
     },

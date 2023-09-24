@@ -86,7 +86,7 @@ const schema = new mongoose.Schema(
             default: "",
         },
         //
-        issignature: {
+        signprotocol: {
             type: Number,
             label: "İmzalama protokolü",
             options: [

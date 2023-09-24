@@ -1,13 +1,12 @@
-
 export default async function (dv) {
-  // Lock the document 
+  // Lock the document
   if (dv.reportList.filter((e) => e._selected == true).length > 0) {
     let selectedRow = dv.reportList.filter((e) => e._selected == true)[0];
-
     dv.lisaccounts = await lisaccounts.findById(selectedRow._id);
   } else {
     throw new Error("Lütfen Bir Satır Seçiniz");
   }
+  
   let isLocked = await System.lock(
     dv.lisaccounts.company,
     "FINT01",

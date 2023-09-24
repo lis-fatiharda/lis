@@ -9,7 +9,7 @@ const itemsSchema = new mongoose.Schema({
     mattype: { type: String, label: "Malzeme Tipi", default: "" },
     material: { type: String, label: "Malzeme Kodu", default: "" },
     mtext: { type: String, label: "Malzeme Adı", default: "" },
-    variant: { type: Object, label: "Varyant", default: {} },
+    variant: { type: String, label: "Varyant", default: "" },
     //** Inventory */
     movecode: { type: String, label: "hareket kodu", default: "" },
     invmanag: { type: String, label: "Env yön. tipi", default: "" },

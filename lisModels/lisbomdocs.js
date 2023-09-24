@@ -6,7 +6,7 @@ const prodsSchema = new mongoose.Schema({
   type: { type: String, label: "Giriş Tipi", default: "" }, // 0: Ürün | 1: Eş değer yanürün | 2: yanürün | 3: fire
   operation: { type: Number, label: "Operasyon No", default: 10 },
   material: { type: String, label: "Malzeme Kodu", default: "" },
-  variant: { type: Object, label: "Varyant", default: {} },
+  variant: { type: Object, label: "Varyant", default: '' },
   quantity: { type: Number, label: "Temel Miktar", default: 1 },
   qunit: { type: String, label: "Birim", default: "" },
 
@@ -38,7 +38,7 @@ const equipmentsSchema = new mongoose.Schema({
   value: { type: Number, label: "Tahmini operasyon süresi", default: 0 },
   unit: { type: String, label: "Birimi", default: "" },
   material: { type: String, label: "Malzeme Kodu", default: "" },
-  variant: { type: Object, label: "Varyant", default: {} },
+  variant: { type: Object, label: "Varyant", default: '' },
   stext: { type: String, label: "Açıklama", default: "" },
 
   iscost: { type: Boolean, label: "Maliyete ekle", default: false },
@@ -48,7 +48,7 @@ const componentsSchema = new mongoose.Schema({
   type: { type: String, label: "Ürün Tipi", default: "" },
   operation: { type: Number, label: "Operasyon No", default: 10 },
   material: { type: String, label: "Malzeme Kodu", default: "" },
-  variant: { type: Object, label: "Varyant", default: {} },
+  variant: { type: Object, label: "Varyant", default: '' },
   quantity: { type: Number, label: "Tüketilecek Miktar", default: 1 },
   qunit: { type: String, label: "Birim", default: "" },
 

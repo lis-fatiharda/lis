@@ -213,6 +213,7 @@
             <l-btn color="primary" icon="search" @click="btnSearch(dv)" />
             <l-btn color="orange" icon="print" @click="btnSearch(dv)" />
         
+            
 
         <l-table
             name="FINT03D01"

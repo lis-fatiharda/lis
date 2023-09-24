@@ -1,372 +1,437 @@
 <template>
-  
     <q-layout container class="bg-white" style="width: 500px">
-      <q-header :class="`bg-${tabInfo.moduleColor} text-black`">
-        <l-toolbar>
-          <l-toolbar-title class="text-black">{{
-            this.$gl("Kalem Detayı", "Item Detail")
-          }}</l-toolbar-title>
+        <q-header :class="`bg-${tabInfo.moduleColor} text-black`">
+            <l-toolbar>
+                <l-toolbar-title class="text-black">{{
+                    this.$gl("Kalem Detayı", "Item Detail")
+                }}</l-toolbar-title>
 
-          <l-btn
-            v-close-popup
-            dense
-            icon="close"
-            color="negative"
-            @click="item.showDetail = false"
-          />
-        </l-toolbar>
-      </q-header>
-
-      <q-page-container>
-        <q-page>
-          <!--  Page Starts **************************************** -->
-          <l-tabs
-            v-model="tab"
-          >
-            <l-tab name="Genel" :label="this.$gl(`Genel`, `General`)" />
-            <l-tab
-              name="İndirim"
-              :label="this.$gl(`İndir./artır.`, `Disc./Inc.`)"
-            />
-            <l-tab name="Statü" :label="this.$gl(`Statü`, `Status`)" />
-            <l-tab
-              name="Belge Takibi"
-              :label="this.$gl(`Belge Takibi`, `Document Tracking`)"
-            />
-            <l-tab name="Notlar" :label="this.$gl(`Notlar`, `Notes`)" />
-          </l-tabs>
-
-          <l-tab-panels v-model="tab" animated>
-            <l-tab-panel name="Genel" class="q-gutter-xs">
-              <l-card class="q-pa-xs">
-                <l-card-section class="row q-gutter-xs">
-                  <l-select
-                    v-model="item.itemtype"
-                    :label="this.$gl(`Kalem Tipi`, `Item Type`)"
-                    options="lissal002"
-                    optValue="itemtype"
-                    optTitle="stext"
-                    optCaptions="unit"
-                  />
-
-                  <l-input
-                    
+                <l-btn
+                    v-close-popup
                     dense
-                    readonly
-                    v-model="item.mattype"
-                    label="Malzeme Tipi"
-                  />
-
-                  <l-input
-                    :label="this.$gl(`Miktar`, `Quantity`)"
-                    v-model.number="item.quantity"
-                    dense
-                    
-                    type="number"
-                  />
-                  <l-select
-                    :label="this.$gl(`Stok Birimi`, `Stock Unit`)"
-                    v-model="item.qunit"
-                    options="lisbas007"
-                    optValue="unit"
-                    optTitle="stext"
-                    optCaptions="unit"
-                    :optFilter="{ unittype: 0 }"
-                    width="150px"
-                    dense
-                    class="bg-blue-1"
-                  />
-                </l-card-section>
-              </l-card>
-
-              <l-card class="bg-white q-pa-xs">
-                <l-card-section class="row q-gutter-xs">
-                  <l-checkbox
-                    :label="this.$gl('Tolerans Var Mı?', 'Has Tolerance?')"
-                    v-model="item.istolerance"
-                  />
-                  <l-input
-                    :label="this.$gl('Alt Tolerans', 'Lower Tolerance')"
-                    v-model="item.lowertol"
-                    type="number"
-                    v-if="item.istolerance"
-                  />
-                  <l-input
-                    :label="this.$gl('Üst Tolerans', 'Upper Tolerance')"
-                    v-model="item.uppertol"
-                    type="number"
-                    v-if="item.istolerance"
-                  />
-                </l-card-section>
-              </l-card>
-              <l-card class="bg-white q-pa-xs">
-                <l-card-section class="row q-gutter-xs"> </l-card-section>
-              </l-card>
-              <l-card class="bg-white q-pa-xs">
-                <l-card-section class="row q-gutter-xs"> </l-card-section>
-              </l-card>
-            </l-tab-panel>
-            <l-tab-panel name="İndirim" class="row q-gutter-xs q-pa-xs">
-              <l-card style="width: 100%; min-width: 320px">
-                <div class="text-overline q-pa-xs">
-                  {{
-                    this.$gl("Belgeden Gelen İndirim", "Discount From Document")
-                  }}
-                </div>
-                <l-card style="width: 70%; min-width: 320px">
-                  <l-card-section class="row q-gutter-xs"> </l-card-section>
-                </l-card>
-                <div class="text-overline q-pa-xs">
-                  {{ this.$gl("İndirimler", "Discounts") }}
-                </div>
-
-                <l-card-section class="q-gutter-xs">
-                  <q-markup-table @change="calcPrice()">
-                    <thead>
-                      <tr>
-                        <th>
-                          {{ this.$gl("İndirim Anahtarı", "Discount Key") }}
-                        </th>
-                        <th>
-                          {{ this.$gl("İndirim Tipi", "Discount Type") }}
-                        </th>
-                        <th>
-                          {{ this.$gl("İndirim Oranı", "Discount Rate") }}
-                        </th>
-                        <th>
-                          {{ this.$gl("İndirim Tutarı", "Discount Amount") }}
-                        </th>
-                        <th>
-                          {{
-                            this.$gl(
-                              "İndirim Açıklaması",
-                              "Discount Description"
-                            )
-                          }}
-                        </th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(disc, index) in item.discount" :key="index">
-                        <td>
-                          <l-select
-                v-model="disc.disckey"
-                    :options="dv.discOpts"
-                  
-                  style="min-width: 120px"
-                  
-                  optValue="disckey"
-                  optTitle="stext"
-                  optCaptions="disckey"
-                  @select="fetchDisc(index)"
+                    icon="close"
+                    color="negative"
+                    @click="item.showDetail = false"
                 />
-                       
-                        </td>
-                        <td>
-                          <l-select
-                            borderless
-                            dense
-                            emit-value
-                            map-options
-                            readonly
-                            v-model="disc.type"
-                            :options="[
-                              {
-                                value: 0,
-                                label: this.$gl(
-                                  `Net Üzerinden Yüzdesel`,
-                                  `Percentage over Net`
-                                ),
-                              },
-                              {
-                                value: 1,
-                                label: this.$gl(
-                                  `Brüt Üzerinden Yüzdesel`,
-                                  `Percent of Gross`
-                                ),
-                              },
-                              {
-                                value: 2,
-                                label: this.$gl(`Mutlak`, `Absolute`),
-                              },
-                              {
-                                value: 3,
-                                label: this.$gl(
-                                  `Birim Başına Mutlak`,
-                                  `Absolute Per Unit`
-                                ),
-                              },
-                            ]"
-                            optValue="value"
-                             optTitle="label"
-                          />
-                        </td>
+            </l-toolbar>
+        </q-header>
 
-                        <td>
-                          <l-input borderless dense v-model="disc.rate" />
-                        </td>
-                        <td>
-                          <l-input borderless dense v-model="disc.amnt" />
-                        </td>
-                        <td>
-                          <l-input borderless dense v-model="disc.stext" />
-                        </td>
-                        <td>
-                          <l-chip
-                            icon="cancel"
-                            dense
-                            clickable
-                            text-color="negative"
-                            class="bg-white"
-                            @click="removeDisc(index)"
-                          />
-                        </td>
-                      </tr>
-                    </tbody>
-                  </q-markup-table>
-                  <l-chip
-                    dense
-                    justify="right"
-                    icon="add"
-                    clickable
-                    rounded
-                    glossy
-                    color="secondary"
-                    text-color="white"
-                    @click="pushNewDisc()"
-                  />
-                </l-card-section>
-              </l-card>
-            </l-tab-panel>
-            <l-tab-panel name="Statü" class="q-pa-xs">
-              {{ this.$gl("Statü", "Status") }}
-            </l-tab-panel>
-            <l-tab-panel name="Belge Takibi" class="q-pa-xs q-gutter-xs">
-              <div class="text-overline q-pa-xs">
-                {{ this.$gl("Referans Belge", "Reference Document") }}
-              </div>
+        <q-page-container>
+            <q-page>
+                <!--  Page Starts **************************************** -->
+                <l-tabs v-model="tab">
+                    <l-tab name="Genel" :label="this.$gl(`Genel`, `General`)" />
+                    <l-tab
+                        name="İndirim"
+                        :label="this.$gl(`İndir./artır.`, `Disc./Inc.`)"
+                    />
+                    <l-tab name="Statü" :label="this.$gl(`Statü`, `Status`)" />
+                    <l-tab
+                        name="Belge Takibi"
+                        :label="this.$gl(`Belge Takibi`, `Document Tracking`)"
+                    />
+                    <l-tab name="Notlar" :label="this.$gl(`Notlar`, `Notes`)" />
+                </l-tabs>
 
-              <div class="q-pa-xs q-gutter-xs row">
-                <l-input
-                  :label="this.$gl('Belge Tipi', 'Document Type')"
-                  
-                  dense
-                  v-model="item.refdoctype"
-                  style="width: 90px"
-                  readonly
-                />
-                <l-input
-                  :label="this.$gl('Belge No', 'Document No')"
-                  
-                  dense
-                  v-model="item.refdocnum"
-                  readonly
-                />
-                <l-input
-                  :label="this.$gl('Kalem No', 'Item No')"
-                  
-                  dense
-                  v-model="item.refitemnum"
-                  style="width: 90px"
-                  readonly
-                />
-              </div>
-              <l-separator />
-              <div class="text-overline q-pa-xs">
-                {{ this.$gl("Envanter Hareketi", "Inventory Document") }}
-              </div>
+                <l-tab-panels v-model="tab" animated>
+                    <l-tab-panel name="Genel" class="q-gutter-xs">
+                        <l-card class="q-pa-xs">
+                            <l-card-section class="row q-gutter-xs">
+                                <l-select
+                                    v-model="item.itemtype"
+                                    :label="this.$gl(`Kalem Tipi`, `Item Type`)"
+                                    options="lissal002"
+                                    optValue="itemtype"
+                                    :optFilter="{
+                                        doctype: dv.lissaldocs.doctype,
+                                    }"
+                                    optTitle="stext"
+                                    optCaptions="itemtype"
+                                />
 
-              <div class="q-pa-xs q-gutter-xs row">
-                <l-input
-                  :label="this.$gl('Belge Tipi', 'Document Type')"
-                  
-                  dense
-                  v-model="itemInvdoctype"
-                  style="width: 90px"
-                  readonly
-                />
-                <l-input
-                  :label="this.$gl('Belge No', 'Document No')"
-                  
-                  dense
-                  v-model="itemInvdocnum"
-                  readonly
-                />
-                <l-input
-                  :label="this.$gl('Kalem No', 'Item No')"
-                  
-                  dense
-                  v-model="itemInvitemnum"
-                  style="width: 90px"
-                  readonly
-                />
-              </div>
-              <l-separator />
-            </l-tab-panel>
-            <l-tab-panel name="Notlar" class="q-pa-xs">
-              {{ this.$gl("Notlar", "Notes") }}
-            </l-tab-panel>
-          </l-tab-panels>
+                                <l-input
+                                    dense
+                                    readonly
+                                    v-model="item.mattype"
+                                    label="Malzeme Tipi"
+                                />
 
-          <!--  Page Ends **************************************** -->
-        </q-page>
-      </q-page-container>
+                                <l-input
+                                    :label="this.$gl(`Miktar`, `Quantity`)"
+                                    v-model.number="item.quantity"
+                                    dense
+                                    type="number"
+                                />
+                                <l-select
+                                    :label="
+                                        this.$gl(`Stok Birimi`, `Stock Unit`)
+                                    "
+                                    v-model="item.qunit"
+                                    options="lisbas007"
+                                    optValue="unit"
+                                    optTitle="stext"
+                                    optCaptions="unit"
+                                    :optFilter="{ unittype: 0 }"
+                                    width="150px"
+                                    dense
+                                    class="bg-blue-1"
+                                />
+                            </l-card-section>
+                        </l-card>
+
+                        <l-card class="bg-white q-pa-xs">
+                            <l-card-section class="row q-gutter-xs">
+                                <l-checkbox
+                                    :label="
+                                        this.$gl(
+                                            'Tolerans Var Mı?',
+                                            'Has Tolerance?'
+                                        )
+                                    "
+                                    v-model="item.istolerance"
+                                />
+                                <l-input
+                                    :label="
+                                        this.$gl(
+                                            'Alt Tolerans',
+                                            'Lower Tolerance'
+                                        )
+                                    "
+                                    v-model="item.lowertol"
+                                    type="number"
+                                    v-if="item.istolerance"
+                                />
+                                <l-input
+                                    :label="
+                                        this.$gl(
+                                            'Üst Tolerans',
+                                            'Upper Tolerance'
+                                        )
+                                    "
+                                    v-model="item.uppertol"
+                                    type="number"
+                                    v-if="item.istolerance"
+                                />
+                            </l-card-section>
+                        </l-card>
+                        <l-card class="bg-white q-pa-xs">
+                            <l-card-section class="row q-gutter-xs">
+                            </l-card-section>
+                        </l-card>
+                        <l-card class="bg-white q-pa-xs">
+                            <l-card-section class="row q-gutter-xs">
+                            </l-card-section>
+                        </l-card>
+                    </l-tab-panel>
+                    <l-tab-panel name="İndirim" class="row q-gutter-xs q-pa-xs">
+                        <l-card style="width: 100%; min-width: 320px">
+                            <div class="text-overline q-pa-xs">
+                                {{
+                                    this.$gl(
+                                        "Belgeden Gelen İndirim",
+                                        "Discount From Document"
+                                    )
+                                }}
+                            </div>
+                            <l-card style="width: 70%; min-width: 320px">
+                                <l-card-section class="row q-gutter-xs">
+                                </l-card-section>
+                            </l-card>
+                            <div class="text-overline q-pa-xs">
+                                {{ this.$gl("İndirimler", "Discounts") }}
+                            </div>
+
+                            <l-card-section class="q-gutter-xs">
+                                <q-markup-table @change="calcPrice()">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                {{
+                                                    this.$gl(
+                                                        "İndirim Anahtarı",
+                                                        "Discount Key"
+                                                    )
+                                                }}
+                                            </th>
+                                            <th>
+                                                {{
+                                                    this.$gl(
+                                                        "İndirim Tipi",
+                                                        "Discount Type"
+                                                    )
+                                                }}
+                                            </th>
+                                            <th>
+                                                {{
+                                                    this.$gl(
+                                                        "İndirim Oranı",
+                                                        "Discount Rate"
+                                                    )
+                                                }}
+                                            </th>
+                                            <th>
+                                                {{
+                                                    this.$gl(
+                                                        "İndirim Tutarı",
+                                                        "Discount Amount"
+                                                    )
+                                                }}
+                                            </th>
+                                            <th>
+                                                {{
+                                                    this.$gl(
+                                                        "İndirim Açıklaması",
+                                                        "Discount Description"
+                                                    )
+                                                }}
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            v-for="(
+                                                disc, index
+                                            ) in item.discount"
+                                            :key="index"
+                                        >
+                                            <td>
+                                                <l-select
+                                                    v-model="disc.disckey"
+                                                    :options="dv.discOpts"
+                                                    style="min-width: 120px"
+                                                    optValue="disckey"
+                                                    optTitle="stext"
+                                                    optCaptions="disckey"
+                                                    @select="fetchDisc(index)"
+                                                />
+                                            </td>
+                                            <td>
+                                                <l-select
+                                                    borderless
+                                                    dense
+                                                    emit-value
+                                                    map-options
+                                                    readonly
+                                                    v-model="disc.type"
+                                                    :options="[
+                                                        {
+                                                            value: 0,
+                                                            label: this.$gl(
+                                                                `Net Üzerinden Yüzdesel`,
+                                                                `Percentage over Net`
+                                                            ),
+                                                        },
+                                                        {
+                                                            value: 1,
+                                                            label: this.$gl(
+                                                                `Brüt Üzerinden Yüzdesel`,
+                                                                `Percent of Gross`
+                                                            ),
+                                                        },
+                                                        {
+                                                            value: 2,
+                                                            label: this.$gl(
+                                                                `Mutlak`,
+                                                                `Absolute`
+                                                            ),
+                                                        },
+                                                        {
+                                                            value: 3,
+                                                            label: this.$gl(
+                                                                `Birim Başına Mutlak`,
+                                                                `Absolute Per Unit`
+                                                            ),
+                                                        },
+                                                    ]"
+                                                    optValue="value"
+                                                    optTitle="label"
+                                                />
+                                            </td>
+
+                                            <td>
+                                                <l-input
+                                                    borderless
+                                                    dense
+                                                    v-model="disc.rate"
+                                                />
+                                            </td>
+                                            <td>
+                                                <l-input
+                                                    borderless
+                                                    dense
+                                                    v-model="disc.amnt"
+                                                />
+                                            </td>
+                                            <td>
+                                                <l-input
+                                                    borderless
+                                                    dense
+                                                    v-model="disc.stext"
+                                                />
+                                            </td>
+                                            <td>
+                                                <l-chip
+                                                    icon="cancel"
+                                                    dense
+                                                    clickable
+                                                    text-color="negative"
+                                                    class="bg-white"
+                                                    @click="removeDisc(index)"
+                                                />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </q-markup-table>
+                                <l-chip
+                                    dense
+                                    justify="right"
+                                    icon="add"
+                                    clickable
+                                    rounded
+                                    glossy
+                                    color="secondary"
+                                    text-color="white"
+                                    @click="pushNewDisc()"
+                                />
+                            </l-card-section>
+                        </l-card>
+                    </l-tab-panel>
+                    <l-tab-panel name="Statü" class="q-pa-xs">
+                        {{ this.$gl("Statü", "Status") }}
+                    </l-tab-panel>
+                    <l-tab-panel
+                        name="Belge Takibi"
+                        class="q-pa-xs q-gutter-xs"
+                    >
+                        <div class="text-overline q-pa-xs">
+                            {{
+                                this.$gl("Referans Belge", "Reference Document")
+                            }}
+                        </div>
+
+                        <div class="q-pa-xs q-gutter-xs row">
+                            <l-input
+                                :label="this.$gl('Belge Tipi', 'Document Type')"
+                                dense
+                                v-model="item.refdoctype"
+                                style="width: 90px"
+                                readonly
+                            />
+                            <l-input
+                                :label="this.$gl('Belge No', 'Document No')"
+                                dense
+                                v-model="item.refdocnum"
+                                readonly
+                            />
+                            <l-input
+                                :label="this.$gl('Kalem No', 'Item No')"
+                                dense
+                                v-model="item.refitemnum"
+                                style="width: 90px"
+                                readonly
+                            />
+                        </div>
+                        <l-separator />
+                        <div class="text-overline q-pa-xs">
+                            {{
+                                this.$gl(
+                                    "Envanter Hareketi",
+                                    "Inventory Document"
+                                )
+                            }}
+                        </div>
+
+                        <div class="q-pa-xs q-gutter-xs row">
+                            <l-input
+                                :label="this.$gl('Belge Tipi', 'Document Type')"
+                                dense
+                                v-model="itemInvdoctype"
+                                style="width: 90px"
+                                readonly
+                            />
+                            <l-input
+                                :label="this.$gl('Belge No', 'Document No')"
+                                dense
+                                v-model="itemInvdocnum"
+                                readonly
+                            />
+                            <l-input
+                                :label="this.$gl('Kalem No', 'Item No')"
+                                dense
+                                v-model="itemInvitemnum"
+                                style="width: 90px"
+                                readonly
+                            />
+                        </div>
+                        <l-separator />
+                    </l-tab-panel>
+                    <l-tab-panel name="Notlar" class="q-pa-xs">
+                        {{ this.$gl("Notlar", "Notes") }}
+                    </l-tab-panel>
+                </l-tab-panels>
+
+                <!--  Page Ends **************************************** -->
+            </q-page>
+        </q-page-container>
     </q-layout>
-
 </template>
 
 <script>
 import calcPrice from "./calcPrice.js";
 export default {
-  props: ["dv", "cpdItemTypes", "item", "tabInfo"],
+    props: ["dv", "item", "tabInfo"],
 
-  data() {
-    return {
-      tab: "Genel",
-      isShow: false,
-      itemInvdoctype: "",
-      itemInvdocnum: "",
-      itemInvitemnum: 0,
-    };
-  },
+    data() {
+        return {
+            tab: "Genel",
+            isShow: false,
+            itemInvdoctype: "",
+            itemInvdocnum: "",
+            itemInvitemnum: 0,
+        };
+    },
 
-  methods: {
-    calcPrice() {
-      this.dv.lissaldocs = calcPrice(this.dv.lissaldocs);
+    methods: {
+        calcPrice() {
+            this.dv.lissaldocs = calcPrice(this.dv.lissaldocs);
+        },
+        async pushNewDisc() {
+            console.log("pushNewDisc");
+            let myReturn = await this.lis.function(
+                "SALT01/pushNewDisc",
+                this.dv
+            );
+            this.item.discount.push(myReturn);
+        },
+        fetchDisc(pIndex) {
+            var myDisc = this.dv.discOpts.filter((e) => {
+                return (
+                    (e.usage == 1) &
+                    (e.disckey == this.item.discount[pIndex].disckey)
+                );
+            });
+            console.log(this.item.discount[pIndex].type);
+            console.log(myDisc[0].type);
+            this.item.discount[pIndex].type = myDisc[0].type;
+            this.item.discount[pIndex].rate = myDisc[0].rate;
+            this.item.discount[pIndex].amnt = myDisc[0].amnt;
+            this.item.discount[pIndex].stext = myDisc[0].stext;
+            this.item.discount[pIndex].isenable = myDisc[0].isenable;
+        },
+        removeDisc(index) {
+            this.item.discount.splice(index, 1);
+        },
     },
-    async pushNewDisc() {
-      console.log("pushNewDisc");
-      let myReturn = await this.lis.function("SALT01/pushNewDisc", this.dv);
-      this.item.discount.push(myReturn);
+    async mounted() {
+        let olisinvdocs = await this.lis.function("SALT01/31-init", {
+            lissaldocs: this.dv.lissaldocs,
+            item: this.item,
+        });
+        console.log("olisinvdocs", olisinvdocs);
+        this.itemInvdoctype = olisinvdocs?.doctype | "";
+        this.itemInvdocnum = olisinvdocs?.docnum | "";
+        this.itemInvitemnum = olisinvdocs?.items[0]?.itemnum | 0;
     },
-    fetchDisc(pIndex) {
-      var myDisc = this.dv.discOpts.filter((e) => {
-        return (
-          (e.usage == 1) & (e.disckey == this.item.discount[pIndex].disckey)
-        );
-      });
-      console.log(this.item.discount[pIndex].type);
-      console.log(myDisc[0].type);
-      this.item.discount[pIndex].type = myDisc[0].type;
-      this.item.discount[pIndex].rate = myDisc[0].rate;
-      this.item.discount[pIndex].amnt = myDisc[0].amnt;
-      this.item.discount[pIndex].stext = myDisc[0].stext;
-      this.item.discount[pIndex].isenable = myDisc[0].isenable;
-    },
-    removeDisc(index) {
-      this.item.discount.splice(index, 1);
-    },
-  },
-  async mounted() {
-    let olisinvdocs = await this.lis.function("SALT01/31-init", {
-      lissaldocs: this.dv.lissaldocs,
-      item: this.item,
-    });
-    console.log("olisinvdocs", olisinvdocs);
-    this.itemInvdoctype = olisinvdocs?.doctype | "";
-    this.itemInvdocnum = olisinvdocs?.docnum | "";
-    this.itemInvitemnum = olisinvdocs?.items[0]?.itemnum | 0;
-  },
 };
 </script>

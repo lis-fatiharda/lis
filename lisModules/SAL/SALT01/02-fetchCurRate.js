@@ -1,5 +1,9 @@
 export default async function fetchCurRate(Args) {
 
+    if (Args.pLissaldocs.currency == '') {
+        return Args.pLissaldocs;
+    }
+
     if (Args.pLissaldocs.currency != 'TRY') {
         const oliscurrencies = await liscurrencies.findOne({
             company: Args.pLissaldocs.company,

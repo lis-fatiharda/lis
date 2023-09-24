@@ -67,9 +67,12 @@ export default {
                     type: "number",
                 },
                 {
-                    label: this.$gl(`Hesap Tipi`, `Account Type`),
+                    type: "selectmenu",
+                    label: this.$gl("Hesap Tipi", "Account Type"),
                     value: "acctype",
-                    type: "string",
+                    options: "lisfin004",
+                    optValue: "acctype",
+                    optTitles: { acctype: "Tip", stext: "Açıklama" },
                 },
                 {
                     label: this.$gl(`Hesap No`, `Account No`),

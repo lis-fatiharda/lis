@@ -13,26 +13,24 @@
 
                     <l-div-flex>
                         <l-btn
-                        v-if="dv.modi != 2"
-                        icon="save"
-                        color="teal"
-                        @click="btnSave()"
-                    />
-                    <l-btn
-                        v-if="isChild != true"
-                        icon="cancel"
-                        color="negative"
-                        @click="cancel()"
-                    />
-                    <l-btn
-                        v-if="isChild == true"
-                        icon="cancel"
-                        color="negative"
-                        @click="$emit('cancel')"
-                    />
+                            v-if="modi != 2"
+                            icon="save"
+                            color="teal"
+                            @click="btnSave()"
+                        />
+                        <l-btn
+                            v-if="isChild != true"
+                            icon="cancel"
+                            color="negative"
+                            @click="cancel()"
+                        />
+                        <l-btn
+                            v-if="isChild == true"
+                            icon="cancel"
+                            color="negative"
+                            @click="$emit('cancel')"
+                        />
                     </l-div-flex>
-
-                    
                 </l-toolbar>
             </l-toolbar>
 
@@ -41,7 +39,7 @@
 
                 <l-select
                     :label="this.$gl(`Firma`, `Company`)"
-                    v-model="dv.liscustomers.company"
+                    v-model="liscustomer.company"
                     options="lisbas001"
                     optValue="company"
                     optTitle="stext"
@@ -52,7 +50,7 @@
 
                 <l-select
                     :label="this.$gl(`İş Alanı`, `Business Area`)"
-                    v-model="dv.liscustomers.busarea"
+                    v-model="liscustomer.busarea"
                     options="lisbas003"
                     optValue="busarea"
                     optTitle="stext"
@@ -62,7 +60,7 @@
                 />
 
                 <l-select
-                    v-model="dv.liscustomers.custorvend"
+                    v-model="liscustomer.custorvend"
                     map-options
                     :options="[
                         { value: 0, label: this.$gl('Aday', `Applicant`) },
@@ -72,30 +70,28 @@
                     optValue="value"
                     optTitle="label"
                     :label="this.$gl(`Cari Tipi`, `Current Type`)"
-                    
                     style="min-width: 180px"
                     class="bg-blue-1"
                 ></l-select>
 
                 <l-input
                     :readonly="modi == '2' ? 'true' : 'false'"
-                    v-model="dv.liscustomers.customer"
+                    v-model="liscustomer.customer"
                     :label="this.$gl(`Cari Kodu`, `Current Code`)"
                 />
                 <l-input
-                    v-model="dv.liscustomers.name1"
+                    v-model="liscustomer.name1"
                     :label="this.$gl(`Cari Adı`, `Current Name`)"
                     style="min-width: 300px"
                 />
                 <l-input
-                    
-                    v-model="dv.liscustomers.title"
+                    v-model="liscustomer.title"
                     :label="this.$gl(`Ünvan`, `Title`)"
                     style="min-width: 300px"
                 />
 
                 <l-select
-                    v-model="dv.liscustomers.islocked"
+                    v-model="liscustomer.islocked"
                     :label="this.$gl(`Bloke Statüsü`, `Blocked Status`)"
                     map-options
                     :options="[
@@ -113,8 +109,7 @@
 
                 <l-checkbox
                     :label="this.$gl(`Silindi mi?`, `Is Delete?`)"
-                    v-model="dv.liscustomers._deleted"
-                    
+                    v-model="liscustomer._deleted"
                 />
             </l-div-flex>
 
@@ -122,7 +117,7 @@
             <l-div-flex>
                 <l-select
                     :label="this.$gl(`Sektör`, `Sector`)"
-                    v-model="dv.liscustomers.sector"
+                    v-model="liscustomer.sector"
                     options="lisbas004"
                     optValue="sector"
                     optTitle="stext"
@@ -131,7 +126,7 @@
                 />
                 <l-select
                     :label="this.$gl(`Ülke`, `Country`)"
-                    v-model="dv.liscustomers.country"
+                    v-model="liscustomer.country"
                     options="lisbas005"
                     optValue="country"
                     optTitle="stext"
@@ -140,19 +135,19 @@
                 />
 
                 <l-input
-                    v-model="dv.liscustomers.taxdept"
+                    v-model="liscustomer.taxdept"
                     :label="this.$gl(`Vergi Dairesi`, `Tax Administration`)"
                     style="width: 300px"
                 />
                 <l-input
-                    v-model="dv.liscustomers.taxnum"
+                    v-model="liscustomer.taxnum"
                     :label="this.$gl(`Vergi No`, `Tax Nnumber`)"
                     style="width: 300px"
                 />
 
                 <l-select
                     :label="this.$gl(`Para Birimi`, `Currency`)"
-                    v-model="dv.liscustomers.currency"
+                    v-model="liscustomer.currency"
                     options="lisbas007"
                     optValue="unit"
                     optTitle="stext"
@@ -207,13 +202,12 @@
                         <l-separator inset />
                         <l-card-section class="row q-gutter-xs">
                             <l-input
-                                v-model="dv.liscustomers.postcode"
+                                v-model="liscustomer.postcode"
                                 :label="this.$gl(`Posta Kodu`, `Post Code`)"
-                                
                             />
                             <l-select
                                 :label="this.$gl(`Şehir`, `City`)"
-                                v-model="dv.liscustomers.city"
+                                v-model="liscustomer.city"
                                 options="lisbas006"
                                 optValue="city"
                                 optTitle="stext"
@@ -222,31 +216,28 @@
                             />
                             <l-input
                                 type="textarea"
-                                v-model="dv.liscustomers.address"
-                                
+                                v-model="liscustomer.address"
                                 :label="this.$gl(`Adres`, `Address`)"
                                 autogrow
                                 style="min-width: 300px"
                             >
                             </l-input>
                             <l-input
-                                v-model="dv.liscustomers.telnum"
+                                v-model="liscustomer.telnum"
                                 :label="this.$gl(`Telefon No`, `Phone Number`)"
                                 mask="+## (###) ### - ####"
                             />
                             <l-input
-                                v-model="dv.liscustomers.faxnum"
+                                v-model="liscustomer.faxnum"
                                 :label="this.$gl(`Fax No`, `Fax Number`)"
                             />
                             <l-input
-                                v-model="dv.liscustomers.email"
+                                v-model="liscustomer.email"
                                 :label="this.$gl(`E-Mail`, `E-Mail`)"
-                                
                             />
                             <l-input
-                                v-model="dv.liscustomers.website"
+                                v-model="liscustomer.website"
                                 :label="this.$gl(`Web Sitesi`, `Website`)"
-                                
                             />
                         </l-card-section>
                     </l-card>
@@ -270,11 +261,14 @@
 
                 <l-tab-panel name="Muhasebe" class="q-gutter-xs row">
                     <l-card style="width: 49%; min-width: 320px">
-                        <l-card-section>
+                        <l-div-flex>
                             <div class="text-overline">
                                 {{ this.$gl("Hesap", "Account") }}
                             </div>
-                        </l-card-section>
+
+                            <l-space/>
+                            <l-chip label="Hesap Hareketleri" color="teal-4" outline clickable/>
+                        </l-div-flex>
                         <l-separator inset />
                         <l-card-section class="row q-gutter-xs">
                             <l-div-flex>
@@ -282,7 +276,7 @@
                                     :label="
                                         this.$gl(`Hesap Tipi`, `Account Type`)
                                     "
-                                    v-model="dv.liscustomers.acctype"
+                                    v-model="liscustomer.acctype"
                                     options="lisfin004"
                                     optValue="acctype"
                                     optTitle="stext"
@@ -298,8 +292,7 @@
                                             `Cust./Vend. Account Number`
                                         )
                                     "
-                                    v-model="dv.liscustomers.glaccount"
-                                    
+                                    v-model="liscustomer.glaccount"
                                     class="bg-blue-1"
                                 />
                                 <l-input
@@ -309,12 +302,11 @@
                                             `Accounting Account Number`
                                         )
                                     "
-                                    v-model="dv.liscustomers.account"
-                                    
+                                    v-model="liscustomer.account"
                                 />
 
                                 <l-select
-                                    v-model="dv.liscustomers.exchmethod"
+                                    v-model="liscustomer.exchmethod"
                                     :label="
                                         this.$gl(
                                             `Kur Hesaplama Metodu`,
@@ -358,25 +350,23 @@
                                 />
                             </l-div-flex>
 
-                            <div class="row bg-amber-2 q-gutter-xs q-pa-xs">
+                            <div class="row q-gutter-xs q-pa-xs">
                                 <l-input
                                     class="bg-white"
                                     :label="
                                         this.$gl(`Kredi Limiti`, `Credit Limit`)
                                     "
-                                    v-model="dv.liscustomers.creditlimit"
-                                    
+                                    v-model="liscustomer.creditlimit"
                                 />
 
                                 <l-select
                                     :label="this.$gl(`P.Br.`, `Currency`)"
-                                    v-model="dv.liscustomers.creditlimitcurr"
+                                    v-model="liscustomer.creditlimitcurr"
                                     options="lisbas007"
                                     optValue="unit"
                                     optTitle="stext"
                                     optCaptions="unit"
                                     :optFilter="{ unittype: 1 }"
-                                    
                                     style="min-width: 80px"
                                     class="bg-white"
                                 />
@@ -396,7 +386,7 @@
                                 :label="
                                     this.$gl(`Satış Bölümü`, `Sales Department`)
                                 "
-                                v-model="dv.liscustomers.saldept"
+                                v-model="liscustomer.saldept"
                                 options="lissal003"
                                 optValue="saldept"
                                 optTitle="stext"
@@ -407,7 +397,7 @@
                                 :label="
                                     this.$gl(`Müşteri Grubu`, `Customer Group`)
                                 "
-                                v-model="dv.liscustomers.custgrp"
+                                v-model="liscustomer.custgrp"
                                 options="lisbas008"
                                 optValue="custgrp"
                                 width="150px"
@@ -416,7 +406,7 @@
                                 :label="
                                     this.$gl(`E-Fatura Tipi`, `E-Invoice Type`)
                                 "
-                                v-model="dv.liscustomers.einvotype"
+                                v-model="liscustomer.einvotype"
                                 map-options
                                 :options="[
                                     {
@@ -456,8 +446,7 @@
                                             `E-Waybill Payer`
                                         )
                                     "
-                                    v-model="dvt.isEdelMember"
-                                    
+                                    v-model="isEdelMember"
                                     disable
                                 />
                             </l-card-section>
@@ -470,8 +459,7 @@
                                             `E-Invoice Payer`
                                         )
                                     "
-                                    v-model="dvt.isEinvMember"
-                                    
+                                    v-model="isEinvMember"
                                     disable
                                 />
                             </l-card-section>
@@ -493,7 +481,7 @@
                                         `Purchasing Department`
                                     )
                                 "
-                                v-model="dv.liscustomers.purdept"
+                                v-model="liscustomer.purdept"
                                 options="lispur003"
                                 optValue="purdept"
                                 optTitle="stext"
@@ -508,7 +496,7 @@
                                         `Currency Value Method`
                                     )
                                 "
-                                v-model="dv.liscustomers.manexchrate"
+                                v-model="liscustomer.manexchrate"
                                 :options="[
                                     {
                                         label: this.$gl(
@@ -571,31 +559,27 @@
 
                 <l-tab-panel name="Banka" class="q-gutter-xs">
                     <template
-                        v-for="bank in dv.liscustomers.custbanks"
+                        v-for="bank in liscustomer.custbanks"
                         :key="bank.id"
                     >
                         <l-card class="row q-gutter-xs q-pa-xs">
                             <l-input
                                 :label="this.$gl(`Banka No`, `Bank Number`)"
                                 v-model="bank.banknum"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`Banka Adı`, `Bank Name`)"
                                 v-model="bank.bankname"
-                                
                             />
                             <l-input
                                 :label="
                                     this.$gl(`Banka Adresi`, `Bank Address`)
                                 "
                                 v-model="bank.bankaddress"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`Hesap No`, `Account Number`)"
                                 v-model="bank.account"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`İban`, `IBAN`)"
@@ -642,7 +626,7 @@
                 </l-tab-panel>
                 <l-tab-panel name="Adres" class="q-gutter-xs row">
                     <template
-                        v-for="adr in dv.liscustomers.custaddress"
+                        v-for="adr in liscustomer.custaddress"
                         :key="adr.id"
                     >
                         <l-card class="row q-gutter-xs q-pa-xs">
@@ -650,50 +634,41 @@
                                 type="number"
                                 :label="this.$gl(`Adres No`, `Address Number`)"
                                 v-model="adr.adrnum"
-                                
                                 class="bg-blue-2"
                             />
                             <l-input
                                 :label="this.$gl(`Adres İsmi`, `Address Name`)"
                                 v-model="adr.addressname"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`Ülke`, `Country`)"
                                 v-model="adr.country"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`Şehir`, `City`)"
                                 v-model="adr.city"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`Adres`, `Address`)"
                                 v-model="adr.address"
-                                
                                 autogrow
                                 style="width: 300px"
                             />
                             <l-input
                                 :label="this.$gl(`Posta Kodu`, `Post Code`)"
                                 v-model="adr.postcode"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`Telefon`, `Telephone`)"
                                 v-model="adr.telnum"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`Fax`, `Fax`)"
                                 v-model="adr.faxnum"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`E-Mail`, `E-Mail`)"
                                 v-model="adr.email"
-                                
                             />
 
                             <l-select
@@ -748,7 +723,6 @@
                                 type="textarea"
                                 :label="this.$gl(`Notlar`, `Notes`)"
                                 v-model="adr.notes"
-                                
                                 autogrow
                             />
                             <l-chip
@@ -780,10 +754,7 @@
                 </l-tab-panel>
 
                 <l-tab-panel name="İlgili Kişi" class="q-gutter-xs row">
-                    <template
-                        v-for="per in dv.liscustomers.custper"
-                        :key="per.id"
-                    >
+                    <template v-for="per in liscustomer.custper" :key="per.id">
                         <l-card class="row q-gutter-xs q-pa-xs">
                             <l-select
                                 :label="this.$gl(`Hitap`, `Appeal`)"
@@ -801,40 +772,33 @@
                                 optValue="value"
                                 optTitle="label"
                                 map-options
-                                
                                 style="width: 150px"
                             />
-                            <l-input label="İsim" v-model="per.name"  />
+                            <l-input label="İsim" v-model="per.name" />
                             <l-input
                                 :label="this.$gl(`İkinci İsmi`, `Second Name`)"
                                 v-model="per.secondname"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`Soy İsim`, `Surname`)"
                                 v-model="per.surname"
-                                
                             />
 
                             <l-input
                                 :label="this.$gl(`Departman`, `Department`)"
                                 v-model="per.department"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`Pozisyon`, `Position`)"
                                 v-model="per.position"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`Telefon No`, `Phone Number`)"
                                 v-model="per.phone"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`Dahili`, `Internal`)"
                                 v-model="per.extphone"
-                                
                             />
 
                             <l-input
@@ -842,7 +806,6 @@
                                     this.$gl(`Cep Telefon`, `Cell Phone Number`)
                                 "
                                 v-model="per.mobil"
-                                
                             />
                             <l-input
                                 :label="
@@ -852,12 +815,10 @@
                                     )
                                 "
                                 v-model="per.mobils"
-                                
                             />
                             <l-input
                                 :label="this.$gl(`E-Mail`, `E-Mail`)"
                                 v-model="per.email"
-                                
                             />
 
                             <l-chip
@@ -893,13 +854,13 @@
                         <l-card-section>
                             {{
                                 this.$gl(
-                                    "Müşteri Malzemeleri",
+                                    "Satılan Malzemeler",
                                     "Customer Materials"
                                 )
                             }}
                         </l-card-section>
                         <q-seperator inset />
-                        <template v-for="mat in dv.liscusmats" :key="mat.id">
+                        <template v-for="mat in liscusmat" :key="mat.id">
                             <q-markup-table>
                                 <thead>
                                     <th>
@@ -980,13 +941,13 @@
                         <l-card-section>
                             {{
                                 this.$gl(
-                                    "Tedarikçi Malzemeleri",
+                                    "Alınan Malzemeler",
                                     "Vendor Materials"
                                 )
                             }}
                         </l-card-section>
                         <q-seperator inset />
-                        <template v-for="mat in dv.liscusmats" :key="mat.id">
+                        <template v-for="mat in liscusmat" :key="mat.id">
                             <q-markup-table>
                                 <thead>
                                     <th>
@@ -1067,21 +1028,19 @@
 
                 <l-tab-panel name="Notlar" class="q-gutter-xs">
                     <template
-                        v-for="note in dv.liscustomers.custnotes"
+                        v-for="note in liscustomer.custnotes"
                         :key="note.id"
                     >
                         <l-card class="q-gutter-xs q-pa-xs">
                             <l-input
                                 :label="this.$gl(`Not Başlığı`, `Note Title`)"
                                 v-model="note.notetitle"
-                                
                                 class="bg-amber-1"
                             />
                             <l-input
                                 type="textarea"
                                 :label="this.$gl(`Not`, `Notes`)"
                                 v-model="note.note"
-                                
                                 autogrow
                             />
                             <l-chip
@@ -1113,11 +1072,11 @@
                 </l-tab-panel>
                 <l-tab-panel name="Eklenenler">
                     <l-doct02d01
-                        :pCompany="dv.liscustomers.company"
+                        :pCompany="liscustomer.company"
                         :pDoctype="'BAST02'"
-                        :pDocnum="dv.liscustomers.customer"
+                        :pDocnum="liscustomer.customer"
                         :numRange="'custDocs'"
-                        :modi="dv.modi"
+                        :modi="modi"
                     />
                 </l-tab-panel>
             </l-tab-panels>
@@ -1147,98 +1106,93 @@
 
 <script>
 export default {
-    props: ["dv", "tabInfo", "isChild"],
+    props: ["tabInfo", "isChild", "pCompany", "pCustomer", "modi"],
     data() {
         return {
-            dvt: {
-                liscustomers: {},
-                isEdelMember: false,
-                isEinvMember: false,
-            },
+            liscustomer: {},
+
+            isEdelMember: false,
+            isEinvMember: false,
+
             tab: "Genel",
             isAlertMessage: false,
             alertMessage: "",
-            lockKeyParams: {
-                company: this.dv.liscustomers.company,
-                lid: "BAST02",
-                lockkey: this.dv.liscustomers.customer,
-            },
         };
     },
 
     methods: {
         async btnSave() {
-        await this.lis.function("BAST02/02-btnSave", this.dv);
-        if (this.isChild != true) {
-              this.cancel();
-        } else {
-              this.$emit("cancel")
+            await this.lis.function("BAST02/02-btnSave", {
+                liscustomer: this.liscustomer,
+                liscusmat: this.liscusmat,
+            });
+            if (this.isChild != true) {
+                this.cancel();
+            } else {
+                this.$emit("cancel");
             }
-            
-            
         },
 
         async cancel() {
-            console.log("Cancel");
             this.tabInfo.blockGoToTransaction = false;
-            this.dv.lisDialog = "BAST02D01";
-            this.dv.liscustomers = [];
+            this.$emit("cancel");
+            this.liscustomer = {};
         },
         async pushNewBank() {
-            let newBank = { ...this.dv.liscustomers.custbanks[0] };
+            let newBank = { ...this.liscustomer.custbanks[0] };
             console.log(newBank);
             for (let i in newBank) {
                 newBank[i] = "";
             }
 
-            this.dv.sc.isCustomer.custbanks.push(newBank);
+            this.liscustomer.custbanks.push(newBank);
         },
         async pushNewAddress() {
-            let newAddress = { ...this.dv.liscustomers.custaddress[0] };
+            let newAddress = { ...this.liscustomer.custaddress[0] };
 
             for (let i in newAddress) {
                 newAddress[i] = "";
             }
             newAddress._id = undefined;
             newAddress.adrnum =
-                this.dv.liscustomers.custaddress[
-                    this.dv.liscustomers.custaddress.length - 1
+                this.liscustomer.custaddress[
+                    this.liscustomer.custaddress.length - 1
                 ].adrnum + 1;
 
-            this.dv.liscustomers.custaddress.push(newAddress);
+            this.liscustomer.custaddress.push(newAddress);
         },
 
         async pushNewNote() {
-            let newNote = { ...this.dv.liscustomers.custnotes[0] };
+            let newNote = { ...this.liscustomer.custnotes[0] };
 
             for (let i in newNote) {
                 newNote[i] = "";
             }
 
             newNote._id = undefined;
-            this.dv.liscustomers.custnotes.push(newNote);
+            this.liscustomer.custnotes.push(newNote);
         },
 
         async pushNewPer() {
-            let newPer = { ...this.dv.liscustomers.custper[0] };
+            let newPer = { ...this.liscustomer.custper[0] };
 
             for (let i in newPer) {
                 newPer[i] = "";
             }
 
-            this.dv.liscustomers.custper.push(newPer);
+            this.liscustomer.custper.push(newPer);
         },
 
         async removeBank(bank) {
-            this.dv.liscustomers.custbanks = [
-                ...this.dv.liscustomers.custbanks.filter(
+            this.liscustomer.custbanks = [
+                ...this.liscustomer.custbanks.filter(
                     (e) => !((e._id == bank._id) & (e.banknum == bank.banknum))
                 ),
             ];
         },
         async removeAddress(adr) {
-            this.dv.liscustomers.custaddress = [
-                ...this.dv.liscustomers.custaddress.filter(
+            this.liscustomer.custaddress = [
+                ...this.liscustomer.custaddress.filter(
                     (e) =>
                         !(
                             (e._id == adr._id) &
@@ -1248,16 +1202,16 @@ export default {
             ];
         },
         async removeNote(note) {
-            this.dv.liscustomers.custnotes = [
-                ...this.dv.liscustomers.custnotes.filter(
+            this.liscustomer.custnotes = [
+                ...this.liscustomer.custnotes.filter(
                     (e) =>
                         !((e._id == note._id) & (e.notetitle == note.notetitle))
                 ),
             ];
         },
         async removePer(per) {
-            this.dv.liscustomers.custper = [
-                ...this.dv.liscustomers.custper.filter(
+            this.liscustomer.custper = [
+                ...this.liscustomer.custper.filter(
                     (e) =>
                         !(
                             (e._id == per._id) &
@@ -1267,18 +1221,29 @@ export default {
                 ),
             ];
         },
-     
     },
-    mounted() {
-        
-        this.dvt.isEdelMember =
-            this.dv.liscustomers.edelmember?.length > 0 ? true : false;
-        this.dvt.isEinvMember =
-          this.dv.liscustomers.einvmember?.length > 0 ? true : false;
-            
+    async mounted() {
+        let myReturn = await this.lis.function("BAST02/02-init", {
+            company: this.pCompany,
+            customer: this.pCustomer,
+        });
+
+        this.liscustomer = myReturn.liscustomer;
+        this.liscusmat = myReturn.liscusmat;
+
+        this.isEdelMember =
+            this.liscustomer.edelmember?.length > 0 ? true : false;
+        this.isEinvMember =
+            this.liscustomer.einvmember?.length > 0 ? true : false;
     },
     async beforeUnmount() {
-        await this.lis.function("cls-system.unlock", this.lockKeyParams);
+        if (this.modi == 1) {
+            await this.lis.function("cls-system.unlock", {
+                company: this.pCompany,
+                lid: "BAST02",
+                lockkey: this.pCustomer,
+            });
+        }
     },
 };
 </script>

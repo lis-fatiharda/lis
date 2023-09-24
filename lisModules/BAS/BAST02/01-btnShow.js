@@ -5,7 +5,9 @@ export default async function (dv) {
   if (dv.lisCustomerList.filter((e) => e._selected == true).length > 0) {
     let selectedRow = dv.lisCustomerList.filter((e) => e._selected == true)[0];
 
-    dv.liscustomers = await liscustomers.findById(selectedRow._id);
+    dv.pCompany = selectedRow.company;
+    dv.pCustomer = selectedRow.customer;
+    
   } else {
     throw new Error("Lütfen Bir Satır Seçiniz");
   }

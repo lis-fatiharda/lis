@@ -4,7 +4,7 @@
 export default async function saveMovement(pLisinvdocs, pMovecode, pMod) {
     // Controls before save --------------------------------
 
-    let olisinvdocsOld = {};
+    let olisinvdocsOld = await lisinvdocs.findOne({ _id: pLisinvdocs._id });
 
     for (let i in pLisinvdocs.items) {
         await this.ctrlMaterialForMove(
@@ -48,23 +48,39 @@ export default async function saveMovement(pLisinvdocs, pMovecode, pMod) {
 
         //--- Check availibility of material-
 
-        if (pLisinvdocs.items[i].postway == 1) {
-            await this.checkAvailibility(
-                pLisinvdocs.company,
-                pLisinvdocs.items[i].plant,
-                pLisinvdocs.items[i].warehouse,
-                pLisinvdocs.items[i].stockplace,
-                pLisinvdocs.items[i].specialstock,
-                pLisinvdocs.items[i].batchnum,
+        if ((pLisinvdocs.items[i].postway == 1 & pLisinvdocs._deleted == false) | (pLisinvdocs.items[i].postway == 0 & pLisinvdocs._deleted == true)) {
 
-                pLisinvdocs.items[i].stocktype,
-                pLisinvdocs.docdate,
-                pLisinvdocs.items[i].material,
-                pLisinvdocs.items[i].variant,
-                pLisinvdocs.items[i].skquantity
-            );
+            if (olisinvdocsOld != null) {
+                var olisinvdocsOldItem = olisinvdocsOld.items.filter(e => {
+                    return e.plant == pLisinvdocs.items[i].plant & e.warehouse == pLisinvdocs.items[i].warehouse & e.stockplace == pLisinvdocs.items[i].stockplace &
+                        e.specialstock == pLisinvdocs.items[i].specialstock & e.batchnum == pLisinvdocs.items[i].batchnum
+                })
+            }
+
+            let ctrlQuantity = pLisinvdocs.items[i].skquantity - olisinvdocsOldItem?.skquantity;
+
+            if (ctrlQuantity > 0) {
+                await this.checkAvailibility(
+                    pLisinvdocs.company,
+                    pLisinvdocs.items[i].plant,
+                    pLisinvdocs.items[i].warehouse,
+                    pLisinvdocs.items[i].stockplace,
+                    pLisinvdocs.items[i].specialstock,
+                    pLisinvdocs.items[i].batchnum,
+
+                    pLisinvdocs.items[i].stocktype,
+                    pLisinvdocs.docdate,
+                    pLisinvdocs.items[i].material,
+                    pLisinvdocs.items[i].variant,
+                    ctrlQuantity
+                );
+            }
+            
         }
     }
+
+    // Save The Document ######################################################
+
     if (pMod <= 0) {
         // Get Document Number ---------------------------------------
 
@@ -85,7 +101,7 @@ export default async function saveMovement(pLisinvdocs, pMovecode, pMod) {
         // Update lisinvstocks ---------------------------------
     }
     if (pMod == 1) {
-        olisinvdocsOld = await lisinvdocs.findOne({ _id: pLisinvdocs._id });
+
 
         let lisinvdocsSave = new lisinvdocs(pLisinvdocs);
 

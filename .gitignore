@@ -34,6 +34,8 @@ lisRunner/configs/main-lisEnv.js
 *.sw?
 .env
 .envite.json
+package.json
+package-lock.json
 
 # media files
 *.jpg

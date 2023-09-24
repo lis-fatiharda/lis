@@ -5,7 +5,6 @@
 //  string : lockkey,
 //  string : createdby,
 // }
-import lislocks from "../../../lisModels/lislocks.js";
 async function lock(Pcompany, Plid, Plockkey, Pcreatedby) {
   let Preturn = false;
 
@@ -24,7 +23,7 @@ async function lock(Pcompany, Plid, Plockkey, Pcreatedby) {
   olislocks.company = Pcompany;
   olislocks.lid = Plid;
   olislocks.lockkey = Plockkey;
-  olislocks._createdby = Pcreatedby;
+  olislocks._createdby = sys_user;
   olislocks.createdat = new Date().toString();
   console.log(olislocks);
 

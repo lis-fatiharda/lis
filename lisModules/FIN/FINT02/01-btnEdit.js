@@ -7,6 +7,9 @@ export default async function (dv) {
     } else {
         throw new Error("Lütfen Bir Satır Seçiniz");
     }
+
+    await Finance.ctrlAuthorization(dv.lisfindocs, 1);
+
     let isLocked = await System.lock(
         dv.lisfindocs.company,
         "FINT02",

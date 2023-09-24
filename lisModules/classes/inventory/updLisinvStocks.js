@@ -1,3 +1,4 @@
+
 export default async function saveMovement(pLisinvdocs, plisinvdocsOld) {
     // Controls before save --------------------------------
 
@@ -11,55 +12,108 @@ export default async function saveMovement(pLisinvdocs, plisinvdocsOld) {
                 company: plisinvdocsOld.company,
                 plant: myLisinvItem.plant,
                 material: myLisinvItem.material,
+                variant: myLisinvItem.variant,
                 warehouse: myLisinvItem.warehouse,
                 stockplace: myLisinvItem.stockplace,
                 specialstock: myLisinvItem.specialstock,
                 batchnum: myLisinvItem.batchnum,
             });
 
-            if (myLisinvItem.postway == 1) {
-                if (myLisinvItem.stocktype == 0)
-                    olisinvstocks.aquantity += myLisinvItem.skquantity;
-                if (myLisinvItem.stocktype == 1)
-                    olisinvstocks.qquantity += myLisinvItem.skquantity;
-                if (myLisinvItem.stocktype == 2)
-                    olisinvstocks.bquantity += myLisinvItem.skquantity;
-                if (myLisinvItem.stocktype == 3)
-                    olisinvstocks.rquantity += myLisinvItem.skquantity;
+            if (olisinvstocks == null) {
+                olisinvstocks = await lis.objectNew('lisinvstocks');
+                lis.objectMove(pLisinvdocs, olisinvstocks);
+                lis.objectMove(myLisinvItem, olisinvstocks);
 
-                olisinvstocks.quantity =
-                    olisinvstocks.aquantity +
-                    olisinvstocks.qquantity +
-                    olisinvstocks.bquantity +
-                    olisinvstocks.rquantity;
-            } else {
-                if (myLisinvItem.stocktype == 0)
-                    olisinvstocks.aquantity -= myLisinvItem.skquantity;
-                if (myLisinvItem.stocktype == 1)
-                    olisinvstocks.qquantity -= myLisinvItem.skquantity;
-                if (myLisinvItem.stocktype == 2)
-                    olisinvstocks.bquantity -= myLisinvItem.skquantity;
-                if (myLisinvItem.stocktype == 3)
-                    olisinvstocks.rquantity -= myLisinvItem.skquantity;
+                if (myLisinvItem.postway == 1) {
+                    if (myLisinvItem.stocktype == 0)
+                        olisinvstocks.aquantity += myLisinvItem.skquantity;
+                    if (myLisinvItem.stocktype == 1)
+                        olisinvstocks.qquantity += myLisinvItem.skquantity;
+                    if (myLisinvItem.stocktype == 2)
+                        olisinvstocks.bquantity += myLisinvItem.skquantity;
+                    if (myLisinvItem.stocktype == 3)
+                        olisinvstocks.rquantity += myLisinvItem.skquantity;
 
-                olisinvstocks.quantity =
-                    olisinvstocks.aquantity +
-                    olisinvstocks.qquantity +
-                    olisinvstocks.bquantity +
-                    olisinvstocks.rquantity;
-            }
-            await lisinvstocks.findOneAndUpdate(
-                {
-                    _id: olisinvstocks._id,
-                },
-                {
-                    quantity: olisinvstocks.quantity,
-                    aquantity: olisinvstocks.aquantity,
-                    qquantity: olisinvstocks.qquantity,
-                    bquantity: olisinvstocks.bquantity,
-                    rquantity: olisinvstocks.rquantity,
+                    olisinvstocks.quantity =
+                        olisinvstocks.aquantity +
+                        olisinvstocks.qquantity +
+                        olisinvstocks.bquantity +
+                        olisinvstocks.rquantity;
+                } else {
+                    if (myLisinvItem.stocktype == 0)
+                        olisinvstocks.aquantity -= myLisinvItem.skquantity;
+                    if (myLisinvItem.stocktype == 1)
+                        olisinvstocks.qquantity -= myLisinvItem.skquantity;
+                    if (myLisinvItem.stocktype == 2)
+                        olisinvstocks.bquantity -= myLisinvItem.skquantity;
+                    if (myLisinvItem.stocktype == 3)
+                        olisinvstocks.rquantity -= myLisinvItem.skquantity;
+
+                    olisinvstocks.quantity =
+                        olisinvstocks.aquantity +
+                        olisinvstocks.qquantity +
+                        olisinvstocks.bquantity +
+                        olisinvstocks.rquantity;
                 }
-            );
+
+                await lisinvstocks.create(olisinvstocks);
+            } else {
+
+                if (myLisinvItem.postway == 1) {
+                    if (myLisinvItem.stocktype == 0)
+                        olisinvstocks.aquantity += myLisinvItem.skquantity;
+                    if (myLisinvItem.stocktype == 1)
+                        olisinvstocks.qquantity += myLisinvItem.skquantity;
+                    if (myLisinvItem.stocktype == 2)
+                        olisinvstocks.bquantity += myLisinvItem.skquantity;
+                    if (myLisinvItem.stocktype == 3)
+                        olisinvstocks.rquantity += myLisinvItem.skquantity;
+
+                    olisinvstocks.quantity =
+                        olisinvstocks.aquantity +
+                        olisinvstocks.qquantity +
+                        olisinvstocks.bquantity +
+                        olisinvstocks.rquantity;
+                } else {
+                    if (myLisinvItem.stocktype == 0)
+                        olisinvstocks.aquantity -= myLisinvItem.skquantity;
+                    if (myLisinvItem.stocktype == 1)
+                        olisinvstocks.qquantity -= myLisinvItem.skquantity;
+                    if (myLisinvItem.stocktype == 2)
+                        olisinvstocks.bquantity -= myLisinvItem.skquantity;
+                    if (myLisinvItem.stocktype == 3)
+                        olisinvstocks.rquantity -= myLisinvItem.skquantity;
+
+                    olisinvstocks.quantity =
+                        olisinvstocks.aquantity +
+                        olisinvstocks.qquantity +
+                        olisinvstocks.bquantity +
+                        olisinvstocks.rquantity;
+                }
+
+                if (olisinvstocks.quantity == 0 & olisinvstocks.aquantity == 0 & olisinvstocks.qquantity == 0 &
+                    olisinvstocks.bquantity == 0 & olisinvstocks.rquantity == 0) {
+                    await lisinvstocks.deleteOne({
+                        _id: olisinvstocks._id
+                    })
+                } else {
+                    await lisinvstocks.findOneAndUpdate(
+                        {
+                            _id: olisinvstocks._id,
+                        },
+                        {
+                            quantity: olisinvstocks.quantity,
+                            aquantity: olisinvstocks.aquantity,
+                            qquantity: olisinvstocks.qquantity,
+                            bquantity: olisinvstocks.bquantity,
+                            rquantity: olisinvstocks.rquantity,
+                        }
+                    );
+                }
+
+            }
+
+
         }
     }
     // Add records for pLisinvdocs --------------------------------
@@ -71,6 +125,7 @@ export default async function saveMovement(pLisinvdocs, plisinvdocsOld) {
             company: pLisinvdocs.company,
             plant: myLisinvItem.plant,
             material: myLisinvItem.material,
+            variant: myLisinvItem.variant,
             warehouse: myLisinvItem.warehouse,
             stockplace: myLisinvItem.stockplace,
             specialstock: myLisinvItem.specialstock,
@@ -78,12 +133,7 @@ export default async function saveMovement(pLisinvdocs, plisinvdocsOld) {
         });
 
         if (olisinvstocks == null) {
-            olisinvstocks = new lisinvstocks(
-                lisinvstocks.prototype.schema.tree
-            );
-
-            olisinvstocks = olisinvstocks._doc;
-
+            olisinvstocks = await lis.objectNew('lisinvstocks');
             lis.objectMove(pLisinvdocs, olisinvstocks);
             lis.objectMove(myLisinvItem, olisinvstocks);
 
@@ -151,18 +201,27 @@ export default async function saveMovement(pLisinvdocs, plisinvdocsOld) {
                     olisinvstocks.bquantity +
                     olisinvstocks.rquantity;
             }
-            await lisinvstocks.findOneAndUpdate(
-                {
-                    _id: olisinvstocks._id,
-                },
-                {
-                    quantity: olisinvstocks.quantity,
-                    aquantity: olisinvstocks.aquantity,
-                    qquantity: olisinvstocks.qquantity,
-                    bquantity: olisinvstocks.bquantity,
-                    rquantity: olisinvstocks.rquantity,
-                }
-            );
+
+            if (olisinvstocks.quantity == 0 & olisinvstocks.aquantity == 0 & olisinvstocks.qquantity == 0 &
+                olisinvstocks.bquantity == 0 & olisinvstocks.rquantity == 0) {
+                await lisinvstocks.deleteOne({
+                    _id: olisinvstocks._id
+                })
+            } else {
+                await lisinvstocks.findOneAndUpdate(
+                    {
+                        _id: olisinvstocks._id,
+                    },
+                    {
+                        quantity: olisinvstocks.quantity,
+                        aquantity: olisinvstocks.aquantity,
+                        qquantity: olisinvstocks.qquantity,
+                        bquantity: olisinvstocks.bquantity,
+                        rquantity: olisinvstocks.rquantity,
+                    }
+                );
+            }
+
         }
     }
 }

@@ -168,15 +168,47 @@
                         <q-avatar color="amber" text-color="white">S</q-avatar>
                         Stok Yeri
                     </l-chip>
+
+                    <l-space />
+                    <l-btn
+                        label="Runcode"
+                        outline
+                        dense
+                        @click="openRuncode()"
+                    />
                 </l-div-flex>
             </l-card-section>
         </l-card>
+
+        <l-dialog v-model="isShowRuncode" persistent>
+            <q-bar :class="`bg-${tabInfo.moduleColor} text-black`">
+                <l-toolbar-title class="text-black"> RUNCODE</l-toolbar-title>
+
+                <l-btn
+                    v-close-popup
+                    dense
+                    icon="close"
+                    color="negative"
+                    @click="isShowRuncode = false"
+                />
+            </q-bar>
+
+            <l-card style="height: 100%">
+                <q-editor
+                    v-model="mv.lisfin002.items[selectedRow].runcode"
+                    min-height="5rem"
+                    class="bg-grey-1"
+                />
+            </l-card>
+
+            <!--  Page Ends **************************************** -->
+        </l-dialog>
         <!--Searching Criterias Layer-->
         <l-table
             v-model="mv.lisfin002.items"
             :columns="myColumnsfin02items"
             :context="contextMenu"
-            height="100vh"
+            height="60vh"
             @keydown="if ($event.key == 'Insert') this.pushNewItem($event);"
         />
     </l-div>
@@ -189,6 +221,8 @@ export default {
 
     data() {
         return {
+            isShowRuncode: false,
+            selectedRow: -1,
             contextMenu: [
                 {
                     name: "Satır Ekle",
@@ -262,46 +296,6 @@ export default {
 
                 {
                     type: "selectmenu",
-                    label: "Vadeli Kağıt Statüsü",
-                    value: "futpaperstat",
-                    options: [
-                        { futpapertype: 1, value: 0, stext: "None" },
-                        { futpapertype: 1, value: 1, stext: "Portföyde" },
-                        { futpapertype: 1, value: 2, stext: "Ciro Edildi" },
-                        { futpapertype: 1, value: 3, stext: "Bankada" },
-                        { futpapertype: 1, value: 4, stext: "Ödendi" },
-                        { futpapertype: 1, value: 5, stext: "Müşt. İade Edildi" },
-                        { futpapertype: 1, value: 6, stext: "Portfoyde (Karşılıksız)" },
-                        { futpapertype: 1, value: 7, stext: "Müşt. İade (Karşılıksız)" },
-                        { futpapertype: 1, value: 8, stext: "Portföyde (Ciro Karşılıksız)" },
-                        { futpapertype: 1, value: 9, stext: "Bankada (Kırdırılacak)" },
-                        { futpapertype: 1, value: 10, stext: "Bankada (Kırdırıldı)" },
-                        { futpapertype: 2, value: 0, stext: "None" },
-                        { futpapertype: 2, value: 1, stext: "Portföyde" },
-                        { futpapertype: 2, value: 2, stext: "Ciro Edildi" },
-                        { futpapertype: 2, value: 3, stext: "Bankada" },
-                        { futpapertype: 2, value: 4, stext: "Ödendi" },
-                        { futpapertype: 2, value: 5, stext: "Müşt. İade Edildi" },
-                        { futpapertype: 2, value: 6, stext: "Portfoyde (Karşılıksız)" },
-                        { futpapertype: 2, value: 7, stext: "Müşt. İade (Karşılıksız)" },
-                        { futpapertype: 2, value: 8, stext: "Portföyde (Ciro Karşılıksız)" },
-                        { futpapertype: 2, value: 9, stext: "Bankada (Kırdırılacak)" },
-                        { futpapertype: 2, value: 10, stext: "Bankada (Kırdırıldı)" },
-                        { futpapertype: 3, value: 0, stext: "None" },
-                        { futpapertype: 3, value: 11, stext: "Alınan Akrd.Mek.Açık" },
-                        { futpapertype: 3, value: 12, stext: "Alınan Akrd.Mek.Güvencede" },
-                        { futpapertype: 3, value: 13, stext: "Alınan Akrd.Mek.Ödenmiş" },
-                        { futpapertype: 3, value: 11, stext: "Verilen Akrd.Mek.Açık" },
-                        { futpapertype: 3, value: 12, stext: "Verilen Akrd.Mek.Kırdırılmış" },
-                        { futpapertype: 3, value: 13, stext: "Verilen Akrd.Mek.Ödenmiş" }
-                    ],
-                    optValue: "value",
-                    optTitles: { futpapertype: "Kağıt Tipi", value: "Tip", stext: "Açıklama" },
-                    optFilter: { futpapertype: "$futpapertype" },
-                },
-
-                {
-                    type: "selectmenu",
                     label: "Vadeli Kağıt Tipi",
                     value: "futpapertype",
                     options: [
@@ -314,7 +308,121 @@ export default {
                     optTitles: { value: "Tip", stext: "Açıklama" },
                 },
 
-                
+                {
+                    type: "selectmenu",
+                    label: "Vadeli Kağıt Statüsü",
+                    value: "futpaperstat",
+                    options: [
+                        { futpapertype: 1, value: 0, stext: "None" },
+                        { futpapertype: 1, value: 1, stext: "Portföyde" },
+                        { futpapertype: 1, value: 2, stext: "Ciro Edildi" },
+                        { futpapertype: 1, value: 3, stext: "Bankada" },
+                        { futpapertype: 1, value: 4, stext: "Ödendi" },
+                        {
+                            futpapertype: 1,
+                            value: 5,
+                            stext: "Müşt. İade Edildi",
+                        },
+                        {
+                            futpapertype: 1,
+                            value: 6,
+                            stext: "Portfoyde (Karşılıksız)",
+                        },
+                        {
+                            futpapertype: 1,
+                            value: 7,
+                            stext: "Müşt. İade (Karşılıksız)",
+                        },
+                        {
+                            futpapertype: 1,
+                            value: 8,
+                            stext: "Portföyde (Ciro Karşılıksız)",
+                        },
+                        {
+                            futpapertype: 1,
+                            value: 9,
+                            stext: "Bankada (Kırdırılacak)",
+                        },
+                        {
+                            futpapertype: 1,
+                            value: 10,
+                            stext: "Bankada (Kırdırıldı)",
+                        },
+                        { futpapertype: 2, value: 0, stext: "None" },
+                        { futpapertype: 2, value: 1, stext: "Portföyde" },
+                        { futpapertype: 2, value: 2, stext: "Ciro Edildi" },
+                        { futpapertype: 2, value: 3, stext: "Bankada" },
+                        { futpapertype: 2, value: 4, stext: "Ödendi" },
+                        {
+                            futpapertype: 2,
+                            value: 5,
+                            stext: "Müşt. İade Edildi",
+                        },
+                        {
+                            futpapertype: 2,
+                            value: 6,
+                            stext: "Portfoyde (Karşılıksız)",
+                        },
+                        {
+                            futpapertype: 2,
+                            value: 7,
+                            stext: "Müşt. İade (Karşılıksız)",
+                        },
+                        {
+                            futpapertype: 2,
+                            value: 8,
+                            stext: "Portföyde (Ciro Karşılıksız)",
+                        },
+                        {
+                            futpapertype: 2,
+                            value: 9,
+                            stext: "Bankada (Kırdırılacak)",
+                        },
+                        {
+                            futpapertype: 2,
+                            value: 10,
+                            stext: "Bankada (Kırdırıldı)",
+                        },
+                        { futpapertype: 3, value: 0, stext: "None" },
+                        {
+                            futpapertype: 3,
+                            value: 11,
+                            stext: "Alınan Akrd.Mek.Açık",
+                        },
+                        {
+                            futpapertype: 3,
+                            value: 12,
+                            stext: "Alınan Akrd.Mek.Güvencede",
+                        },
+                        {
+                            futpapertype: 3,
+                            value: 13,
+                            stext: "Alınan Akrd.Mek.Ödenmiş",
+                        },
+                        {
+                            futpapertype: 3,
+                            value: 11,
+                            stext: "Verilen Akrd.Mek.Açık",
+                        },
+                        {
+                            futpapertype: 3,
+                            value: 12,
+                            stext: "Verilen Akrd.Mek.Kırdırılmış",
+                        },
+                        {
+                            futpapertype: 3,
+                            value: 13,
+                            stext: "Verilen Akrd.Mek.Ödenmiş",
+                        },
+                    ],
+                    optValue: "value",
+                    optTitles: {
+                        futpapertype: "Kağıt Tipi",
+                        value: "Tip",
+                        stext: "Açıklama",
+                    },
+                    optFilter: { futpapertype: "$futpapertype" },
+                },
 
                 {
                     type: "selectmenu",
@@ -325,11 +433,28 @@ export default {
                     optTitles: { unit: "Birim", stext: "Açıklama" },
                     optFilter: { unittype: 1 },
                 },
+
+                {
+                    type: "string",
+                    label: "Kod",
+                    value: "runcode",
+                },
             ],
         };
     },
 
     methods: {
+        async openRuncode() {
+            this.selectedRow = await this.lis.findSelectedIndex(
+                this.mv.lisfin002.items
+            );
+
+            if (this.selectedRow == -1) {
+                this.lis.alert("w", "Lütfen Bir Satır Seçiniz!");
+                return;
+            }
+            this.isShowRuncode = true;
+        },
         async btnSave() {
             await this.lis.function(
                 "BAST01/SUPS/lisfin002/02-btnSave",

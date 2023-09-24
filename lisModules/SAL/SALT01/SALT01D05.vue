@@ -91,7 +91,7 @@
                 />
                 <l-select
                     v-model="vat.novatcode"
-                    :options="dv.noVatReasons"
+                    options="lisbas013"
                     :label="this.$gl(`KDV Muafiyet Sebebi`, `No Vat Reasons`)"
                     style="width: 150px"
                     dense
@@ -100,6 +100,7 @@
                     optValue="taxcode"
                     optTitle="taxname"
                     optCaptions="taxcode"
+                    @selectedRow="vat.novattxt = $event.taxname"
                 />
 
                 <l-input
@@ -115,7 +116,7 @@
 
         <l-card-section class="row q-gutter-xs">
             <l-select
-                    :label="'Kur Metodu'"
+                    label="Kur Metodu"
                     map-options
                     v-model="dv.lissaldocs.exchmethod"
                     :options="[
@@ -156,5 +157,6 @@
 <script>
 export default {
     props: ["dv", "tabInfo"],
+
 };
 </script>

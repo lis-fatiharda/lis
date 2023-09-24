@@ -1,10 +1,3 @@
-import liscustomers from "../../../lisModels/liscustomers.js";
-import lisaccounts from "../../../lisModels/lisaccounts.js";
-import lisfindocs from "../../../lisModels/lisfindocs.js";
-
-import lisfin002 from "../../../lisModels/lisfin002.js";
-import lispur001 from "../../../lisModels/lispur001.js";
-import lispur002 from "../../../lisModels/lispur002.js";
 
 export default async function (plispurdocs) {
     const oliscustomers = await liscustomers.findOne({
@@ -19,9 +12,7 @@ export default async function (plispurdocs) {
         _deleted: false,
     });
     if (olisaccounts == undefined) throw new Error("Cari Hesap Bulunamadı!");
-    let olisfindocs = new lisfindocs(
-        lisfindocs.prototype.schema.tree
-    ).toObject();
+    let olisfindocs = lis.objectNew('lisfindocs');
     const olispur001 = await lispur001.findOne({
         company: plispurdocs.company,
         doctype: plispurdocs.doctype,
@@ -70,12 +61,10 @@ export default async function (plispurdocs) {
                     }
                 } else {
                     // create new lisfindocs_item
-                    let olisfindocs_item = new lisfindocs(
-                        lisfindocs.prototype.schema.tree
-                    ).toObject();
-                    olisfindocs_item = olisfindocs_item.items[0];
+                    let olisfindocs_item = lis.objectNew('lisfindocs.items');
                     //
                     lis.objectMove(myfin002_item, olisfindocs_item);
+                    
                     olisfindocs_item.acctype = olisaccounts.acctype;
                     olisfindocs_item.account = olisaccounts.account;
                     olisfindocs_item.glaccount = olisaccounts.glaccount;
@@ -120,10 +109,7 @@ export default async function (plispurdocs) {
                     }
                 } else {
                     // create new lisfindocs_item
-                    let olisfindocs_item = new lisfindocs(
-                        lisfindocs.prototype.schema.tree
-                    ).toObject();
-                    olisfindocs_item = olisfindocs_item.items[0];
+                    let olisfindocs_item = lis.objectNew('lisfindocs.items');
                     //
                     lis.objectMove(myfin002_item, olisfindocs_item);
                     olisfindocs_item.acctype = "G";

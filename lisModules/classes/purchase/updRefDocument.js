@@ -1,7 +1,5 @@
-import lispurdocs from "../../../lisModels/lispurdocs.js";
 
 export default async function updRefDocument(plispurdocs) {
-    console.log("updRefDocument");
 
     for (let i in plispurdocs.items) {
         let pLisPurItem = plispurdocs.items[i];

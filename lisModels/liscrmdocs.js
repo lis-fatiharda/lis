@@ -59,7 +59,7 @@ import mongoose from "mongoose";
   const offerItemsSchema = new mongoose.Schema({
     type: { type: String, label: "Kalem tipi", default: "" },
     material: { type: String, label: "Malzeme Kodu", default: "" },
-    variant: { type: Object, label: "Varyant", default: {} },
+    variant: { type: Object, label: "Varyant", default: '' },
     mtext: { type: String, label: "Malzeme Adı", default: "" },
     quantity: { type: Number, label: "Miktar", default: 0 },
     qunit: { type: String, label: "Birim", default: "" },
@@ -104,7 +104,7 @@ import mongoose from "mongoose";
   const materialsSchema = new mongoose.Schema({
     company: { type: String, label: "Firma Kodu", default: "" },
     material: { type: String, label: "Malzeme Kodu", default: "" },
-    variant: { type: Object, label: "Varyant", default: {} },
+    variant: { type: Object, label: "Varyant", default: '' },
     mattype: {
       type: String,
       label: "Malzeme Tipi",

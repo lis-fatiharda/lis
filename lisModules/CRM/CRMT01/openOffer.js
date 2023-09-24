@@ -10,7 +10,7 @@ export default async function (item) {
 
   // Set Some Infos
 
-  item.isapprove = "Yok";
+  item.issignature = "Yok";
   item.docstat = "Açık";
 
   // Save the Material Card**************

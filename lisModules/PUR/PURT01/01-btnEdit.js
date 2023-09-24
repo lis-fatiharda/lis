@@ -8,7 +8,7 @@ export default async function (dv) {
     throw new Error("Lütfen Bir Satır Seçiniz");
   }
 
-  dv.lispurdocs = await Purchase.ctrlAuthorization(dv.lispurdocs, 1);
+  await Purchase.ctrlAuthorization(dv.lispurdocs, 1);
 
   if (dv.lispurdocs.docstat == 2) {
     throw new Error("Kapalı Statüdeki Belge Düzenlenemez!");

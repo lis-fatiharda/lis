@@ -9,8 +9,9 @@ export default async function (dv) {
         purdept: lis.like(dv.sc.purdept),
         vendor: lis.like(dv.sc.vendor),
         name1: lis.like(dv.sc.name1),
-        material: lis.like(dv.sc.material),
-        mtext: lis.like(dv.sc.mtext),
+        "items.material": lis.like(dv.sc.material),
+        "items.mtext": lis.like(dv.sc.mtext),
+        "items.variant": lis.like(dv.sc.variant),
 
         docstat:
             (dv.sc.docStat === null) | (dv.sc.docStat === 99)

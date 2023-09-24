@@ -4,14 +4,13 @@
 //  string : lid,
 //  string : lockkey,
 // }
-import lislocks from "../../../lisModels/lislocks.js";
-export default async function unlock(params) {
+export default async function unlock({ company, lid, lockkey }) {
 
     await lislocks
         .deleteOne({
-            company: params.company,
-            lid: params.lid,
-            lockkey: params.lockkey,
+            company: company,
+            lid: lid,
+            lockkey: lockkey,
         })
         .then((res) => {
             return true;

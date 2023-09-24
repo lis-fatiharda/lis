@@ -30,7 +30,6 @@
   <q-dialog v-model="isShowItemDetail">
     <SALT01D31
       :dv="dv"
-      :cpdItemTypes="cpdItemTypes"
       :item="dv.lissaldocs.items[selectedRow]"
       :tabInfo="tabInfo"
     />
@@ -40,6 +39,7 @@
       :dv="dv"
       :item="dv.lissaldocs.items[selectedRowVar]"
       :tabInfo="tabInfo"
+      @ok="isShowItemVar = false"
     />
   </q-dialog>
   <BAST03D01mini
@@ -347,12 +347,6 @@ export default {
           label: this.$gl("Sil", "Delete"),
           value: "_deleted",
           type: "checkbox",
-        },
-        {
-          type: "string",
-          label: this.$gl("Malzeme Varyantı", "Material Variant"),
-          value: "varkey",
-          readonly: true,
         },
       ];
     },

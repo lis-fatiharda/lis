@@ -1,10 +1,3 @@
-import liscustomers from "../../../lisModels/liscustomers.js";
-import lisaccounts from "../../../lisModels/lisaccounts.js";
-import lisfindocs from "../../../lisModels/lisfindocs.js";
-
-import lisfin002 from "../../../lisModels/lisfin002.js";
-import lissal001 from "../../../lisModels/lissal001.js";
-import lissal002 from "../../../lisModels/lissal002.js";
 
 export default async function (plissaldocs) {
     const oliscustomers = await liscustomers.findOne({
@@ -19,9 +12,7 @@ export default async function (plissaldocs) {
         _deleted: false,
     });
     if (olisaccounts == undefined) throw new Error("Cari Hesap Bulunamadı!");
-    let olisfindocs = new lisfindocs(
-        lisfindocs.prototype.schema.tree
-    ).toObject();
+    let olisfindocs = lis.objectNew('lisfindocs');
     const olissal001 = await lissal001.findOne({
         company: plissaldocs.company,
         doctype: plissaldocs.doctype,
@@ -70,14 +61,13 @@ export default async function (plissaldocs) {
                         olisfindocs.items[myRow].dcredit +=
                             mySalItem[myfin002_item.valuefield];
                     }
+                    await lis.runcode(myfin002_item.runcode)
                 } else {
                     // create new lisfindocs_item
-                    let olisfindocs_item = new lisfindocs(
-                        lisfindocs.prototype.schema.tree
-                    ).toObject();
-                    olisfindocs_item = olisfindocs_item.items[0];
+                    let olisfindocs_item = lis.objectNew('lisfindocs.items');
                     //
                     lis.objectMove(myfin002_item, olisfindocs_item);
+                    await lis.runcode(myfin002_item.runcode)
                     olisfindocs_item.acctype = olisaccounts.acctype;
                     olisfindocs_item.account = olisaccounts.account;
                     olisfindocs_item.glaccount = olisaccounts.glaccount;
@@ -120,14 +110,13 @@ export default async function (plissaldocs) {
                         olisfindocs.items[myRow].dcredit +=
                             mySalItem[myfin002_item.valuefield];
                     }
+                    await lis.runcode(myfin002_item.runcode)
                 } else {
                     // create new lisfindocs_item
-                    let olisfindocs_item = new lisfindocs(
-                        lisfindocs.prototype.schema.tree
-                    ).toObject();
-                    olisfindocs_item = olisfindocs_item.items[0];
+                    let olisfindocs_item = lis.objectNew('lisfindocs.items');
                     //
                     lis.objectMove(myfin002_item, olisfindocs_item);
+                    await lis.runcode(myfin002_item.runcode)
                     olisfindocs_item.acctype = "G";
                     olisfindocs_item.account = myAccount;
                     olisfindocs_item.glaccount = olisfindocs_item.account;
