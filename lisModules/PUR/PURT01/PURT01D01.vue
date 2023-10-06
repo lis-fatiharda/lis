@@ -225,6 +225,7 @@
       icon="edit"
       color="negative"
       text-color="white"
+      @click="signDocument()"
     />
     <!--Table Layer---------------------------->
 
@@ -232,6 +233,7 @@
       v-model="dv.purDocList"
       :columns="myColumnsPur"
       :context="contextMenu"
+      height="fit"
       :readonly="true"
       @dblclick="btnEdit()"
     />
@@ -527,6 +529,13 @@ export default {
     //         },
     async init() {
       this.dv = await this.lis.function("PURT01/01-init", this.dv);
+    },
+    async signDocument() {
+      let selectedRowPur = this.dv.purDocList.filter(
+        (e) => e._selected == true
+      );
+      await this.lis.function("PURT01/signDocument", selectedRowPur[0]);
+      this.lis.alert("p", "Belge İmzalandı.");
     },
   },
 

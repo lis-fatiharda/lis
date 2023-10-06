@@ -723,20 +723,20 @@
                             v-if="
                                 dv.hProcessInt.toString().substring(1, 2) == '1'
                             "
-                            name="EDNT01D01"
                             v-model="dv.lisedndocsList"
                             :columns="custColumns"
                             :readonly="true"
+                            height="fit"
                         />
                         <l-table
                             v-if="
                                 dv.hProcessInt.toString().substring(1, 2) == '0'
                             "
-                            name="EDNT01D01"
                             v-model="dv.lisedndocsList"
                             :columns="vendColumns"
                             :context="contextMenu"
                             :readonly="true"
+                            height="fit"
                         />
                     </l-div>
                 </q-page>

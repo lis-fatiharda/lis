@@ -6,8 +6,5 @@ export default async function (dv) {
         doctype: dv.lisfindocs.doctype
     })
 
-
-    dv.postKeyList = olisfin003.postkeys;
-
-    return dv.postKeyList;
+    return olisfin003;
 }

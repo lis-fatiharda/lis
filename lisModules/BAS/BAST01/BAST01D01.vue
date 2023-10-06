@@ -165,7 +165,6 @@
             </l-card0>
             <!--Butons Layer Layer---------------------->
 
-                <l-btn-group>
                     <l-btn color="warning" icon="search" @click="btnSearch()" />
                     <l-btn
                         color="info"
@@ -178,7 +177,6 @@
                         icon="add"
                         @click="btnInsert(dv)"
                     />
-                </l-btn-group>
             <!--Table Layer---------------------------->
             <q-markup-table flat bordered dense separator="cell">
                 <thead>

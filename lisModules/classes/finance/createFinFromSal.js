@@ -12,7 +12,7 @@ export default async function (plissaldocs) {
         _deleted: false,
     });
     if (olisaccounts == undefined) throw new Error("Cari Hesap Bulunamadı!");
-    let olisfindocs = lis.objectNew('lisfindocs');
+    let olisfindocs = await lis.objectNew('lisfindocs');
     const olissal001 = await lissal001.findOne({
         company: plissaldocs.company,
         doctype: plissaldocs.doctype,
@@ -64,7 +64,7 @@ export default async function (plissaldocs) {
                     await lis.runcode(myfin002_item.runcode)
                 } else {
                     // create new lisfindocs_item
-                    let olisfindocs_item = lis.objectNew('lisfindocs.items');
+                    let olisfindocs_item = await lis.objectNew('lisfindocs.items');
                     //
                     lis.objectMove(myfin002_item, olisfindocs_item);
                     await lis.runcode(myfin002_item.runcode)
@@ -113,7 +113,7 @@ export default async function (plissaldocs) {
                     await lis.runcode(myfin002_item.runcode)
                 } else {
                     // create new lisfindocs_item
-                    let olisfindocs_item = lis.objectNew('lisfindocs.items');
+                    let olisfindocs_item = await lis.objectNew('lisfindocs.items');
                     //
                     lis.objectMove(myfin002_item, olisfindocs_item);
                     await lis.runcode(myfin002_item.runcode)

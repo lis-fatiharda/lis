@@ -68,15 +68,23 @@
         <!--Butons Layer Layer---------------------->
 
         <l-btn-group>
-            <l-btn color="warning" icon="search" @click="btnSearch(dv)" />
-            <l-btn color="primary" icon="edit" @click="btnEdit(dv)" />
-            <l-btn color="info" icon="visibility" @click="btnShow(dv)" />
-            <l-btn color="secondary" icon="add" @click="btnInsert(dv)" />
-            <l-btn color="negative" icon="delete" @click="btnDelete(dv)" />
+            <l-btn color="warning" icon="search" @click="btnSearch()" />
+            <l-btn color="primary" icon="edit" @click="btnEdit()" />
+            <l-btn color="info" icon="visibility" @click="btnShow()" />
+            <l-btn color="secondary" icon="add" @click="btnInsert()" />
+            <l-btn color="negative" icon="delete" @click="btnDelete()" />
         </l-btn-group>
 
         <!--Table Layer---------------------------->
-        <l-table name="DEVT01D01" v-model="dv.olismodels" :columns="tableColumns" :readonly="true"> </l-table>
+        <l-table
+            v-model="dv.olismodels"
+            :columns="tableColumns"
+            :readonly="true"
+            height="fit"
+            @dblclick="btnEdit()"
+            :summary="false"
+        >
+        </l-table>
     </l-div>
     <DEVT01D02 :dv="dv" :tabInfo="tabInfo" v-if="dv.lisDialog == 'DEVT01D02'" />
 </template>
@@ -150,26 +158,26 @@ export default {
             this.lis.alert("p", "Veri Tabanı Güncellendi.");
         },
 
-        async btnSearch(prop) {
-            this.dv = await this.lis.function("DEVT01/01-btnSearch", prop);
+        async btnSearch() {
+            this.dv = await this.lis.function("DEVT01/01-btnSearch", this.dv);
         },
-        async btnEdit(prop) {
-            this.dv = await this.lis.function("DEVT01/01-btnEdit", prop);
+        async btnEdit() {
+            this.dv = await this.lis.function("DEVT01/01-btnEdit", this.dv);
             this.tabInfo.blockGoToTransaction = true;
         },
-        async btnShow(prop) {
-            this.dv = await this.lis.function("DEVT01/01-btnShow", prop);
+        async btnShow() {
+            this.dv = await this.lis.function("DEVT01/01-btnShow", this.dv);
             this.tabInfo.blockGoToTransaction = true;
         },
-        async btnInsert(prop) {
-            this.dv = await this.lis.function("DEVT01/01-btnInsert", prop);
+        async btnInsert() {
+            this.dv = await this.lis.function("DEVT01/01-btnInsert", this.dv);
             this.tabInfo.blockGoToTransaction = true;
         },
-        async btnDelete(prop) {
-            this.dv = await this.lis.function("DEVT01/01-btnDelete", prop);
+        async btnDelete() {
+            this.dv = await this.lis.function("DEVT01/01-btnDelete", this.dv);
         },
-        async init(prop) {
-            this.dv = await this.lis.function("DEVT01/01-init", prop);
+        async init() {
+            this.dv = await this.lis.function("DEVT01/01-init", this.dv);
         },
     },
     mounted() {

@@ -1,14 +1,5 @@
 export default async function (Args) {
-    // Create Account
-
-    if (
-        (Args.liscustomer.acctype?.length > 0) &
-        (Args.liscustomer.glaccount?.length > 0) &
-        ((Args.liscustomer.account == undefined) |
-            (Args.liscustomer.account == ""))
-    ) {
-        Customer.createAccount(Args.liscustomer);
-    }
+    
 
     // Save the Document*********************
     if (Args.modi == 0) {
@@ -38,11 +29,24 @@ export default async function (Args) {
 
         await liscustomers.create(Args.liscustomer);
 
+        // Save the liscusmats*********************
+
+        Args.liscusmat.customer = Args.liscustomer.customer;
+        await liscusmats.create(Args.liscusmat);
+
+
+
     } else {
         // Update The Document**************
 
         await liscustomers
             .findOneAndUpdate({ _id: Args.liscustomer._id }, Args.liscustomer, {
+                new: true,
+                upsert: true,
+            });
+        
+        await liscusmats
+            .findOneAndUpdate({ _id: Args.liscusmats._id }, Args.liscusmats, {
                 new: true,
                 upsert: true,
             })
@@ -52,7 +56,16 @@ export default async function (Args) {
         await Emember.checkUser(Args.liscustomer);
     }
 
-    Args.liscustomer = {};
+    // Create Account
+
+    if (
+        (Args.liscustomer.acctype?.length > 0) &
+        (Args.liscustomer.glaccount?.length > 0) &
+        ((Args.liscustomer.account == undefined) |
+            (Args.liscustomer.account == ""))
+    ) {
+        Customer.createAccount(Args.liscustomer);
+    }
 
     return Args;
 }

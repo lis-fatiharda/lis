@@ -12,7 +12,7 @@ export default async function (plispurdocs) {
         _deleted: false,
     });
     if (olisaccounts == undefined) throw new Error("Cari Hesap Bulunamadı!");
-    let olisfindocs = lis.objectNew('lisfindocs');
+    let olisfindocs = await lis.objectNew('lisfindocs');
     const olispur001 = await lispur001.findOne({
         company: plispurdocs.company,
         doctype: plispurdocs.doctype,
@@ -61,7 +61,7 @@ export default async function (plispurdocs) {
                     }
                 } else {
                     // create new lisfindocs_item
-                    let olisfindocs_item = lis.objectNew('lisfindocs.items');
+                    let olisfindocs_item = await lis.objectNew('lisfindocs.items');
                     //
                     lis.objectMove(myfin002_item, olisfindocs_item);
                     
@@ -109,7 +109,7 @@ export default async function (plispurdocs) {
                     }
                 } else {
                     // create new lisfindocs_item
-                    let olisfindocs_item = lis.objectNew('lisfindocs.items');
+                    let olisfindocs_item = await lis.objectNew('lisfindocs.items');
                     //
                     lis.objectMove(myfin002_item, olisfindocs_item);
                     olisfindocs_item.acctype = "G";

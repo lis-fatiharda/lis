@@ -48,7 +48,7 @@
           icon="edit"
           color="negative"
           text-color="white"
-          @click="signDocument()"
+          @click="signDocument()"  
       /></l-div-flex>
       <l-table
         name="SALT01D09"

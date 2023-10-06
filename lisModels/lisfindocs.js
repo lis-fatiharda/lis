@@ -114,7 +114,6 @@ const schema = new mongoose.Schema(
     busarea: { type: String, label: "İş Alanı", default: "S" },
     doctype: { type: String, label: "Döküman tipi", default: "" },
     docnum: { type: String, label: "Döküman no", default: "" },
-    extdocnum: { type: String, label: "Harici Döküman no", default: "" },
     accstd: { type: Number, label: "Muhasebe Standardı", default: 1 },
     stext: { type: String, label: "Belge Açıklaması", default: "" },
 
@@ -133,6 +132,8 @@ const schema = new mongoose.Schema(
     signstat: [signstatSchema],
 
     //******************* */
+    extdoctype: { type: String, label: "Harici Döküman no", default: "" },
+    extdocnum: { type: String, label: "Harici Döküman no", default: "" },
     purdoctype: {
       type: String,
       label: "Referans Alış Döküman Tipi",

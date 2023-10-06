@@ -5,7 +5,8 @@ export default async function (dv) {
     dv.reportList = [];
     let accList = await lisaccounts
         .find({
-            acctype: "G",
+            company: dv.sc.company,
+            acctype: lis.like(dv.sc.acctype),
             account: lis.like(dv.sc.account),
             glaccount: lis.like(dv.sc.glaccount),
             _deleted: false,
@@ -28,7 +29,7 @@ export default async function (dv) {
                 $match: {
                     company: myAccount.company,
                     //   busarea: myAccount.busarea,
-                    //   acctype: myAccount.acctype,
+                    "items.acctype": myAccount.acctype,
                     "items.account": lis.like(myAccount.account),
                     "items.glaccount": lis.like(myAccount.glaccount),
 
@@ -56,9 +57,10 @@ export default async function (dv) {
                 $match: {
                     company: myAccount.company,
                     //   busarea: myAccount.busarea,
-                    //   acctype: myAccount.acctype,
+                    
                     //"items.account": { $regex: myAccount.account + ".*" },
                     //"items.glaccount": { $regex: myAccount.glaccount + ".*" },
+                    "items.acctype": myAccount.acctype,
                     "items.account": lis.like(myAccount.account),
                     "items.glaccount": lis.like(myAccount.glaccount),
                     postdate: {
@@ -86,6 +88,8 @@ export default async function (dv) {
         }
 
         dv.reportList.push({
+            company: myAccount.company,
+            acctype: myAccount.acctype,
             account: myAccount.account,
             glaccount: myAccount.glaccount,
             stext: myAccount.stext,

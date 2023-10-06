@@ -31,6 +31,7 @@ export default async function ({plisfindocs, cv}) {
                     let plisfindocs_item = await lis.objectNew('lisfindocs.items');
                     //
                     lis.objectMove(myfin002_item, plisfindocs_item);
+                    if (plisfindocs.items.length > 0) plisfindocs_item.itemnum = plisfindocs.items[plisfindocs.items.length - 1].itemnum + 10;
 
                     let oliscustomers = await liscustomers.findOne({ company: plisfindocs.company, customer: cv.customer });
                     if (oliscustomers == null) throw new Error('Cari Kartı Bulunamadı!');
@@ -79,9 +80,10 @@ export default async function ({plisfindocs, cv}) {
                 } else {
 
                     // create new lisfindocs_item
-                    let plisfindocs_item = lis.objectNew('lisfindocs.items');
+                    let plisfindocs_item = await lis.objectNew('lisfindocs.items');
                 //
                     lis.objectMove(myfin002_item, plisfindocs_item);
+                    if (plisfindocs.items.length > 0) plisfindocs_item.itemnum = plisfindocs.items[plisfindocs.items.length - 1].itemnum + 10;
                     plisfindocs_item.acctype = 'G';
                     plisfindocs_item.account = myAccount;
                     plisfindocs_item.glaccount = plisfindocs_item.account;

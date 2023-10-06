@@ -122,28 +122,30 @@
                     <l-btn
                         color="warning"
                         icon="search"
-                        @click="btnSearch(dv)"
+                        @click="btnSearch()"
                     />
                     <l-btn
                         color="info"
                         icon="visibility"
-                        @click="btnShow(dv)"
+                        @click="btnShow()"
                     />
 
-                    <l-btn color="primary" icon="edit" @click="btnEdit(dv)" />
+                    <l-btn color="primary" icon="edit" @click="btnEdit()" />
                     <l-btn
                         color="secondary"
                         icon="add"
-                        @click="btnInsert(dv)"
+                        @click="btnInsert()"
                     />
-                    <l-btn color="deep-orange" icon="print" @click="btnPrint(dv)" />
+                    <l-btn color="deep-orange" icon="print" @click="btnPrint()" />
              
      
 
             <l-table
                 v-model="dv.lisCustomerList"
                 :columns="myColumnsCus"
+                height="fit"
                 :readonly="true"
+                @dblclick="btnEdit()"
             />
         </l-div>
         <BAST02D02
@@ -283,22 +285,22 @@ export default {
                 console.log("not supported");
             }
         },
-        async btnSearch(prop) {
-            this.dv = await this.lis.function("BAST02/01-btnSearch", prop);
+        async btnSearch() {
+            this.dv = await this.lis.function("BAST02/01-btnSearch", this.dv);
           
         },
-        async btnEdit(prop) {
-            this.dv = await this.lis.function("BAST02/01-btnEdit", prop);
+        async btnEdit() {
+            this.dv = await this.lis.function("BAST02/01-btnEdit", this.dv);
             this.tabInfo.blockGoToTransaction = true;
            
         },
-        async btnShow(prop) {
-            this.dv = await this.lis.function("BAST02/01-btnShow", prop);
+        async btnShow() {
+            this.dv = await this.lis.function("BAST02/01-btnShow", this.dv);
             this.tabInfo.blockGoToTransaction = true;
             
         },
-        async btnInsert(prop) {
-            this.dv = await this.lis.function("BAST02/01-btnInsert", prop);
+        async btnInsert() {
+            this.dv = await this.lis.function("BAST02/01-btnInsert", this.dv);
             this.tabInfo.blockGoToTransaction = true;
            
         },
@@ -308,14 +310,9 @@ export default {
         },
             
        
-        async init(prop) {
+        async init() {
             this.dv = await this.lis.function("BAST02/01-init", this.dv);
         },
     },
-
-    // mounted() {
-    //     console.log("mounted bast01d01");
-    //     this.init(this.dv);
-    // },
 };
 </script>

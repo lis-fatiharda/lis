@@ -10,13 +10,16 @@
             this.$gl(`Kullanıcı Detayı`, `User Detail`)
           }}</l-toolbar-title>
 
-          <l-btn
+<div class="q-gutter-xs">
+  <l-btn
             v-if="dv.modi != 2"
             icon="save"
             color="teal"
             @click="btnSave()"
           />
           <l-btn icon="cancel" color="negative" @click="cancel()" />
+</div>
+          
         </l-toolbar>
       </l-toolbar>
 

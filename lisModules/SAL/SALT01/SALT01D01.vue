@@ -214,6 +214,7 @@
       icon="edit"
       color="negative"
       text-color="white"
+      @click="signDocument()"
     />
 
     <!--Table Layer---------------------------->
@@ -222,8 +223,7 @@
       v-model="dv.salDocList"
       :columns="myColumns"
       :context="contextMenu"
-      :width="'100%'"
-      style="height: 100%"
+      height="fit"
       :readonly="true"
       @dblclick="btnEdit()"
     />
@@ -266,7 +266,6 @@ import SALT01D02 from "./SALT01D02.vue";
 import SALT02D01 from "../SALT02/SALT02D01.vue";
 import SALT01D12 from "./SALT01D12.vue";
 import SALT01D01PDF from "./SALT01D01PDF.vue";
-import { Error } from "mongoose";
 
 export default {
   props: ["lv", "tabInfo"],
@@ -540,6 +539,13 @@ export default {
       this.dv = await this.lis.function("SALT01/01-init", this.dv);
 
       this.dv.noVatReasons.map((e) => (e.value = e.taxcode));
+    },
+    async signDocument() {
+      let selectedRowSal = this.dv.salDocList.filter(
+        (e) => e._selected == true
+      );
+      await this.lis.function("SALT01/signDocument", selectedRowSal[0]);
+      this.lis.alert("p", "Belge İmzalandı.");
     },
   },
 

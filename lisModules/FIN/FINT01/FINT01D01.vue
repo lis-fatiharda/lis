@@ -138,11 +138,11 @@
 
         <l-div0-flex class="q-gutter-xs">
            
-                <l-btn color="warning" icon="search" @click="btnSearch(dv)" />
-                <l-btn color="info" icon="visibility" @click="btnShow(dv)" />
-                <l-btn color="primary" icon="edit" @click="btnEdit(dv)" />
-                <l-btn color="secondary" icon="add" @click="btnInsert(dv)" />
-                <l-btn color="deep-orange" icon="print" @click="btnDelete(dv)" />
+                <l-btn color="warning" icon="search" @click="btnSearch()" />
+                <l-btn color="info" icon="visibility" @click="btnShow()" />
+                <l-btn color="primary" icon="edit" @click="btnEdit()" />
+                <l-btn color="secondary" icon="add" @click="btnInsert()" />
+                <l-btn color="deep-orange" icon="print" @click="btnDelete()" />
            
 
             <l-space />
@@ -150,7 +150,7 @@
                 label="Hesap Hareketleri"
                 color="primary"
                 outline
-                @click="btnDelete(dv)"
+                @click="showFint03()"
             />
             <l-space />
         </l-div0-flex>
@@ -161,24 +161,40 @@
             :columns="myColumnsFin"
             :context="contextMenu"
             :readonly="true"
+            height="fit"
+            :summary="false"
+            @dblclick="btnEdit()"
         />
     </l-div>
     <FINT01D02 :dv="dv" :tabInfo="tabInfo" v-if="dv.lisDialog == 'FINT01D02'" />
+    <l-dialog v-model="isShowFint03" persistent>
+    <l-card0>
+      <FINT03D01
+        :cv="dv.sc"
+        :tabInfo="tabInfo"
+        :isChild="true"
+        @cancel="isShowFint03 = false"
+      />
+    </l-card0>
+  </l-dialog>
 </template>
 
 <script>
 import FINT01D02 from "./FINT01D02.vue";
+import FINT03D01 from "../../FIN/FINT03/FINT03D01.vue";
 
+  
 export default {
-    props: ["lv", "goToTransaction", "currentTab", "tabInfo"],
+    props: ["lv", "cv", "goToTransaction", "currentTab", "tabInfo"],
     components: {
-        FINT01D02,
+        FINT01D02, FINT03D01
     },
 
     data() {
         return {
             isSelectAcc: false,
             isSelectGla: false,
+            isShowFint03: false,
             dv: {
                 sc: {
                     company: "01",
@@ -291,8 +307,8 @@ export default {
     },
 
     methods: {
-        async btnSearch(prop) {
-            this.dv = await this.lis.function("FINT01/01-btnSearch", prop);
+        async btnSearch() {
+            this.dv = await this.lis.function("FINT01/01-btnSearch", this.dv);
 
             this.dv.reportList.forEach((e) => {
                 if (e.acclevel == 0) {
@@ -303,21 +319,28 @@ export default {
                 }
             });
         },
-        async btnEdit(prop) {
-            this.dv = await this.lis.function("FINT01/01-btnEdit", prop);
+        async btnEdit() {
+            this.dv = await this.lis.function("FINT01/01-btnEdit", this.dv);
         },
-        async btnShow(prop) {
-            this.dv = await this.lis.function("FINT01/01-btnShow", prop);
+        async btnShow() {
+            this.dv = await this.lis.function("FINT01/01-btnShow", this.dv);
         },
-        async btnInsert(prop) {
-            this.dv = await this.lis.function("FINT01/01-btnInsert", prop);
+        async btnInsert() {
+            this.dv = await this.lis.function("FINT01/01-btnInsert", this.dv);
         },
-        async btnDelete(prop) {
-            this.dv = await this.lis.function("FINT01/01-btnDelete", prop);
+        async btnDelete() {
+            this.dv = await this.lis.function("FINT01/01-btnDelete", this.dv);
         },
-        async init(prop) {
+        async init() {
             this.dv = await this.lis.function("FINT01/01-init", this.dv);
         },
+        showFint03() {
+            let selectedRow = this.dv.reportList.filter((e)=> e._selected == true)
+            console.log("selectedRow",selectedRow);
+            this.dv.sc.busarea = selectedRow[0].busarea;
+            this.dv.sc.acctype = selectedRow[0].acctype;
+            this.dv.sc.account = selectedRow[0].account;
+            this.isShowFint03 = true}
     },
 
     mounted() {

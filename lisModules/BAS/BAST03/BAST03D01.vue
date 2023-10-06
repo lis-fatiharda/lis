@@ -42,7 +42,7 @@
             
             dense
             :label="this.$gl(`Malzeme Adı`, `Material Name`)"
-            v-model="dv.sc.stext"
+            v-model="dv.sc.mtext"
           />
           <l-input
             
@@ -103,11 +103,11 @@
       <!--Butons Layer Layer---------------------->
 
 
-          <l-btn color="warning"  icon="search" @click="btnSearch(dv)" />
-          <l-btn color="info"  icon="visibility" @click="btnShow(dv)" />
-          <l-btn color="primary"  icon="edit" @click="btnEdit(dv)" />
-          <l-btn color="secondary"  icon="add" @click="btnInsert(dv)" />
-          <l-btn color="deep-orange"  icon="print" @click="btnPrint(dv)" />
+          <l-btn color="warning"  icon="search" @click="btnSearch()" />
+          <l-btn color="info"  icon="visibility" @click="btnShow()" />
+          <l-btn color="primary"  icon="edit" @click="btnEdit()" />
+          <l-btn color="secondary"  icon="add" @click="btnInsert()" />
+          <l-btn color="deep-orange"  icon="print" @click="btnPrint()" />
       
    
       <!--Table Layer---------------------------->
@@ -134,7 +134,7 @@
             </td>
             <td class="text-left">{{ item.material }}</td>
             <td class="text-left">{{ item.mattype }}</td>
-            <td class="text-left">{{ item.stext }}</td>
+            <td class="text-left">{{ item.mtext }}</td>
             <q-menu touch-position context-menu>
               <q-list dense style="min-width: 100px">
                 <q-item
@@ -172,12 +172,11 @@
         />
       </q-markup-table> -->
       <l-table
-        name="BAST03D01"
         v-model="dv.materialList"
         :columns="myColumnsMat"
-        :height="'75vh'"
-        :width="'100%'"
+        height="fit"
         :readonly="true"
+        @dblclick="btnEdit()"
       />
     </l-div>
     <BAST03D02 :dv="dv" :tabInfo="tabInfo" v-if="dv.lisDialog == 'BAST03D02'" />
@@ -213,7 +212,7 @@ export default {
         },
         {
           label: this.$gl("Açıklaması", "Description"),
-          value: "stext",
+          value: "mtext",
           type: "string",
         },
         {
@@ -255,7 +254,7 @@ export default {
         sc: {
           company: "01",
          
-          stext: "",
+          mtext: "",
           material: "",
           
           //*** */
@@ -281,24 +280,23 @@ export default {
   },
 
   methods: {
-    async btnSearch(prop) {
-      this.dv = await this.lis.function("BAST03/01-btnSearch", prop);
-      console.log(prop);
+    async btnSearch() {
+      this.dv = await this.lis.function("BAST03/01-btnSearch", this.dv);
       this.dv.selectedRow = "";
     },
-    async btnEdit(prop) {
-      this.dv = await this.lis.function("BAST03/01-btnEdit", prop);
+    async btnEdit() {
+      this.dv = await this.lis.function("BAST03/01-btnEdit", this.dv);
     },
-    async btnShow(prop) {
-      this.dv = await this.lis.function("BAST03/01-btnShow", prop);
+    async btnShow() {
+      this.dv = await this.lis.function("BAST03/01-btnShow", this.dv);
     },
-    async btnInsert(prop) {
-      this.dv = await this.lis.function("BAST03/01-btnInsert", prop);
+    async btnInsert() {
+      this.dv = await this.lis.function("BAST03/01-btnInsert", this.dv);
     },
     async btnPrint() {
             this.lis.printPDF("BAST03D01PDF", "Malzeme Kartları Raporu");
         },
-    async init(prop) {
+    async init() {
       this.dv = await this.lis.function("BAST03/01-init", this.dv);
     },
   },

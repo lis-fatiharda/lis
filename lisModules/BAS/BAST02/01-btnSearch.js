@@ -4,11 +4,11 @@ export default async function (dv) {
         customer: lis.like(dv.sc.customer),
         name1: lis.like(dv.sc.name1),
         //custorvend: dv.sc.custOrVend,
-        sector: dv.sc.sector,
-        country: dv.sc.country,
-        city: dv.sc.city,
-        taxdept: dv.sc.taxDept,
-        taxnum: dv.sc.taxNum,
+        sector: lis.like(dv.sc.sector),
+        country: lis.like(dv.sc.country),    
+        city: lis.like(dv.sc.city),
+        taxdept: lis.like(dv.sc.taxDept),
+        taxnum: lis.like(dv.sc.taxNum),
         custorvend:
             (dv.sc.custOrVend === null) | (dv.sc.custOrVend === 99)
                 ? { $gte: 0 }

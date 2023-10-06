@@ -106,7 +106,7 @@
                         </td>
                         <td class="text-left">{{ item.material }}</td>
                         <td class="text-left">{{ item.mattype }}</td>
-                        <td class="text-left">{{ item.stext }}</td>
+                        <td class="text-left">{{ item.mtext }}</td>
                     </tr>
                 </tbody>
             </q-markup-table>

@@ -10,12 +10,12 @@ const schema = new mongoose.Schema(
         material: { type: String, label: "Malzeme Kodu", default: "" },
         variant: { type: Object, label: "Varyant", default: '' },
         mtext: { type: String, label: "Malzeme Adı", default: "" },
-        materialcust: {
+        custmaterial: {
             type: String,
             label: "Müşterideki Malzeme Kodu",
             default: "",
         },
-        mtextcust: {
+        custmtext: {
             type: String,
             label: "Müşterideki Malzeme Adı",
             default: "",

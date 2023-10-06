@@ -8,7 +8,7 @@ export default async function createTransfer(
     pStext
 ) {
     let pItemnum = 0;
-    const olisinvdocs = lis.objectNew('lisinvdocs');
+    const olisinvdocs = await lis.objectNew('lisinvdocs');
     olisinvdocs.items = [];
 
     const olisinv006 = await lisinv006.findOne({
@@ -63,7 +63,7 @@ export default async function createTransfer(
 
         //------ Exit ---------
 
-        let newItem = lis.objectNew('lisinvdocs');
+        let newItem = await lis.objectNew('lisinvdocs');
         newItem = newItem.items[0];
 
         pItemnum += 10;
@@ -100,7 +100,7 @@ export default async function createTransfer(
 
         //------ Enterance ---------
 
-        newItem = lis.objectNew('lisinvdocs.items');
+        newItem = await lis.objectNew('lisinvdocs.items');
 
         pItemnum += 10;
 

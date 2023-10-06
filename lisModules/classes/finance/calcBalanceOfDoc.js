@@ -32,7 +32,7 @@ export default async function (plisfindocs, lis) {
 
         plisfindocs.finperiod = lis.getMonth(new Date(plisfindocs.docdate));
 
-        plisfindocs.itemcount = plisfindocs.length;
+        plisfindocs.itemcount = plisfindocs.items.length;
 
         //
 

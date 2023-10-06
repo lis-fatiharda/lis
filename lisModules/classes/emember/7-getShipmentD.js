@@ -18,6 +18,13 @@ export default async function () {
 </cac:DriverPerson>
 </cac:ShipmentStage>
 <cac:Delivery>
+<cac:DeliveryAddress>
+<cbc:CitySubdivisionName>#STATE#</cbc:CitySubdivisionName>
+<cbc:CityName>#CITY#</cbc:CityName>
+<cbc:PostalZone>#POBOX#</cbc:PostalZone>
+<cbc:District>#DISTRICT#</cbc:District>
+<cac:Country><cbc:Name>#COUNTRY#</cbc:Name></cac:Country>
+</cac:DeliveryAddress>
 <cac:CarrierParty>
 <cac:PartyIdentification>
 <cbc:ID schemeID="TCKN">#DRIVERID#</cbc:ID>
@@ -35,13 +42,6 @@ export default async function () {
 </cac:Country>
 </cac:PostalAddress>
 </cac:CarrierParty>
-<cac:DeliveryAddress>
-<cbc:CitySubdivisionName>#STATE#</cbc:CitySubdivisionName>
-<cbc:CityName>#CITY#</cbc:CityName>
-<cbc:PostalZone>#POBOX#</cbc:PostalZone>
-<cbc:District>#DISTRICT#</cbc:District>
-<cac:Country>#COUNTRY#</cac:Country>
-</cac:DeliveryAddress>
 <cac:Despatch>
 <cbc:ActualDespatchDate>#VALIDFROM#</cbc:ActualDespatchDate>
 <cbc:ActualDespatchTime>#VALIDTIME#</cbc:ActualDespatchTime>

@@ -147,7 +147,7 @@
             <l-btn color="orange" icon="print" />
 
             <l-space />
-            <l-btn label="Hesap Hareketleri" outline />
+            <l-btn label="Hesap Hareketleri" outline clickable @click = showFint03() />
             <l-btn label="Hesap" outline />
             <l-space />
         </l-div0-flex>
@@ -178,17 +178,29 @@
             @cancel="zoomMaterialRow = null"
         />
     </l-div>
+    <l-dialog v-model="isShowFint03" persistent>
+    <l-card0>
+      <FINT03D01
+        :cv="dv.sc"
+        :tabInfo="tabInfo"
+        :isChild="true"
+        @cancel="isShowFint03 = false"
+      />
+    </l-card0>
+  </l-dialog>
 </template>
 
 <script>
+import FINT03D01 from "../../FIN/FINT03/FINT03D01.vue";
 export default {
     props: ["lv", "goToTransaction", "currentTab", "tabInfo"],
-    components: {},
+    components: { FINT03D01 },
 
     data() {
         return {
             isSelectAcc: false,
             isSelectGla: false,
+            isShowFint03: false,
             tab: "Sorgula",
             dv: {
                 sc: {
@@ -208,6 +220,16 @@ export default {
                 reportList: [],
             },
             columns: [
+                {
+                    label: this.$gl(`İş Alanı`, `Account`),
+                    value: "busarea",
+                    type: "string",
+                },
+                {
+                    label: this.$gl(`Hesap Tipi`, `Account Type`),
+                    value: "acctype",
+                    type: "string",
+                },
                 {
                     label: this.$gl(`Hesap No`, `Account`),
                     value: "account",
@@ -312,6 +334,12 @@ export default {
         async btnSearch() {
             this.dv = await this.lis.function("FINT04/01-btnSearch", this.dv);
         },
+        showFint03() {
+            let selectedRow = this.dv.reportList.filter((e)=> e._selected == true)
+            console.log("selectedRow",selectedRow);
+            this.dv.sc.account = selectedRow[0].account;
+            this.isShowFint03 = true}
+        
     },
 
     mounted() {},

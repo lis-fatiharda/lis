@@ -175,12 +175,14 @@ export default {
       //     "FINT02/02-setDocChar",
       //     this.dv
       //   );
-      let myReturn = await this.lis.function("FINT02/02-setDocChar", this.dv);
+      let olisfin003 = await this.lis.function("FINT02/02-setDocChar", this.dv);
+      this.dv.postKeyList = olisfin003.postkeys;
+
       if (this.dv.modi == 0) {
-        if (myReturn.olispur001.signprotocol == 0) {
-          this.dv.lispurdocs.issignature = 0;
+        if (olisfin003.signprotocol == 0) {
+          this.dv.lisfindocs.issignature = 0;
         } else {
-          this.dv.lispurdocs.issignature = 1;
+          this.dv.lisfindocs.issignature = 1;
         }
       }
     },

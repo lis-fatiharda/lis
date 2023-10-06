@@ -44,19 +44,19 @@
       </l-div-flex>
     </l-card0>
 
-    <l-btn-group>
-      <l-btn color="warning" icon="search" @click="btnSearch(dv)" />
-      <l-btn color="primary" icon="edit" @click="btnEdit(dv)" />
-      <l-btn color="info" icon="visibility" @click="btnShow(mv)"/>
-      <l-btn color="secondary" icon="add" @click="btnInsert(dv)" />
-      <l-btn color="negative" icon="delete" @click="btnDelete(dv)" />
-    </l-btn-group>
+      <l-btn color="warning" icon="search" @click="btnSearch()" />
+      <l-btn color="primary" icon="edit" @click="btnEdit()" />
+      <l-btn color="info" icon="visibility" @click="btnShow()"/>
+      <l-btn color="secondary" icon="add" @click="btnInsert()" />
+      <l-btn color="negative" icon="delete" @click="btnDelete()" />
+   
 
     <l-table
-      name="BAST04D01"
       v-model="dv.lisvariantsList"
       :columns="myColumnsBas04"
       :readonly="true"
+      height="fit"
+      @dblclick="btnEdit()"
     />
   </l-div>
 

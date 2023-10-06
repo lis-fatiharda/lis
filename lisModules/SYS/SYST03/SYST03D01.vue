@@ -51,32 +51,33 @@
     </l-card0>
     <!--Butons Layer Layer---------------------->
 
-    <l-btn-group>
-      <l-btn color="warning" icon="search" @click="btnSearch(dv)" />
+      <l-btn color="warning" icon="search" @click="btnSearch()" />
       <l-btn
         v-if="isChild == undefined"
         color="primary"
         icon="edit"
-        @click="btnEdit(dv)"
+        @click="btnEdit()"
       />
       <l-btn
         v-if="isChild == undefined"
         color="info"
         icon="visibility"
-        @click="btnShow(dv)"
+        @click="btnShow()"
       />
       <l-btn
         v-if="isChild == undefined"
         color="secondary"
         icon="add"
-        @click="btnInsert(dv)"
+        @click="btnInsert()"
       />
-    </l-btn-group>
 
     <l-table
-      name="SYST03D01"
       v-model="dv.reportList"
       :columns="myColumnsreportList"
+      :summary="false"
+      :readOnly="false"
+      height="fit"
+      @dblclick="btnEdit()"
     />
   </l-div>
   <SYST03D02 :dv="dv" :tabInfo="tabInfo" v-if="dv.lisDialog == 'SYST03D02'" />
@@ -126,26 +127,26 @@ export default {
   },
 
   methods: {
-    async btnSearch(prop) {
-      this.dv = await this.lis.function("SYST03/01-btnSearch", prop);
+    async btnSearch() {
+      this.dv = await this.lis.function("SYST03/01-btnSearch", this.dv);
     },
-    async btnEdit(prop) {
-      this.dv = await this.lis.function("SYST03/01-btnEdit", prop);
+    async btnEdit() {
+      this.dv = await this.lis.function("SYST03/01-btnEdit", this.dv);
       this.tabInfo.blockGoToTransaction = true;
     },
-    async btnShow(prop) {
-      this.dv = await this.lis.function("SYST03/01-btnShow", prop);
+    async btnShow() {
+      this.dv = await this.lis.function("SYST03/01-btnShow", this.dv);
       this.tabInfo.blockGoToTransaction = true;
     },
-    async btnInsert(prop) {
-      this.dv = await this.lis.function("SYST03/01-btnInsert", prop);
+    async btnInsert() {
+      this.dv = await this.lis.function("SYST03/01-btnInsert", this.dv);
       this.tabInfo.blockGoToTransaction = true;
     },
-    async btnDelete(prop) {
-      this.dv = await this.lis.function("SYST03/01-btnDelete", prop);
+    async btnDelete() {
+      this.dv = await this.lis.function("SYST03/01-btnDelete", this.dv);
     },
-    async init(prop) {
-      this.dv = await this.lis.function("SYST03/01-init", prop);
+    async init() {
+      this.dv = await this.lis.function("SYST03/01-init", this.dv);
     },
     ok() {
       let select = this.dv.reportList.filter((e) => e._selected == true);

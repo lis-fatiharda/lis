@@ -96,25 +96,24 @@ export default async function (plissaldocs, plisedndocs) {
 
     var SIGNATUREBLOCK = await getSignatureSchemaD();
 
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#TAXNO#", olisbas001.taxnum);
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#TAXNO#", olisbas001.taxnum);
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#WEBADR#", olisbas001.website);
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#PARTYTAXTYPE#", "VKN");
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#TAXNO#", olisbas001.taxnum);
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#WEBADR#", olisbas001.website);
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#PARTYTAXTYPE#", "VKN");
 
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#POBOX#", olisbas001.postcode);
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#POBOX#", olisbas001.postcode);
 
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#CUSNAME#", olisbas001.title);
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#ADRESS#", olisbas001.address);
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#BUILDING#", olisbas001.building);
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#STATE#", olisbas001.state);
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#CITY#", olisbas001.city);
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#COUNTRY#", olisbas001.country);
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#TAXDEPT#", olisbas001.taxdept);
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#TEL#", olisbas001.telnum);
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#CUSNAME#", olisbas001.title);
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#ADRESS#", olisbas001.address);
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#BUILDING#", olisbas001.building);
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#STATE#", olisbas001.state);
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#CITY#", olisbas001.city);
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#COUNTRY#", olisbas001.country);
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#TAXDEPT#", olisbas001.taxdept);
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#TEL#", olisbas001.telnum);
 
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#FAX#", olisbas001.faxnum);
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#EMAIL#", olisbas001.email);
-    SIGNATUREBLOCK = SIGNATUREBLOCK.replace("#PERSON#", "");
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#FAX#", olisbas001.faxnum);
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#EMAIL#", olisbas001.email);
+    SIGNATUREBLOCK = SIGNATUREBLOCK.replaceAll("#PERSON#", "");
     //SIGNATUREBLOCK = SIGNATUREBLOCK.replace(
     //    "#Signature",
     //    `#Signature_${plisedndocs.einvonumber}`
@@ -128,24 +127,24 @@ export default async function (plissaldocs, plisedndocs) {
 
     var SUPPLIERBLOCK = await getSupplierSchemaD();
 
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#WEBADR#", olisbas001.website);
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#PARTYTAXTYPE#", "VKN");
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#TAXNO#", olisbas001.taxnum);
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#TICARISICILNO#", "");
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#CUSNAME#", olisbas001.title);
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#ADRESS#", olisbas001.address);
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#BUILDING#", "");
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#STATE#", "");
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#CITY#", olisbas001.city);
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#POBOX#", olisbas001.postcode);
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#COUNTRY#", olisbas001.country);
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#WEBADR#", olisbas001.website);
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#PARTYTAXTYPE#", "VKN");
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#TAXNO#", olisbas001.taxnum);
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#TICARISICILNO#", "");
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#CUSNAME#", olisbas001.title);
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#ADRESS#", olisbas001.address);
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#BUILDING#", "");
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#STATE#", "");
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#CITY#", olisbas001.city);
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#POBOX#", olisbas001.postcode);
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#COUNTRY#", olisbas001.country);
 
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#TAXDEPT#", olisbas001.taxdept);
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#TEL#", olisbas001.telnum);
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#FAX#", olisbas001.faxnum);
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#EMAIL#", olisbas001.email);
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#TAXDEPT#", olisbas001.taxdept);
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#TEL#", olisbas001.telnum);
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#FAX#", olisbas001.faxnum);
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#EMAIL#", olisbas001.email);
 
-    SUPPLIERBLOCK = SUPPLIERBLOCK.replace("#PERSON#", "");
+    SUPPLIERBLOCK = SUPPLIERBLOCK.replaceAll("#PERSON#", "");
 
     EINVOSTR += SUPPLIERBLOCK;
  
@@ -161,7 +160,7 @@ export default async function (plissaldocs, plisedndocs) {
     CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#CUSNAME#", plissaldocs.grcname1);
     CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#ADRESS#", plissaldocs.grcaddress);
     CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#BUILDING#", plissaldocs.grcbuilding);
-    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#STATE#", plissaldocs.district);
+    CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#STATE#", plissaldocs.grcdistrict);
     CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#CITY#", plissaldocs.grccity);
     CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#POBOX#", plissaldocs.grcpostcode);
     CUSTOMERBLOCK = CUSTOMERBLOCK.replaceAll("#COUNTRY#", plissaldocs.grccountry);
@@ -175,13 +174,14 @@ export default async function (plissaldocs, plisedndocs) {
 
     console.log("555555555555555555555555555555555555555555");
 
-    //**********getShipmentD************************************* */
+    //**********getShipmentD************************************* */ 
 
     var SHIPMENTBLOCK = await getShipmentD();
 
     SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#STATE#", plissaldocs.grcdistrict);
     SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#CITY#", plissaldocs.grccity);
-    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#POBOX#", plissaldocs.grcpostcode);
+    //SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#POBOX#", plissaldocs.grcpostcode);
+    SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#POBOX#", '34312');
     SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#DISTRICT#", plissaldocs.grcdistrict);
     SHIPMENTBLOCK = SHIPMENTBLOCK.replace("#COUNTRY#", plissaldocs.grccountry);
 
