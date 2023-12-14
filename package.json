@@ -10,17 +10,37 @@
         "build": "vite build",
         "preview": "vite preview",
         "lisVite": "vite --host --port 1000",
-        "lisApi": "nodemon --inspect=1033 ./lisRunner/server/lisApi/lisApi.js",
-        "lisApiOut": "nodemon ./lisRunner/server/lisApiOut/lisApi.js",
+        "lisApi": "nodemon --inspect=1033 ./lisRunner-src/lis-server/lisApi.js",
+        "lisBuild": "rm /opt/liserp/lisRunner -R && mkdir /opt/liserp/lisRunner && node /opt/liserp/lisRunner-src/commands/system/obfuscateAll.js",
+        "lisSocket": "nodemon --inspect=1033 ./lisSocket/socket.js",
         "lisJobs": "node ./lisRunner/jobs/A-lisJobs.js",
         "clearCache": "sync; echo 3 > /proc/sys/vm/drop_caches"
     },
     "nodemonConfig": {
-        "ignore": [
+        "ignore": [ 
             "*.json",
-            "lisRunner/*.json"
+            "lisRunner/*"
         ]
     },
+    "pkg": {
+        "scripts": [
+            "lisJobs/**/*",
+            "lisModels/**",
+            "lisModules/**/**/**/*"
+        ],
+        "targets": [
+            "node16-win-x64"
+        ],
+        "outputPath": "dist"
+    },
+    "tts": {
+        "assets": "lisRunner/**/*",
+        "targets": [
+            "node16-linux-x64",
+            "node16-macos-x64"
+        ]
+    },
+    "bin": "./bin.js",
     "dependencies": {
         "@fullcalendar/core": "^5.11.0",
         "@fullcalendar/daygrid": "^5.11.0",
@@ -83,6 +103,9 @@
         "@quasar/vite-plugin": "^1.0.4",
         "@rollup/plugin-dynamic-import-vars": "^2.0.3",
         "@vitejs/plugin-vue": "^2.3.4",
+        "html-obfuscator": "^1.0.2",
+        "javascript-obfuscator": "^4.1.0",
+        "nexe": "^4.0.0-rc.2",
         "sass": "^1.32.0",
         "unplugin-vue-components": "^0.24.1",
         "vite": "^2.9.15",

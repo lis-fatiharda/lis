@@ -7,22 +7,29 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-
 dist
 dist-ssr
 
 *.local
 # files of liserp
+
+assets
 backups
-patches
+
+components
+dist
 docman
-lisRunner
+lisClient
+lisServer
+lisSocket
+node_modules
+patches
+
 temp
 
-node_modules
+
 
 # Config Files
-lisRunner/configs/main-lisEnv.js
 
 # Editor directories and files
 .idea
@@ -33,7 +40,6 @@ lisRunner/configs/main-lisEnv.js
 *.sln
 *.sw?
 .env
-.envite.json
 package.json
 package-lock.json
 

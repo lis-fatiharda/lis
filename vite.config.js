@@ -13,7 +13,7 @@ export default defineConfig({
         },
     },
 
-    //base: "/opt/liserp/",
+    //base: "/opt/liserp/server-client",
 
     plugins: [
         vue({
@@ -21,22 +21,33 @@ export default defineConfig({
         }),
 
         quasar({
-            sassVariables: "lisRunner/quasar-variables.sass",
+            sassVariables: "lisRunner/lis-client/quasar-variables.sass",
         }),
 
         Components({ dirs: ["/opt/liserp/lisModules"] }),
     ],
 
+   // build: {
+   //     rollupOptions: {
+   //         output: {
+   //            // assetFileNames: 'server-client',
+   //             chunkFileNames: 'server-client/**',
+   //         
+   //            // entryFileNames: 'server-client',
+   //         },
+   //     },
+   // },
+
     //---
 
-    resolve: {
-        alias: [
-            {
-                find: "@lisModules",
-                replacement: fileURLToPath(
-                    new URL("/opt/lisModules", import.meta.url)
-                ),
-            },
-        ],
-    },
+    //resolve: {
+    //    alias: [
+    //        {
+    //            find: "@lisModules",
+    //            replacement: fileURLToPath(
+    //                new URL("/opt/lisModules", import.meta.url)
+    //            ),
+    //        },
+    //    ],
+    //},
 });

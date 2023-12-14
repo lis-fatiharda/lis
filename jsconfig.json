@@ -4,9 +4,9 @@
       "moduleResolution": "node",
 
       "paths": {
-      "@lisModules/*": ["/opt/liserp/lisModules/*"],
+      "@lisModules/*": ["development/lisModules/*"],
     }
     },
-    "exclude": [ "lisRunner/server", "dist", "lisRunner/**/*.js"],
+    "exclude": [ "lisServer", "dist", "lisServer/**/*.js"],
   }
   

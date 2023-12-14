@@ -1,0 +1,3 @@
+{
+    "lisApi_URL": "https://lis.liserp.com/lisApi/"
+}
